@@ -33,7 +33,7 @@ namespace zzzdkjs
         public Form1()
         {
             InitializeComponent();
-            
+
         }
 
         private void chart1_Click(object sender, EventArgs e)
@@ -111,7 +111,7 @@ namespace zzzdkjs
             {
                 dataGridView1.Columns[i].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
-            
+
             for (int i = 0; i < excelParse.fiberrecords.Count; i++)
             {
                 int index = this.dataGridView1.Rows.Add();
@@ -143,12 +143,12 @@ namespace zzzdkjs
         /// <returns></returns>
         private TreeNode FindTreeNode(string nodename)
         {
-            
+
             TreeNode node = new TreeNode();
             TreeNode root = treeView1.Nodes[0];
             for (int i = 0; i < root.Nodes.Count; i++)
             {
-                if (string.Compare(nodename,root.Nodes[i].Text)==0)
+                if (string.Compare(nodename, root.Nodes[i].Text) == 0)
                 {
                     node = root.Nodes[i];
                     break;
@@ -270,11 +270,11 @@ namespace zzzdkjs
         {
             for (int i = 0; i < dataGridView1.RowCount; i++)
             {
-                if (null==dataGridView1.Rows[i].Cells["ColumnTeleOperator"].Value )
+                if (null == dataGridView1.Rows[i].Cells["ColumnTeleOperator"].Value)
                 {
                     continue;
                 }
-                if (string.Compare(dataGridView1.Rows[i].Cells["ColumnTeleOperator"].Value.ToString(),"电信")==0)
+                if (string.Compare(dataGridView1.Rows[i].Cells["ColumnTeleOperator"].Value.ToString(), "电信") == 0)
                 {
                     dataGridView1.Rows[i].Visible = false;
                 }
@@ -299,13 +299,13 @@ namespace zzzdkjs
             int index = 1;
             int tabindex = tabControl1.SelectedIndex;
 
-            while (parentnode!=null)
+            while (parentnode != null)
             {
                 index++;
                 parentnode = parentnode.Parent;
             }
 
-            if (index ==1)
+            if (index == 1)
             {
                 // 当前点击节点为顶级节点
             }
@@ -321,27 +321,27 @@ namespace zzzdkjs
                         recSerachForm.ShowDialog();
                         break;
                     case "Operator":
-                        if (tabindex ==0)
+                        if (tabindex == 0)
                         {
                             str2 = node.Nodes[0].Text;
                             ShowSelectrecbyOperator(str2);
                         }
-                        if (tabindex ==1)
+                        if (tabindex == 1)
                         {
                             ShowGraphbyOperator();
                         }
                         break;
 
                     case "UsingType":
-                        if (tabindex ==0)
+                        if (tabindex == 0)
                         {
                             str2 = node.Nodes[0].Text;
                             ShowSelectrecbyUsingType(str2);
                         }
 
-                        if (tabindex ==1)
+                        if (tabindex == 1)
                         {
-                            
+
                         }
 
                         break;
@@ -351,7 +351,7 @@ namespace zzzdkjs
 
             }
 
-            if (index ==3)
+            if (index == 3)
             {
                 /// 当前点击节点为3级节点
                 string str = node.Parent.Name;
@@ -360,7 +360,7 @@ namespace zzzdkjs
                 {
                     // 显示指定运营商的光纤记录
                     case "Operator":
-                      
+
                         ShowSelectrecbyOperator(str2);
                         break;
                     case "UsingType":
@@ -385,7 +385,7 @@ namespace zzzdkjs
             }
 
 
-            for (int i = 0; i < dataGridView1.RowCount-1; i++)
+            for (int i = 0; i < dataGridView1.RowCount - 1; i++)
             {
                 if (null == dataGridView1.Rows[i].Cells["ColumnTeleOperator"].Value)
                 {
@@ -425,14 +425,14 @@ namespace zzzdkjs
                             dataGridView1.Rows[i].Visible = true;
                         }
                     }
-                  break;
+                    break;
                 case "电警":
                     for (int i = 0; i < dataGridView1.RowCount - 1; i++)
                     {
-                        if (dataGridView1.Rows[i].Cells["ColumnEPoliceUsed"].Value ==null)
+                        if (dataGridView1.Rows[i].Cells["ColumnEPoliceUsed"].Value == null)
                         {
                             continue;
-                            
+
                         }
                         if (string.Compare(dataGridView1.Rows[i].Cells["ColumnEPoliceUsed"].Value.ToString(), "有") == 0)
                         {
@@ -457,7 +457,7 @@ namespace zzzdkjs
                 case "信号机":
                     for (int i = 0; i < dataGridView1.RowCount - 1; i++)
                     {
-                        if (dataGridView1.Rows[i].Cells["ColumnSignalUsed"].Value==null)
+                        if (dataGridView1.Rows[i].Cells["ColumnSignalUsed"].Value == null)
                         {
                             continue;
                         }
@@ -471,7 +471,7 @@ namespace zzzdkjs
                 case "支队内网":
                     for (int i = 0; i < dataGridView1.RowCount - 1; i++)
                     {
-                        if (dataGridView1.Rows[i].Cells["ColumnIntranetUsed"].Value==null)
+                        if (dataGridView1.Rows[i].Cells["ColumnIntranetUsed"].Value == null)
                         {
                             continue;
                         }
@@ -485,7 +485,7 @@ namespace zzzdkjs
                 case "视频专网":
                     for (int i = 0; i < dataGridView1.RowCount - 1; i++)
                     {
-                        if (dataGridView1.Rows[i].Cells["ColumnVideoUsed"].Value ==null)
+                        if (dataGridView1.Rows[i].Cells["ColumnVideoUsed"].Value == null)
                         {
                             continue;
                         }
@@ -502,10 +502,10 @@ namespace zzzdkjs
             for (int i = 0; i < dataGridView1.RowCount - 1; i++)
             {
 
-//                if (string.Compare(dataGridView1.Rows[i].Cells["ColumnTeleOperator"].Value.ToString(), UsingTypeName) == 0)
-//                {
-//                    dataGridView1.Rows[i].Visible = true;
-//                }
+                //                if (string.Compare(dataGridView1.Rows[i].Cells["ColumnTeleOperator"].Value.ToString(), UsingTypeName) == 0)
+                //                {
+                //                    dataGridView1.Rows[i].Visible = true;
+                //                }
             }
 
             dataGridView1.Invalidate();
@@ -620,10 +620,10 @@ namespace zzzdkjs
             cht1.Titles[0].ForeColor = Color.Red;
             cht1.Titles[0].Font = new Font("微软雅黑", 20f, FontStyle.Regular);
             cht1.Titles[0].Alignment = ContentAlignment.TopCenter;
-//            cht1.Titles.Add("合计：25414 宗");
-//            cht1.Titles[1].ForeColor = Color.White;
-//            cht1.Titles[1].Font = new Font("微软雅黑", 8f, FontStyle.Regular);
-//            cht1.Titles[1].Alignment = ContentAlignment.TopRight;
+            //            cht1.Titles.Add("合计：25414 宗");
+            //            cht1.Titles[1].ForeColor = Color.White;
+            //            cht1.Titles[1].Font = new Font("微软雅黑", 8f, FontStyle.Regular);
+            //            cht1.Titles[1].Alignment = ContentAlignment.TopRight;
 
             //控件背景
             cht1.BackColor = Color.Transparent;
@@ -641,7 +641,7 @@ namespace zzzdkjs
             cht1.ChartAreas[0].AxisX.LineColor = ColorTranslator.FromHtml("#38587a"); ;
             cht1.ChartAreas[0].AxisX.LabelStyle.ForeColor = Color.White;
             cht1.ChartAreas[0].AxisX.LabelStyle.Font = new Font("微软雅黑", 10f, FontStyle.Regular);
-         
+
             //X轴网络线条
             cht1.ChartAreas[0].AxisX.MajorGrid.Enabled = true;
             cht1.ChartAreas[0].AxisX.MajorGrid.LineColor = ColorTranslator.FromHtml("#2c4c6d");
@@ -670,7 +670,7 @@ namespace zzzdkjs
             cht1.Series[0].LabelForeColor = Color.White;
             cht1.Series[0].ToolTip = "#VALX:#VAL";     //鼠标移动到对应点显示数值
             cht1.Series[0].ChartType = SeriesChartType.Column;    //图类型(折线)
-            
+
             cht1.Series[0].Color = Color.Lime;
             cht1.Series[0].LegendText = legend.Name;
             cht1.Series[0].IsValueShownAsLabel = true;
@@ -678,7 +678,7 @@ namespace zzzdkjs
             cht1.Series[0].CustomProperties = "DrawingStyle = Cylinder";
             cht1.Legends.Add(legend);
             cht1.Legends[0].Position.Auto = false;
-            
+
             //绑定数据
             cht1.Series[0].Points.DataBindXY(x, y);
             cht1.Series[0].Points[0].Color = Color.White;
@@ -694,7 +694,7 @@ namespace zzzdkjs
         /// <param name="e"></param>
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (tabControl1.SelectedIndex==1)
+            if (tabControl1.SelectedIndex == 1)
             {
                 TreeNode parentnode = currentselectednode.Parent;
                 int index = 1;
@@ -745,21 +745,21 @@ namespace zzzdkjs
         {
             string str = dataGridView1.Rows[e.RowIndex].Cells["ColumnFiberPigtail"].Value.ToString();
             currentselectdatagridviewrowindex = e.RowIndex;
-            if (str ==null)
+            if (str == null)
             {
                 return;
             }
 
-            
+
             foreach (FiberRecord rec in excelParse.fiberrecords)
             {
-                if (string.Compare(str,rec.FiberPigtail) ==0)
+                if (string.Compare(str, rec.FiberPigtail) == 0)
                 {
                     selectedfiberRecord = rec;
                     break;
                 }
             }
-            
+
             OPChooseForm opChooseForm = new OPChooseForm(selectedfiberRecord);
             opChooseForm.EditFiberRec += EditFiberRec;
             opChooseForm.AddFiberRec += AddFiberRec;
@@ -773,58 +773,6 @@ namespace zzzdkjs
         /// </summary>
         private void EditFiberRec(FiberRecord rec)
         {
-
-            if (string.Compare(selectedfiberRecord.FiberPigtail,rec.FiberPigtail)!=0)
-            {
-               // 尾纤编号发生了更改，需要判断是否与当前记录存在冲突
-                bool flag = false;
-                for (int i = 0; i < excelParse.fiberrecords.Count; i++)
-                {
-                    if (string.Compare(rec.FiberPigtail,excelParse.fiberrecords[i].FiberPigtail)==0)
-                    {
-                        flag = true;
-                        break;
-                    }
-                }
-
-                if (flag)
-                {
-                    MessageBox.Show("当前尾纤已存在，请更改！");
-                    return;
-                }
-
-                else
-                {
-                    // 完成datagridview控件中的记录更改工作
-                    
-                    dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnFiberPigtail"].Value = rec.FiberPigtail;
-                    dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnTeleOperator"].Value = rec.TeleOperator;
-                    dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnRoadIntersection"].Value = rec.RoadCross;
-                    dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnBayonetUsed"].Value = rec.BayonetUsed;
-                    dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnVideoUsed"].Value = rec.VideoUsed;
-                    dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnSignalUsed"].Value = rec.SignalUsed;
-                    dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnTrafficGuidanceUsed"].Value = rec.TrafficGuidanceUsed;
-                    dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnEPoliceUsed"].Value = rec.EPoliceUsed;
-                    dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnMonitorUsed"].Value = rec.MonitorUsed;
-                    dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnIntranetUsed"].Value = rec.IntranetUsed;
-                    dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnDetachmentLocationA"].Value = rec.DetachmentLocationA;
-                    dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnDetachmentLocationB"].Value = rec.DetachmentLocationB;
-                    dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnFiberPlugType"].Value = rec.FiberPlugType;
-                }
-            }
-
-            else
-            {
-                // 直接完成记录更改工作
-            }
-        }
-
-        /// <summary>
-        /// 增加光纤记录
-        /// </summary>
-        private void AddFiberRec(FiberRecord rec)
-        {
-            //MessageBox.Show("delegate add test");
 
             if (string.Compare(selectedfiberRecord.FiberPigtail, rec.FiberPigtail) != 0)
             {
@@ -869,6 +817,53 @@ namespace zzzdkjs
             {
                 // 直接完成记录更改工作
             }
+        }
+
+        /// <summary>
+        /// 增加光纤记录
+        /// </summary>
+        private void AddFiberRec(FiberRecord rec)
+        {
+            
+            // 尾纤编号发生了更改，需要判断是否与当前记录存在冲突
+            bool flag = false;
+            for (int i = 0; i < excelParse.fiberrecords.Count; i++)
+            {
+                if (string.Compare(rec.FiberPigtail, excelParse.fiberrecords[i].FiberPigtail) == 0)
+                {
+                    flag = true;
+                    break;
+                }
+            }
+
+            if (flag)
+            {
+                MessageBox.Show("当前尾纤已存在，无法增加新的光纤记录，请更改！");
+                return;
+            }
+
+            else
+            {
+                // 完成datagridview控件中的记录增加工作
+
+                int index = this.dataGridView1.Rows.Add();
+                dataGridView1.Rows[index].Cells["ColumnFiberPigtail"].Value = rec.FiberPigtail;
+                dataGridView1.Rows[index].Cells["ColumnTeleOperator"].Value = rec.TeleOperator;
+                dataGridView1.Rows[index].Cells["ColumnRoadIntersection"].Value = rec.RoadCross;
+                dataGridView1.Rows[index].Cells["ColumnBayonetUsed"].Value = rec.BayonetUsed;
+                dataGridView1.Rows[index].Cells["ColumnVideoUsed"].Value = rec.VideoUsed;
+                dataGridView1.Rows[index].Cells["ColumnSignalUsed"].Value = rec.SignalUsed;
+                dataGridView1.Rows[index].Cells["ColumnTrafficGuidanceUsed"].Value = rec.TrafficGuidanceUsed;
+                dataGridView1.Rows[index].Cells["ColumnEPoliceUsed"].Value = rec.EPoliceUsed;
+                dataGridView1.Rows[index].Cells["ColumnMonitorUsed"].Value = rec.MonitorUsed;
+                dataGridView1.Rows[index].Cells["ColumnIntranetUsed"].Value = rec.IntranetUsed;
+                dataGridView1.Rows[index].Cells["ColumnDetachmentLocationA"].Value = rec.DetachmentLocationA;
+                dataGridView1.Rows[index].Cells["ColumnDetachmentLocationB"].Value = rec.DetachmentLocationB;
+                dataGridView1.Rows[index].Cells["ColumnFiberPlugType"].Value = rec.FiberPlugType;
+            }
+
+
+
         }
 
         /// <summary>

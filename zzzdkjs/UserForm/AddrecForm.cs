@@ -39,8 +39,18 @@ namespace zzzdkjs.UserForm
             rec.FiberPigtail = textBoxFiberTail.Text;
             rec.TeleOperator = comboBoxOperator.Items[comboBoxOperator.SelectedIndex].ToString();
 
+
             return rec;
 
         }
-    }
+
+
+        /// <summary>
+        /// 主界面控件初始化
+        /// </summary>
+        private void CtrlInit()
+        {
+
+        }
+        }
 }
