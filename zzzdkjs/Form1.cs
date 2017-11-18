@@ -824,8 +824,8 @@ namespace zzzdkjs
         /// </summary>
         private void AddFiberRec(FiberRecord rec)
         {
-            
-            // 尾纤编号发生了更改，需要判断是否与当前记录存在冲突
+
+            // 需要根据新增光纤记录的尾号判断是否与当前记录存在冲突
             bool flag = false;
             for (int i = 0; i < excelParse.fiberrecords.Count; i++)
             {
@@ -844,8 +844,10 @@ namespace zzzdkjs
 
             else
             {
-                // 完成datagridview控件中的记录增加工作
+                // 在光纤数据集合中增加新的光纤记录数据
+                excelParse.fiberrecords.Add(rec);
 
+                // 完成datagridview控件中的记录增加工作
                 int index = this.dataGridView1.Rows.Add();
                 dataGridView1.Rows[index].Cells["ColumnFiberPigtail"].Value = rec.FiberPigtail;
                 dataGridView1.Rows[index].Cells["ColumnTeleOperator"].Value = rec.TeleOperator;
@@ -862,8 +864,6 @@ namespace zzzdkjs
                 dataGridView1.Rows[index].Cells["ColumnFiberPlugType"].Value = rec.FiberPlugType;
             }
 
-
-
         }
 
         /// <summary>
@@ -871,7 +871,20 @@ namespace zzzdkjs
         /// </summary>
         private void DelFiberRec(FiberRecord rec)
         {
-            MessageBox.Show("delegate del test");
+            bool flag = false;
+            for (int i = 0; i < excelParse.fiberrecords.Count; i++)
+            {
+                if (string.Compare(rec.FiberPigtail, excelParse.fiberrecords[i].FiberPigtail) == 0)
+                {
+                    excelParse.fiberrecords.RemoveAt(i);
+                    break;
+                }
+            }
+
+            // 删除Datagridview中的光纤记录
+            dataGridView1.Rows.RemoveAt(currentselectdatagridviewrowindex);
+            dataGridView1.Invalidate();
+
         }
     }
 }
