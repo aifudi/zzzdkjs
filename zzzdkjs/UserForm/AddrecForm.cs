@@ -26,7 +26,8 @@ namespace zzzdkjs.UserForm
         private void button1_Click(object sender, System.EventArgs e)
         {
             FiberRecord rec = GetEditedRec();
-            AddFiberRec(fiberrec);
+            
+            AddFiberRec(rec);
         }
 
         /// <summary>
@@ -38,7 +39,7 @@ namespace zzzdkjs.UserForm
             FiberRecord rec = new FiberRecord();
             rec.FiberPigtail = textBoxFiberTail.Text;
             rec.TeleOperator = comboBoxOperator.Items[comboBoxOperator.SelectedIndex].ToString();
-
+            rec.EditFlag = 0x10;
 
             return rec;
 

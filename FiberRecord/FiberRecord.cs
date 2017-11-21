@@ -92,6 +92,17 @@ namespace FiberRecordNS
         /// </summary>
         public string ContractIndex;
 
+        /// <summary>
+        /// 表示当前数据记录状态
+        /// 0x00--未变化 0x01 ---删除，0x10---新增, 0x11---编辑
+        /// 初始化的时候，该值==0x00
+        /// </summary>
+        public int EditFlag;
+
+        public FiberRecord()
+        {
+            EditFlag = 0x00;
+        }
 
     }
 

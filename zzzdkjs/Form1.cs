@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Reflection;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using ExcelParseNS;
@@ -33,7 +32,6 @@ namespace zzzdkjs
         public Form1()
         {
             InitializeComponent();
-
         }
 
         private void chart1_Click(object sender, EventArgs e)
@@ -159,7 +157,7 @@ namespace zzzdkjs
 
         public void xx()
         {
-            List<FiberRecord> records = excelParse.GetDataFromExcelByCom(true);
+            List<FiberRecord> records = excelParse.GetFiberRecordsData(true);
             Dictionary<string, int> result = excelParse.GetDataStatisticsByTeleOperator(records);
             string[] x = result.Keys.ToArray();
             int[] y = result.Values.ToArray();
@@ -790,7 +788,7 @@ namespace zzzdkjs
                 if (flag)
                 {
                     MessageBox.Show("当前尾纤已存在，请更改！");
-                    return;
+                   
                 }
 
                 else
@@ -816,6 +814,21 @@ namespace zzzdkjs
             else
             {
                 // 直接完成记录更改工作
+                dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnFiberPigtail"].Value = rec.FiberPigtail;
+                dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnTeleOperator"].Value = rec.TeleOperator;
+                dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnRoadIntersection"].Value = rec.RoadCross;
+                dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnBayonetUsed"].Value = rec.BayonetUsed;
+                dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnVideoUsed"].Value = rec.VideoUsed;
+                dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnSignalUsed"].Value = rec.SignalUsed;
+                dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnTrafficGuidanceUsed"].Value = rec.TrafficGuidanceUsed;
+                dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnEPoliceUsed"].Value = rec.EPoliceUsed;
+                dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnMonitorUsed"].Value = rec.MonitorUsed;
+                dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnIntranetUsed"].Value = rec.IntranetUsed;
+                dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnDetachmentLocationA"].Value = rec.DetachmentLocationA;
+                dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnDetachmentLocationB"].Value = rec.DetachmentLocationB;
+                dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnFiberPlugType"].Value = rec.FiberPlugType;
+
+
             }
         }
 
@@ -864,6 +877,7 @@ namespace zzzdkjs
                 dataGridView1.Rows[index].Cells["ColumnFiberPlugType"].Value = rec.FiberPlugType;
             }
 
+
         }
 
         /// <summary>
@@ -876,7 +890,7 @@ namespace zzzdkjs
             {
                 if (string.Compare(rec.FiberPigtail, excelParse.fiberrecords[i].FiberPigtail) == 0)
                 {
-                    excelParse.fiberrecords.RemoveAt(i);
+                    excelParse.fiberrecords[i].EditFlag = 0x01;
                     break;
                 }
             }
@@ -885,6 +899,42 @@ namespace zzzdkjs
             dataGridView1.Rows.RemoveAt(currentselectdatagridviewrowindex);
             dataGridView1.Invalidate();
 
+        }
+
+        /// <summary>
+        /// 退出程序时，将所有光纤数据文件保存至后台文件
+        /// </summary>
+        private void SaveRec()
+        {
+            for (int i =0; i < excelParse.fiberrecords.Count; i++)
+            {
+                switch (excelParse.fiberrecords[i].EditFlag & 0xFF)
+                {
+                    case 0x00:  // 未改变
+                        break;
+                    case 0x01:  // 删除
+                        excelParse.DelRecord(excelParse.fiberrecords[i]);
+                        break;
+                    case 0x10:  // 新增
+                        excelParse.AddNewRecord(excelParse.fiberrecords[i]);
+                        break;
+                    case 0x11:  // 编辑
+                        excelParse.EditRecord(excelParse.fiberrecords[i]);
+                        break;
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// 窗体关闭时执行的后台操作
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // 保存光纤记录至后台数据文件
+            SaveRec();
         }
     }
 }

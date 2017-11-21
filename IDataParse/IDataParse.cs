@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using FiberRecordNS;
 
 namespace IDataParseNS
 {
@@ -12,6 +9,53 @@ namespace IDataParseNS
     /// </summary>
     public interface IDataParse
     {
+        /// <summary>
+        /// 删除光纤数据记录
+        /// </summary>
+        /// <param name="rec"></param>
+        /// <returns></returns>
+        bool DelRecord(FiberRecord rec);
+
+        /// <summary>
+        /// 新增光纤数据记录
+        /// </summary>
+        /// <param name="rec"></param>
+        /// <returns></returns>
+        bool AddNewRecord(FiberRecord rec);
+
+        /// <summary>
+        /// 编辑光纤记录
+        /// </summary>
+        /// <param name="oldrec"></param>
+        /// <param name="newrec"></param>
+        /// <returns></returns>
+        bool EditRecord(FiberRecord newrec);
+
+        /// <summary>
+        /// 返回不同业务使用的光纤线路
+        /// 目前支持的业务包括：卡口、监控系统、电子警察等
+        /// </summary>
+        /// <returns></returns>
+        Dictionary<string, int> GetDataStatisticsByUsing(List<FiberRecord> records);
+        
+        /// <summary>
+        /// 返回不同运营商负责承建维护的光纤线路
+        /// </summary>
+        /// <returns></returns>
+        Dictionary<string, int> GetDataStatisticsByTeleOperator(List<FiberRecord> records);
+
+        /// <summary>
+        /// 返回光纤记录数据集
+        /// </summary>
+        /// <param name="hasTitle"></param>
+        /// <returns></returns>
+        List<FiberRecord> GetFiberRecordsData(bool hasTitle = true);
+
+        /// <summary>
+        /// 更新数据记录
+        /// </summary>
+        /// <param name="rec"></param>
+        void UpdateFiberRecords(FiberRecord rec);
 
     }
 }

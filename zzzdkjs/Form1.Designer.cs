@@ -28,43 +28,48 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode33 = new System.Windows.Forms.TreeNode("电信");
-            System.Windows.Forms.TreeNode treeNode34 = new System.Windows.Forms.TreeNode("联通");
-            System.Windows.Forms.TreeNode treeNode35 = new System.Windows.Forms.TreeNode("移动");
-            System.Windows.Forms.TreeNode treeNode36 = new System.Windows.Forms.TreeNode("中信");
-            System.Windows.Forms.TreeNode treeNode37 = new System.Windows.Forms.TreeNode("自建");
-            System.Windows.Forms.TreeNode treeNode38 = new System.Windows.Forms.TreeNode("运营商", new System.Windows.Forms.TreeNode[] {
-            treeNode33,
-            treeNode34,
-            treeNode35,
-            treeNode36,
-            treeNode37});
-            System.Windows.Forms.TreeNode treeNode39 = new System.Windows.Forms.TreeNode("电视监视");
-            System.Windows.Forms.TreeNode treeNode40 = new System.Windows.Forms.TreeNode("电警");
-            System.Windows.Forms.TreeNode treeNode41 = new System.Windows.Forms.TreeNode("卡口");
-            System.Windows.Forms.TreeNode treeNode42 = new System.Windows.Forms.TreeNode("信号机");
-            System.Windows.Forms.TreeNode treeNode43 = new System.Windows.Forms.TreeNode("支队内网");
-            System.Windows.Forms.TreeNode treeNode44 = new System.Windows.Forms.TreeNode("视频专网");
-            System.Windows.Forms.TreeNode treeNode45 = new System.Windows.Forms.TreeNode("业务使用", new System.Windows.Forms.TreeNode[] {
-            treeNode39,
-            treeNode40,
-            treeNode41,
-            treeNode42,
-            treeNode43,
-            treeNode44});
-            System.Windows.Forms.TreeNode treeNode46 = new System.Windows.Forms.TreeNode("路口位置");
-            System.Windows.Forms.TreeNode treeNode47 = new System.Windows.Forms.TreeNode("记录查询");
-            System.Windows.Forms.TreeNode treeNode48 = new System.Windows.Forms.TreeNode("光纤记录", new System.Windows.Forms.TreeNode[] {
-            treeNode38,
-            treeNode45,
-            treeNode46,
-            treeNode47});
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("电信");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("联通");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("移动");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("中信");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("自建");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("运营商", new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2,
+            treeNode3,
+            treeNode4,
+            treeNode5});
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("电视监视");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("电警");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("卡口");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("信号机");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("支队内网");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("视频专网");
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("业务使用", new System.Windows.Forms.TreeNode[] {
+            treeNode7,
+            treeNode8,
+            treeNode9,
+            treeNode10,
+            treeNode11,
+            treeNode12});
+            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("路口位置");
+            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("记录查询");
+            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("光纤记录", new System.Windows.Forms.TreeNode[] {
+            treeNode6,
+            treeNode13,
+            treeNode14,
+            treeNode15});
+            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("合同记录");
+            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("查找");
+            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("打印");
+            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("辅助功能", new System.Windows.Forms.TreeNode[] {
+            treeNode18,
+            treeNode19});
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.button1 = new System.Windows.Forms.Button();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -107,26 +112,15 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.button1);
             this.splitContainer1.Panel1.Controls.Add(this.treeView1);
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
-            this.splitContainer1.Size = new System.Drawing.Size(838, 444);
-            this.splitContainer1.SplitterDistance = 215;
+            this.splitContainer1.Size = new System.Drawing.Size(1390, 606);
+            this.splitContainer1.SplitterDistance = 214;
             this.splitContainer1.SplitterWidth = 10;
             this.splitContainer1.TabIndex = 0;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(313, 466);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(107, 61);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // treeView1
             // 
@@ -134,45 +128,55 @@
             this.treeView1.Location = new System.Drawing.Point(0, 0);
             this.treeView1.Margin = new System.Windows.Forms.Padding(7);
             this.treeView1.Name = "treeView1";
-            treeNode33.Name = "节点5";
-            treeNode33.Text = "电信";
-            treeNode34.Name = "节点6";
-            treeNode34.Text = "联通";
-            treeNode35.Name = "节点7";
-            treeNode35.Text = "移动";
-            treeNode36.Name = "节点3";
-            treeNode36.Text = "中信";
-            treeNode37.Name = "节点4";
-            treeNode37.Text = "自建";
-            treeNode38.BackColor = System.Drawing.Color.White;
-            treeNode38.ForeColor = System.Drawing.Color.DodgerBlue;
-            treeNode38.Name = "Operator";
-            treeNode38.Text = "运营商";
-            treeNode39.Name = "节点8";
-            treeNode39.Text = "电视监视";
-            treeNode40.Name = "节点9";
-            treeNode40.Text = "电警";
-            treeNode41.Name = "节点10";
-            treeNode41.Text = "卡口";
-            treeNode42.Name = "节点11";
-            treeNode42.Text = "信号机";
-            treeNode43.Name = "节点0";
-            treeNode43.Text = "支队内网";
-            treeNode44.Name = "节点1";
-            treeNode44.Text = "视频专网";
-            treeNode45.Name = "UsingType";
-            treeNode45.Text = "业务使用";
-            treeNode46.Name = "CrossingLoc";
-            treeNode46.Text = "路口位置";
-            treeNode47.Name = "RecSerach";
-            treeNode47.Text = "记录查询";
-            treeNode48.BackColor = System.Drawing.Color.White;
-            treeNode48.ForeColor = System.Drawing.Color.DodgerBlue;
-            treeNode48.Name = "节点0";
-            treeNode48.Text = "光纤记录";
+            treeNode1.Name = "节点5";
+            treeNode1.Text = "电信";
+            treeNode2.Name = "节点6";
+            treeNode2.Text = "联通";
+            treeNode3.Name = "节点7";
+            treeNode3.Text = "移动";
+            treeNode4.Name = "节点3";
+            treeNode4.Text = "中信";
+            treeNode5.Name = "节点4";
+            treeNode5.Text = "自建";
+            treeNode6.BackColor = System.Drawing.Color.White;
+            treeNode6.ForeColor = System.Drawing.Color.DodgerBlue;
+            treeNode6.Name = "Operator";
+            treeNode6.Text = "运营商";
+            treeNode7.Name = "节点8";
+            treeNode7.Text = "电视监视";
+            treeNode8.Name = "节点9";
+            treeNode8.Text = "电警";
+            treeNode9.Name = "节点10";
+            treeNode9.Text = "卡口";
+            treeNode10.Name = "节点11";
+            treeNode10.Text = "信号机";
+            treeNode11.Name = "节点0";
+            treeNode11.Text = "支队内网";
+            treeNode12.Name = "节点1";
+            treeNode12.Text = "视频专网";
+            treeNode13.Name = "UsingType";
+            treeNode13.Text = "业务使用";
+            treeNode14.Name = "CrossingLoc";
+            treeNode14.Text = "路口位置";
+            treeNode15.Name = "RecSerach";
+            treeNode15.Text = "记录查询";
+            treeNode16.BackColor = System.Drawing.Color.White;
+            treeNode16.ForeColor = System.Drawing.Color.DodgerBlue;
+            treeNode16.Name = "NodeFiber";
+            treeNode16.Text = "光纤记录";
+            treeNode17.Name = "NodeContract";
+            treeNode17.Text = "合同记录";
+            treeNode18.Name = "NodeFind";
+            treeNode18.Text = "查找";
+            treeNode19.Name = "NodePrint";
+            treeNode19.Text = "打印";
+            treeNode20.Name = "AssistanceFun";
+            treeNode20.Text = "辅助功能";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode48});
-            this.treeView1.Size = new System.Drawing.Size(215, 444);
+            treeNode16,
+            treeNode17,
+            treeNode20});
+            this.treeView1.Size = new System.Drawing.Size(214, 606);
             this.treeView1.TabIndex = 0;
             this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
             // 
@@ -186,7 +190,7 @@
             this.tabControl1.Margin = new System.Windows.Forms.Padding(7);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(613, 444);
+            this.tabControl1.Size = new System.Drawing.Size(1166, 606);
             this.tabControl1.TabIndex = 0;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -197,7 +201,7 @@
             this.tabPage1.Margin = new System.Windows.Forms.Padding(7);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(7);
-            this.tabPage1.Size = new System.Drawing.Size(605, 403);
+            this.tabPage1.Size = new System.Drawing.Size(1158, 565);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "记录列表";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -226,7 +230,7 @@
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(591, 389);
+            this.dataGridView1.Size = new System.Drawing.Size(1144, 551);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             // 
@@ -234,66 +238,78 @@
             // 
             this.ColumnFiberPigtail.HeaderText = "光纤尾号";
             this.ColumnFiberPigtail.Name = "ColumnFiberPigtail";
+            this.ColumnFiberPigtail.ReadOnly = true;
             // 
             // ColumnTeleOperator
             // 
             this.ColumnTeleOperator.HeaderText = "运营商";
             this.ColumnTeleOperator.Name = "ColumnTeleOperator";
+            this.ColumnTeleOperator.ReadOnly = true;
             // 
             // ColumnRoadIntersection
             // 
             this.ColumnRoadIntersection.HeaderText = "路口位置";
             this.ColumnRoadIntersection.Name = "ColumnRoadIntersection";
+            this.ColumnRoadIntersection.ReadOnly = true;
             // 
             // ColumnMonitorUsed
             // 
             this.ColumnMonitorUsed.HeaderText = "电视监视";
             this.ColumnMonitorUsed.Name = "ColumnMonitorUsed";
+            this.ColumnMonitorUsed.ReadOnly = true;
             // 
             // ColumnBayonetUsed
             // 
             this.ColumnBayonetUsed.HeaderText = "卡口";
             this.ColumnBayonetUsed.Name = "ColumnBayonetUsed";
+            this.ColumnBayonetUsed.ReadOnly = true;
             // 
             // ColumnVideoUsed
             // 
             this.ColumnVideoUsed.HeaderText = "视频";
             this.ColumnVideoUsed.Name = "ColumnVideoUsed";
+            this.ColumnVideoUsed.ReadOnly = true;
             // 
             // ColumnSignalUsed
             // 
             this.ColumnSignalUsed.HeaderText = "信号机";
             this.ColumnSignalUsed.Name = "ColumnSignalUsed";
+            this.ColumnSignalUsed.ReadOnly = true;
             // 
             // ColumnTrafficGuidanceUsed
             // 
             this.ColumnTrafficGuidanceUsed.HeaderText = "交通诱导";
             this.ColumnTrafficGuidanceUsed.Name = "ColumnTrafficGuidanceUsed";
+            this.ColumnTrafficGuidanceUsed.ReadOnly = true;
             // 
             // ColumnEPoliceUsed
             // 
             this.ColumnEPoliceUsed.HeaderText = "电警";
             this.ColumnEPoliceUsed.Name = "ColumnEPoliceUsed";
+            this.ColumnEPoliceUsed.ReadOnly = true;
             // 
             // ColumnIntranetUsed
             // 
             this.ColumnIntranetUsed.HeaderText = "内网业务";
             this.ColumnIntranetUsed.Name = "ColumnIntranetUsed";
+            this.ColumnIntranetUsed.ReadOnly = true;
             // 
             // ColumnDetachmentLocationA
             // 
             this.ColumnDetachmentLocationA.HeaderText = "11楼机柜部署";
             this.ColumnDetachmentLocationA.Name = "ColumnDetachmentLocationA";
+            this.ColumnDetachmentLocationA.ReadOnly = true;
             // 
             // ColumnDetachmentLocationB
             // 
             this.ColumnDetachmentLocationB.HeaderText = "12楼机柜部署";
             this.ColumnDetachmentLocationB.Name = "ColumnDetachmentLocationB";
+            this.ColumnDetachmentLocationB.ReadOnly = true;
             // 
             // ColumnFiberPlugType
             // 
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("宋体", 5.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.ColumnFiberPlugType.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 5.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.ColumnFiberPlugType.DefaultCellStyle = dataGridViewCellStyle1;
             this.ColumnFiberPlugType.HeaderText = "光纤类型";
             this.ColumnFiberPlugType.Name = "ColumnFiberPlugType";
             this.ColumnFiberPlugType.ReadOnly = true;
@@ -312,18 +328,18 @@
             // 
             // cht1
             // 
-            chartArea3.Name = "ChartArea1";
-            this.cht1.ChartAreas.Add(chartArea3);
+            chartArea1.Name = "ChartArea1";
+            this.cht1.ChartAreas.Add(chartArea1);
             this.cht1.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend3.Name = "Legend1";
-            this.cht1.Legends.Add(legend3);
+            legend1.Name = "Legend1";
+            this.cht1.Legends.Add(legend1);
             this.cht1.Location = new System.Drawing.Point(7, 7);
             this.cht1.Margin = new System.Windows.Forms.Padding(7);
             this.cht1.Name = "cht1";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.cht1.Series.Add(series3);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.cht1.Series.Add(series1);
             this.cht1.Size = new System.Drawing.Size(591, 404);
             this.cht1.TabIndex = 0;
             this.cht1.Text = "chart1";
@@ -345,14 +361,14 @@
             // toolStripContainer1.ContentPanel
             // 
             this.toolStripContainer1.ContentPanel.Margin = new System.Windows.Forms.Padding(7);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(838, 444);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(1390, 606);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer1.LeftToolStripPanelVisible = false;
             this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer1.Margin = new System.Windows.Forms.Padding(7);
             this.toolStripContainer1.Name = "toolStripContainer1";
             this.toolStripContainer1.RightToolStripPanelVisible = false;
-            this.toolStripContainer1.Size = new System.Drawing.Size(838, 444);
+            this.toolStripContainer1.Size = new System.Drawing.Size(1390, 606);
             this.toolStripContainer1.TabIndex = 1;
             this.toolStripContainer1.Text = "toolStripContainer1";
             this.toolStripContainer1.TopToolStripPanelVisible = false;
@@ -361,13 +377,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(838, 444);
+            this.ClientSize = new System.Drawing.Size(1390, 606);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStripContainer1);
             this.Font = new System.Drawing.Font("宋体", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(7);
             this.Name = "Form1";
             this.Text = "支队光纤数据管理系统";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -408,7 +425,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDetachmentLocationA;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDetachmentLocationB;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnFiberPlugType;
-        private System.Windows.Forms.Button button1;
     }
 }
 

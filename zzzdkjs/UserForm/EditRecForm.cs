@@ -41,27 +41,27 @@ namespace zzzdkjs.UserForm
         {
             textBoxCrossName.Text = fiberrec.RoadCross;
             textBoxFiberTail.Text = fiberrec.FiberPigtail;
-            textBoxLocof11floor.Text = fiberrec.DetachmentLocationA;
-            textBoxLocof12floor.Text = fiberrec.DetachmentLocationB;
-            switch (fiberrec.TeleOperator)
+            string str = fiberrec.DetachmentLocationA;
+            string[] strs = new string[5];
+            if (str.Contains("－") || str.Contains("-"))
             {
-                case "电信":
-                    comboBoxOperator.SelectedIndex = 0;
-                    break;
-                case "联通":
-                    comboBoxOperator.SelectedIndex = 1;
-                    break;
-                case "移动":
-                    comboBoxOperator.SelectedIndex = 2;
-                    break;
-                case "中信":
-                    comboBoxOperator.SelectedIndex = 3;
-                    break;
+                // 将远端地址拆分为两个路口
+                strs = str.Split('－');
+                comboBoxJiGui.SelectedItem = strs[0];
+                comboBoxKuangJia.SelectedItem = strs[1];
+                comboBoxPanHao.SelectedItem = strs[2];
+                comboBoxXuHao.SelectedItem = strs[3];
             }
 
-            if (string.Compare(fiberrec.IntranetUsed,"有")==0)
+            textBoxLocof12floor.Text = fiberrec.DetachmentLocationB;
+            comboBoxFiberPlugType.SelectedItem = fiberrec.FiberPlugType;
+            textBoxLocof12floor.Text = fiberrec.DetachmentLocationB;
+            textBoxCrossName.Text = fiberrec.RoadCross;
+            comboBoxOperator.SelectedItem = fiberrec.TeleOperator;
+
+            if (string.Compare(fiberrec.IntranetUsed, "有") == 0)
             {
-                
+                checkBoxzdnw.Checked = true;
             }
             if (string.Compare(fiberrec.EPoliceUsed, "有") == 0)
             {
@@ -81,9 +81,8 @@ namespace zzzdkjs.UserForm
             }
             if (string.Compare(fiberrec.MonitorUsed, "有") == 0)
             {
-
+                checkBoxdsjk.Checked = true;
             }
-
 
             //遍历Form上的所有控件  
             foreach (System.Windows.Forms.Control control in this.Controls)
@@ -101,13 +100,34 @@ namespace zzzdkjs.UserForm
         private FiberRecord GetEditedRec()
         {
             FiberRecord rec = new FiberRecord();
-            rec.FiberPigtail = textBoxFiberTail.Text;
-            rec.TeleOperator = comboBoxOperator.Items[comboBoxOperator.SelectedIndex].ToString();
+            rec.EditFlag = 0x11;
+            try
+            {
+                rec.FiberPigtail = textBoxFiberTail.Text;
+                rec.TeleOperator = comboBoxOperator.SelectedItem.ToString();
+                rec.DetachmentLocationA = string.Concat(comboBoxJiGui.SelectedItem.ToString(), "-", comboBoxKuangJia.SelectedItem.ToString(), "-",
+                    comboBoxPanHao.SelectedItem.ToString(), "-", comboBoxXuHao.SelectedItem.ToString());
+                rec.FiberPlugType = comboBoxFiberPlugType.SelectedItem.ToString();
+                rec.DetachmentLocationB = textBoxLocof12floor.Text;
+                rec.RoadCross = textBoxCrossName.Text;
+
+                rec.BayonetUsed = checkBoxkk.Checked ? "有" : "无";
+                rec.VideoUsed = checkBoxspzw.Checked ? "有" : "无";
+                rec.EPoliceUsed = checkBoxdj.Checked ? "有" : "无";
+                rec.MonitorUsed = checkBoxdsjk.Checked ? "有" : "无";
+                rec.IntranetUsed = checkBoxzdnw.Checked ? "有" : "无";
+                rec.SignalUsed = checkBoxxhj.Checked ? "有" : "无";
+                rec.TrafficGuidanceUsed = checkBoxjtyd.Checked ? "有" : "无";
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
 
             return rec;
-
         }
-
 
         /// <summary>
         /// 启动编辑
@@ -116,23 +136,47 @@ namespace zzzdkjs.UserForm
         /// <param name="e"></param>
         private void button3_Click(object sender, EventArgs e)
         {
-            if(button3.Text =="停止编辑")
+            if (button3.Text == "停止编辑")
             {
                 button3.Text = "启动编辑";
-                //遍历Form上的所有控件  
-                foreach (System.Windows.Forms.Control control in this.Controls)
-                {
-                    control.Enabled = false;
-                }
+                EnableOrDisableCtrl(this, false);
                 button3.Enabled = true;
             }
             else
             {
                 button3.Text = "停止编辑";
-                //遍历Form上的所有控件  
-                foreach (System.Windows.Forms.Control control in this.Controls)
+                EnableOrDisableCtrl(this, true);
+            }
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ctrl"></param>
+        private void EnableOrDisableCtrl(Control ctrl, bool flag)
+        {
+            if (flag)
+            {
+                foreach (System.Windows.Forms.Control control in ctrl.Controls)
                 {
                     control.Enabled = true;
+                    if (ctrl.Controls.Count > 0)
+                    {
+                        EnableOrDisableCtrl(control, true);
+                    }
+                }
+            }
+
+            else
+            {
+                foreach (System.Windows.Forms.Control control in ctrl.Controls)
+                {
+                    control.Enabled = false;
+                    if (ctrl.Controls.Count > 0)
+                    {
+                        EnableOrDisableCtrl(control, false);
+                    }
                 }
             }
 
