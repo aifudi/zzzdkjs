@@ -59,7 +59,9 @@ namespace FiberRecordNS
         /// <summary>
         /// 光纤部署的路口位置描述
         /// </summary>
-        public string RoadCross;
+        //public string RoadCross;
+        public RoadCrossInfo roadcrossinfo;
+
         /// <summary>
         /// 光纤在支队11楼机柜上的部署位置
         /// 例子：GL1柜一框A盘01# 
@@ -71,17 +73,7 @@ namespace FiberRecordNS
         /// 光纤在支队12楼机柜上的部署位置
         /// </summary>
         public string DetachmentLocationB;
-
-        /// <summary>
-        /// 光纤在远程路口的的部署情况(路口A)，其维护由光纤运营商负责
-        /// </summary>
-        public string RemoteLocationA;
-
-        /// <summary>
-        /// 光纤在远程路口的的部署情况(路口B)，其维护由光纤运营商负责
-        /// </summary>
-        public string RemoteLocationB;
-
+        
         /// <summary>
         /// 光纤介入类型，主要包括：SC、FC、LC、ST
         /// </summary>
@@ -102,10 +94,32 @@ namespace FiberRecordNS
         public FiberRecord()
         {
             EditFlag = 0x00;
+            roadcrossinfo = new RoadCrossInfo();
         }
 
     }
 
+    [Serializable]
+    /// <summary>
+    /// 路口信息类
+    /// </summary>
+    public class RoadCrossInfo
+    {
+        /// <summary>
+        /// 光纤部署的路口位置描述
+        /// </summary>
+        public string RoadCrossname;
+
+        /// <summary>
+        /// 光纤外场部署经度
+        /// </summary>
+        public double log;
+        
+        /// <summary>
+        /// 光纤外场部署纬度
+        /// </summary>
+        public double lat;
+    }
 
 
     [Serializable]

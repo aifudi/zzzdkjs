@@ -26,7 +26,6 @@ namespace zzzdkjs.UserForm
         private void button1_Click(object sender, System.EventArgs e)
         {
             FiberRecord rec = GetEditedRec();
-            
             AddFiberRec(rec);
         }
 
@@ -37,8 +36,23 @@ namespace zzzdkjs.UserForm
         private FiberRecord GetEditedRec()
         {
             FiberRecord rec = new FiberRecord();
+
             rec.FiberPigtail = textBoxFiberTail.Text;
-            rec.TeleOperator = comboBoxOperator.Items[comboBoxOperator.SelectedIndex].ToString();
+            rec.TeleOperator = comboBoxOperator.SelectedItem.ToString();
+            rec.DetachmentLocationA = string.Concat(comboBoxJiGui.SelectedItem.ToString(), "-", comboBoxKuangJia.SelectedItem.ToString(), "-",
+                comboBoxPanHao.SelectedItem.ToString(), "-", comboBoxXuHao.SelectedItem.ToString());
+            rec.FiberPlugType = comboBoxFiberPlugType.SelectedItem.ToString();
+            rec.DetachmentLocationB = textBoxLocof12floor.Text;
+            rec.roadcrossinfo.RoadCrossname = textBoxCrossName.Text;
+
+            rec.BayonetUsed = checkBoxkk.Checked ? "有" : "无";
+            rec.VideoUsed = checkBoxspzw.Checked ? "有" : "无";
+            rec.EPoliceUsed = checkBoxdj.Checked ? "有" : "无";
+            rec.MonitorUsed = checkBoxdsjk.Checked ? "有" : "无";
+            rec.IntranetUsed = checkBoxzdnw.Checked ? "有" : "无";
+            rec.SignalUsed = checkBoxxhj.Checked ? "有" : "无";
+            rec.TrafficGuidanceUsed = checkBoxjtyd.Checked ? "有" : "无";
+
             rec.EditFlag = 0x10;
 
             return rec;

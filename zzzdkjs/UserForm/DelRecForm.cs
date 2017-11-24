@@ -26,6 +26,7 @@ namespace zzzdkjs.UserForm
         /// <param name="e"></param>
         private void button1_Click(object sender, System.EventArgs e)
         {
+            fiberrec.EditFlag = 0x01;
             DelFiberRec(fiberrec);
         }
 
@@ -39,26 +40,12 @@ namespace zzzdkjs.UserForm
         /// </summary>
         private void CtrlInit()
         {
-            textBoxCrossName.Text = fiberrec.RoadCross;
+            textBoxCrossName.Text = fiberrec.roadcrossinfo.RoadCrossname;
             textBoxFiberTail.Text = fiberrec.FiberPigtail;
             //textBoxLocof11floor.Text = fiberrec.DetachmentLocationA;
             textBoxLocof12floor.Text = fiberrec.DetachmentLocationB;
-            switch (fiberrec.TeleOperator)
-            {
-                case "电信":
-                    comboBoxOperator.SelectedIndex = 0;
-                    break;
-                case "联通":
-                    comboBoxOperator.SelectedIndex = 1;
-                    break;
-                case "移动":
-                    comboBoxOperator.SelectedIndex = 2;
-                    break;
-                case "中信":
-                    comboBoxOperator.SelectedIndex = 3;
-                    break;
-            }
-
+            comboBoxOperator.SelectedItem = fiberrec.TeleOperator;
+            
             if (string.Compare(fiberrec.IntranetUsed, "有") == 0)
             {
 

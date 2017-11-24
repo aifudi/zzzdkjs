@@ -53,6 +53,9 @@
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.checkBoxzdnw = new System.Windows.Forms.CheckBox();
+            this.checkBoxdsjk = new System.Windows.Forms.CheckBox();
+            this.checkBoxjtyd = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -68,7 +71,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(245, 239);
+            this.button2.Location = new System.Drawing.Point(266, 224);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 46;
@@ -80,7 +83,7 @@
             // 
             this.checkBoxxhj.AutoSize = true;
             this.checkBoxxhj.Enabled = false;
-            this.checkBoxxhj.Location = new System.Drawing.Point(10, 86);
+            this.checkBoxxhj.Location = new System.Drawing.Point(102, 64);
             this.checkBoxxhj.Name = "checkBoxxhj";
             this.checkBoxxhj.Size = new System.Drawing.Size(60, 16);
             this.checkBoxxhj.TabIndex = 7;
@@ -134,7 +137,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(245, 191);
+            this.button1.Location = new System.Drawing.Point(266, 176);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 45;
@@ -144,6 +147,9 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.checkBoxjtyd);
+            this.groupBox1.Controls.Add(this.checkBoxzdnw);
+            this.groupBox1.Controls.Add(this.checkBoxdsjk);
             this.groupBox1.Controls.Add(this.checkBoxxhj);
             this.groupBox1.Controls.Add(this.checkBoxdj);
             this.groupBox1.Controls.Add(this.checkBoxspzw);
@@ -151,7 +157,7 @@
             this.groupBox1.Enabled = false;
             this.groupBox1.Location = new System.Drawing.Point(19, 156);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(168, 111);
+            this.groupBox1.Size = new System.Drawing.Size(210, 111);
             this.groupBox1.TabIndex = 44;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "光纤用途";
@@ -339,11 +345,44 @@
             this.comboBox2.Size = new System.Drawing.Size(51, 20);
             this.comboBox2.TabIndex = 49;
             // 
+            // checkBoxzdnw
+            // 
+            this.checkBoxzdnw.AutoSize = true;
+            this.checkBoxzdnw.Enabled = false;
+            this.checkBoxzdnw.Location = new System.Drawing.Point(103, 42);
+            this.checkBoxzdnw.Name = "checkBoxzdnw";
+            this.checkBoxzdnw.Size = new System.Drawing.Size(72, 16);
+            this.checkBoxzdnw.TabIndex = 11;
+            this.checkBoxzdnw.Text = "支队内网";
+            this.checkBoxzdnw.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxdsjk
+            // 
+            this.checkBoxdsjk.AutoSize = true;
+            this.checkBoxdsjk.Enabled = false;
+            this.checkBoxdsjk.Location = new System.Drawing.Point(103, 20);
+            this.checkBoxdsjk.Name = "checkBoxdsjk";
+            this.checkBoxdsjk.Size = new System.Drawing.Size(72, 16);
+            this.checkBoxdsjk.TabIndex = 10;
+            this.checkBoxdsjk.Text = "电视监控";
+            this.checkBoxdsjk.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxjtyd
+            // 
+            this.checkBoxjtyd.AutoSize = true;
+            this.checkBoxjtyd.Enabled = false;
+            this.checkBoxjtyd.Location = new System.Drawing.Point(10, 89);
+            this.checkBoxjtyd.Name = "checkBoxjtyd";
+            this.checkBoxjtyd.Size = new System.Drawing.Size(72, 16);
+            this.checkBoxjtyd.TabIndex = 56;
+            this.checkBoxjtyd.Text = "交通诱导";
+            this.checkBoxjtyd.UseVisualStyleBackColor = true;
+            // 
             // DelRecForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(411, 275);
+            this.ClientSize = new System.Drawing.Size(420, 290);
             this.Controls.Add(this.comboBox5);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.comboBox4);
@@ -401,5 +440,8 @@
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.CheckBox checkBoxzdnw;
+        private System.Windows.Forms.CheckBox checkBoxdsjk;
+        private System.Windows.Forms.CheckBox checkBoxjtyd;
     }
 }

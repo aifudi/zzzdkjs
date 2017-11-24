@@ -20,14 +20,14 @@ namespace ExcelParseNS
 
         private string excelFilePath = string.Empty;
         public DataTable dt;
-        public List<FiberRecord> fiberrecords = new List<FiberRecord>();
-        public List<string> roadnamelist = new List<string>();
-        public List<string> crossnamelist = new List<string>();
-
+        private List<FiberRecord> fiberrecords = new List<FiberRecord>();
+        private List<string> roadnamelist = new List<string>();
+        private List<string> crossnamelist = new List<string>();
         // 不同业务使用的光纤线路统计字典
-        public Dictionary<string, int> numberoftaskusingdict = new Dictionary<string, int>();
+        private Dictionary<string, int> numberoftaskusingdict = new Dictionary<string, int>();
         // 不同运营商使用的光纤数目统计字典
-        public Dictionary<string, int> numberofoperatordict = new Dictionary<string, int>();
+        private Dictionary<string, int> numberofoperatordict = new Dictionary<string, int>();
+
 
         public ExcelParse(string _filename)
         {
@@ -41,20 +41,17 @@ namespace ExcelParseNS
             dt = new DataTable();
         }
 
-
-
         /// <summary>
         /// Excel数据记录文件的初始化
         /// </summary>
         private void DataInit()
         {
 
-            var records = GetFiberRecordsData(true);
-            numberoftaskusingdict = GetDataStatisticsByUsing(records);
-            numberofoperatordict = GetDataStatisticsByTeleOperator(records);
-            roadnamelist = GetDataStatisticsByRoadName(records);
-            crossnamelist = GetDataStatisticsByCrossName(records);
-
+            GetFiberRecordsData(true);
+            numberoftaskusingdict = GetDataStatisticsByUsing();
+            numberofoperatordict = GetDataStatisticsByTeleOperator();
+            roadnamelist = GetDataStatisticsByRoadName();
+            crossnamelist = GetDataStatisticsByRoadCrossName();
         }
         /// <summary>
         /// 返回以FiberRecord类结构保存的数据记录
@@ -88,41 +85,15 @@ namespace ExcelParseNS
                     case "卡口":
                         record.BayonetUsed = row[column].ToString();
                         break;
-                    case "远端地址":
+                    case "外场地址":
                         string str = row[column].ToString();
-                        record.RoadCross = str;
-                        if (str.Contains('－'))
-                        {
-                            // 将远端地址拆分为两个路口
-                            string[] addrs = str.Split('－');
-                            record.RemoteLocationA = addrs[0].Trim();
-                            record.RemoteLocationB = addrs[1].Trim();
-                        }
-                        else
-                        {
-                            if (str.Contains('-'))
-                            {
-                                string[] addrs = str.Split('-');
-                                record.RemoteLocationA = addrs[0].Trim();
-                                record.RemoteLocationB = addrs[1].Trim();
-                            }
-
-                            else
-                            {
-                                record.RemoteLocationA = str;
-                                record.RemoteLocationB = str;
-                            }
-
-                        }
+                        record.roadcrossinfo.RoadCrossname = str;
                         break;
-
                     case "十一楼机房位置":
                         record.DetachmentLocationA = row[column].ToString();
                         break;
-
                     case "十二楼机房位置":
                         record.DetachmentLocationB = row[column].ToString();
-
                         break;
                 }
 
@@ -135,7 +106,7 @@ namespace ExcelParseNS
         /// 目前支持的业务包括：卡口、监控系统、电子警察等
         /// </summary>
         /// <returns></returns>
-        public Dictionary<string, int> GetDataStatisticsByUsing(List<FiberRecord> records)
+        public Dictionary<string, int> GetDataStatisticsByUsing()
         {
             var result = new Dictionary<string, int>();
             string[] strs = new string[] { "卡口", "电子警察", "视频专网", "电视监视", "信号", "内网" };
@@ -146,7 +117,7 @@ namespace ExcelParseNS
                 result.Add(list[i], 0);
             }
 
-            foreach (FiberRecord rec in records)
+            foreach (FiberRecord rec in fiberrecords)
             {
                 if (string.Compare(rec.EPoliceUsed, "有") == 0)
                 {
@@ -185,10 +156,10 @@ namespace ExcelParseNS
         /// 返回不同运营商负责承建维护的光纤线路
         /// </summary>
         /// <returns></returns>
-        public Dictionary<string, int> GetDataStatisticsByTeleOperator(List<FiberRecord> records)
+        public Dictionary<string, int> GetDataStatisticsByTeleOperator()
         {
             var result = new Dictionary<string, int>();
-            foreach (FiberRecord rec in records)
+            foreach (FiberRecord rec in fiberrecords)
             {
                 string keyname = rec.TeleOperator;
                 if (result.ContainsKey(keyname))
@@ -206,22 +177,43 @@ namespace ExcelParseNS
         }
 
         /// <summary>
-        /// 返回所有光纤线路涉及到的路段名称
+        /// 返回路段名称数据集合
         /// </summary>
         /// <returns></returns>
-        public List<string> GetDataStatisticsByRoadName(List<FiberRecord> records)
+        public List<string> GetDataStatisticsByRoadName()
         {
             var result = new List<string>();
-            foreach (FiberRecord rec in records)
+            string stra = string.Empty;
+            string strb = string.Empty;
+            foreach (FiberRecord rec in fiberrecords)
             {
-                string stra = rec.RemoteLocationA;
-                string strb = rec.RemoteLocationB;
-
-                if (!result.Contains(stra))
+                string str = rec.roadcrossinfo.RoadCrossname;
+                if (str.Contains('－'))
+                {
+                    // 将外场地址拆分为两个路口
+                    string[] addrs = str.Split('－');
+                    stra = addrs[0].Trim();
+                    strb = addrs[1].Trim();
+                }
+                else
+                {
+                    if (str.Contains('-'))
+                    {
+                        string[] addrs = str.Split('-');
+                        stra = addrs[0].Trim();
+                        strb = addrs[1].Trim();
+                    }
+                    else
+                    {
+                        stra= str;
+                        strb = str;
+                    }
+                }
+                if (!result.Contains(stra)&&stra!=string.Empty)
                 {
                     result.Add(stra);
                 }
-                if (!result.Contains(strb))
+                if (!result.Contains(strb)&&strb!=string.Empty)
                 {
                     result.Add(strb);
                 }
@@ -236,19 +228,44 @@ namespace ExcelParseNS
         /// <param name="rec"></param>
         public void UpdateFiberRecords(FiberRecord rec)
         {
-            
+            switch (rec.EditFlag)
+            {
+                case 0x01:  // 删除光纤数据记录
+                    fiberrecords.Remove(rec);
+                    break;
+                case 0x10: // 新增光纤记录
+                    fiberrecords.Add(rec);
+                    break;
+                case 0x11: // 编辑光纤记录
+                    int index = -1;
+                    for (int i = 0; i < fiberrecords.Count; i++)
+                    {
+                        if (string.Compare(fiberrecords[i].FiberPigtail, rec.FiberPigtail) == 0)
+                        {
+                            index = i;
+                            break;
+                        }
+                    }
+                    if (index >= 0)
+                    {
+                        fiberrecords.RemoveAt(index);
+                        fiberrecords.Add(rec);
+                    }
+
+                    break;
+            }
         }
 
         /// <summary>
-        /// 返回所有光纤线路涉及到的路口名称
+        /// 返回所有的路口名称
         /// </summary>
         /// <returns></returns>
-        public List<string> GetDataStatisticsByCrossName(List<FiberRecord> records)
+        public List<string> GetDataStatisticsByRoadCrossName()
         {
             var result = new List<string>();
-            foreach (FiberRecord rec in records)
+            foreach (FiberRecord rec in fiberrecords)
             {
-                result.Add(rec.RoadCross);
+                result.Add(rec.roadcrossinfo.RoadCrossname);
             }
             return result;
         }
@@ -268,9 +285,9 @@ namespace ExcelParseNS
         /// <returns></returns>
         public bool EditRecord(FiberRecord newrec)
         {
-            bool result1 =DelRecord(newrec);
+            bool result1 = DelRecord(newrec);
             bool result2 = AddNewRecord(newrec);
-            return result1&&result2;
+            return result1 && result2;
         }
 
         /// <summary>
@@ -396,8 +413,8 @@ namespace ExcelParseNS
                         case "光纤尾号":
                             worksheet.Cells[rowIdx, iCol] = rec.FiberPigtail;  //尾纤编号
                             break;
-                        case "远端地址":
-                            worksheet.Cells[rowIdx, iCol] = rec.DetachmentLocationB;  //远端地址
+                        case "外场地址":
+                            worksheet.Cells[rowIdx, iCol] = rec.DetachmentLocationB;  //外场地址
                             break;
                         case "电视监视":
                             worksheet.Cells[rowIdx, iCol] = rec.MonitorUsed; //光纤承建运营商
@@ -409,7 +426,7 @@ namespace ExcelParseNS
                             worksheet.Cells[rowIdx, iCol] = rec.BayonetUsed;  //尾纤编号
                             break;
                         case "信号":
-                            worksheet.Cells[rowIdx, iCol] = rec.SignalUsed;  //远端地址
+                            worksheet.Cells[rowIdx, iCol] = rec.SignalUsed;  //外场地址
                             break;
                         case "内网":
                             worksheet.Cells[rowIdx, iCol] = rec.IntranetUsed;  //光纤承建运营商
@@ -421,7 +438,7 @@ namespace ExcelParseNS
                             worksheet.Cells[rowIdx, iCol] = rec.DetachmentLocationA;  //尾纤编号
                             break;
                         case "十二楼机房位置":
-                            worksheet.Cells[rowIdx, iCol] = rec.DetachmentLocationB;  //远端地址
+                            worksheet.Cells[rowIdx, iCol] = rec.DetachmentLocationB;  //外场地址
                             break;
                     }
 
@@ -903,11 +920,11 @@ namespace ExcelParseNS
     //                    case "卡口":
     //                        record.BayonetUsed = row[column].ToString();
     //                        break;
-    //                    case "远端地址":
+    //                    case "外场地址":
     //                        string str = row[column].ToString();
     //                        if (str.Contains('－'))
     //                        {
-    //                            // 将远端地址拆分为两个路口
+    //                            // 将外场地址拆分为两个路口
     //                            string[] addrs = str.Split('－');
     //                            record.RemoteLocationA = addrs[0].Trim();
     //                            record.RemoteLocationB = addrs[1].Trim();
@@ -1120,7 +1137,7 @@ namespace ExcelParseNS
     //                        case "光纤尾号":
     //                            fiberdataworksheet.Cells[rowIdx, iCol] = rec.FiberPigtail;  //光纤承建运营商
     //                            break;
-    //                        case "远端地址":
+    //                        case "外场地址":
     //                            fiberdataworksheet.Cells[rowIdx, iCol] = "just a test";  //光纤承建运营商
     //                            break;
     //                    }

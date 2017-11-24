@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using ExcelParseNS;
 using FiberRecordNS;
+using IDataParseNS;
 using zzzdkjs.UserForm;
 
 
@@ -25,13 +26,20 @@ namespace zzzdkjs
         // 当前datagridview中选中的行
         private int currentselectdatagridviewrowindex;
 
-        public ExcelParse excelParse;
+        // 数据记录处理器
+        public IDataParse DataParse;
+        public List<FiberRecord> records = new List<FiberRecord>();
 
         // 点击Datagridview时，选中的FiberRecord记录
         private FiberRecord selectedfiberRecord = new FiberRecord();
         public Form1()
         {
             InitializeComponent();
+            // 加载数据解析库
+            applicationstartuppath = Application.StartupPath;
+            exceldatapath = applicationstartuppath + "\\FiberData.xls";
+            DataParse = new ExcelParse(exceldatapath);
+            records = DataParse.GetFiberRecordsData(true);
         }
 
         private void chart1_Click(object sender, EventArgs e)
@@ -54,28 +62,13 @@ namespace zzzdkjs
             #region TreeView控件初始化,
             /// 找到"路口位置"节点，并进行“路口位置”子节点的初始化
             TreeNode LocationNode = FindTreeNode("路口位置");
-            for (int i = 0; i < excelParse.roadnamelist.Count; i++)
+            List<string> roadcrossnamelist = DataParse.GetDataStatisticsByRoadCrossName();
+            for (int i = 0; i < roadcrossnamelist.Count; i++)
             {
                 TreeNode node = new TreeNode();
-                node.Text = excelParse.roadnamelist[i];
+                node.Text = roadcrossnamelist[i];
                 LocationNode.Nodes.Add(node);
             }
-
-            //            /// 找到"运营商"节点，并进行“运营商”子节点的初始化
-            //            TreeNode OperatorNode = FindTreeNode("运营商");
-            //            for (int i = 0; i < 2; i++)
-            //            {
-            //                TreeNode node = new TreeNode();
-            //                OperatorNode.Nodes.Add(node);
-            //            }
-            //
-            //            /// 找到"业务使用"节点，并进行“业务使用”子节点的初始化
-            //            TreeNode UseTypeNode = FindTreeNode("业务使用");
-            //            for (int i = 0; i < 2; i++)
-            //            {
-            //                TreeNode node = new TreeNode();
-            //                UseTypeNode.Nodes.Add(node);
-            //            }
             currentselectednode = treeView1.TopNode;
             #endregion
 
@@ -110,23 +103,23 @@ namespace zzzdkjs
                 dataGridView1.Columns[i].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
 
-            for (int i = 0; i < excelParse.fiberrecords.Count; i++)
+            for (int i = 0; i < records.Count; i++)
             {
                 int index = this.dataGridView1.Rows.Add();
 
-                dataGridView1.Rows[index].Cells["ColumnFiberPigtail"].Value = excelParse.fiberrecords[i].FiberPigtail;
-                dataGridView1.Rows[index].Cells["ColumnTeleOperator"].Value = excelParse.fiberrecords[i].TeleOperator;
-                dataGridView1.Rows[index].Cells["ColumnRoadIntersection"].Value = excelParse.fiberrecords[i].RoadCross;
-                dataGridView1.Rows[index].Cells["ColumnBayonetUsed"].Value = excelParse.fiberrecords[i].BayonetUsed;
-                dataGridView1.Rows[index].Cells["ColumnVideoUsed"].Value = excelParse.fiberrecords[i].VideoUsed;
-                dataGridView1.Rows[index].Cells["ColumnSignalUsed"].Value = excelParse.fiberrecords[i].SignalUsed;
-                dataGridView1.Rows[index].Cells["ColumnTrafficGuidanceUsed"].Value = excelParse.fiberrecords[i].TrafficGuidanceUsed;
-                dataGridView1.Rows[index].Cells["ColumnEPoliceUsed"].Value = excelParse.fiberrecords[i].EPoliceUsed;
-                dataGridView1.Rows[index].Cells["ColumnMonitorUsed"].Value = excelParse.fiberrecords[i].MonitorUsed;
-                dataGridView1.Rows[index].Cells["ColumnIntranetUsed"].Value = excelParse.fiberrecords[i].IntranetUsed;
-                dataGridView1.Rows[index].Cells["ColumnDetachmentLocationA"].Value = excelParse.fiberrecords[i].DetachmentLocationA;
-                dataGridView1.Rows[index].Cells["ColumnDetachmentLocationB"].Value = excelParse.fiberrecords[i].DetachmentLocationB;
-                dataGridView1.Rows[index].Cells["ColumnFiberPlugType"].Value = excelParse.fiberrecords[i].FiberPlugType;
+                dataGridView1.Rows[index].Cells["ColumnFiberPigtail"].Value = records[i].FiberPigtail;
+                dataGridView1.Rows[index].Cells["ColumnTeleOperator"].Value = records[i].TeleOperator;
+                dataGridView1.Rows[index].Cells["ColumnRoadIntersection"].Value = records[i].roadcrossinfo.RoadCrossname;
+                dataGridView1.Rows[index].Cells["ColumnBayonetUsed"].Value = records[i].BayonetUsed;
+                dataGridView1.Rows[index].Cells["ColumnVideoUsed"].Value = records[i].VideoUsed;
+                dataGridView1.Rows[index].Cells["ColumnSignalUsed"].Value = records[i].SignalUsed;
+                dataGridView1.Rows[index].Cells["ColumnTrafficGuidanceUsed"].Value = records[i].TrafficGuidanceUsed;
+                dataGridView1.Rows[index].Cells["ColumnEPoliceUsed"].Value = records[i].EPoliceUsed;
+                dataGridView1.Rows[index].Cells["ColumnMonitorUsed"].Value = records[i].MonitorUsed;
+                dataGridView1.Rows[index].Cells["ColumnIntranetUsed"].Value = records[i].IntranetUsed;
+                dataGridView1.Rows[index].Cells["ColumnDetachmentLocationA"].Value = records[i].DetachmentLocationA;
+                dataGridView1.Rows[index].Cells["ColumnDetachmentLocationB"].Value = records[i].DetachmentLocationB;
+                dataGridView1.Rows[index].Cells["ColumnFiberPlugType"].Value = records[i].FiberPlugType;
 
             }
 
@@ -157,8 +150,8 @@ namespace zzzdkjs
 
         public void xx()
         {
-            List<FiberRecord> records = excelParse.GetFiberRecordsData(true);
-            Dictionary<string, int> result = excelParse.GetDataStatisticsByTeleOperator(records);
+            
+            Dictionary<string, int> result = DataParse.GetDataStatisticsByTeleOperator();
             string[] x = result.Keys.ToArray();
             int[] y = result.Values.ToArray();
             #region 柱状图
@@ -252,34 +245,15 @@ namespace zzzdkjs
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
-            applicationstartuppath = Application.StartupPath;
-            exceldatapath = applicationstartuppath + "\\FiberData.xls";
-            excelParse = new ExcelParse(exceldatapath);
+
             ControlInit();
+
+            // 加载WEB控件
+            webBrowser1.Navigate(@"C:\Users\fang\source\repos\zzzdkjs\BaiduMapCtrl\index.html");
+            //webBrowser1.ObjectForScripting = this;
+
         }
 
-
-        /// <summary>
-        /// 测试按钮
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void button1_Click(object sender, EventArgs e)
-        {
-            for (int i = 0; i < dataGridView1.RowCount; i++)
-            {
-                if (null == dataGridView1.Rows[i].Cells["ColumnTeleOperator"].Value)
-                {
-                    continue;
-                }
-                if (string.Compare(dataGridView1.Rows[i].Cells["ColumnTeleOperator"].Value.ToString(), "电信") == 0)
-                {
-                    dataGridView1.Rows[i].Visible = false;
-                }
-            }
-
-            dataGridView1.Invalidate();
-        }
 
         /// <summary>
         /// 点击TreeNode触发的响应事件
@@ -365,6 +339,7 @@ namespace zzzdkjs
                         ShowSelectrecbyUsingType(str2);
                         break;
                     case "CrossingLocation":
+                        MessageBox.Show("it is just a test");
                         break;
                 }
             }
@@ -497,15 +472,6 @@ namespace zzzdkjs
 
             }
 
-            for (int i = 0; i < dataGridView1.RowCount - 1; i++)
-            {
-
-                //                if (string.Compare(dataGridView1.Rows[i].Cells["ColumnTeleOperator"].Value.ToString(), UsingTypeName) == 0)
-                //                {
-                //                    dataGridView1.Rows[i].Visible = true;
-                //                }
-            }
-
             dataGridView1.Invalidate();
         }
 
@@ -516,7 +482,7 @@ namespace zzzdkjs
         {
             //string[] x = new string[] { "南山大队", "福田大队", "罗湖大队", "宝安大队", "指挥处", "大帝科技", "南山大队", "福田大队", "罗湖大队", "宝安大队", "指挥处", "大帝科技" };
             //double[] y = new double[] { 541, 574, 345, 854, 684, 257, 541, 574, 345, 854, 684, 257 };
-            Dictionary<string, int> result = excelParse.numberofoperatordict;
+            Dictionary<string, int> result = DataParse.GetDataStatisticsByTeleOperator();
             string[] x = result.Keys.ToArray();
             int[] y = result.Values.ToArray();
 
@@ -607,7 +573,7 @@ namespace zzzdkjs
         /// </summary>
         private void ShowGraphbyUsingType()
         {
-            Dictionary<string, int> result = excelParse.numberofoperatordict;
+            Dictionary<string, int> result = DataParse.GetDataStatisticsByUsing();
             string[] x = result.Keys.ToArray();
             int[] y = result.Values.ToArray();
 
@@ -748,8 +714,7 @@ namespace zzzdkjs
                 return;
             }
 
-
-            foreach (FiberRecord rec in excelParse.fiberrecords)
+            foreach (FiberRecord rec in records)
             {
                 if (string.Compare(str, rec.FiberPigtail) == 0)
                 {
@@ -776,9 +741,9 @@ namespace zzzdkjs
             {
                 // 尾纤编号发生了更改，需要判断是否与当前记录存在冲突
                 bool flag = false;
-                for (int i = 0; i < excelParse.fiberrecords.Count; i++)
+                for (int i = 0; i < records.Count; i++)
                 {
-                    if (string.Compare(rec.FiberPigtail, excelParse.fiberrecords[i].FiberPigtail) == 0)
+                    if (string.Compare(rec.FiberPigtail, records[i].FiberPigtail) == 0)
                     {
                         flag = true;
                         break;
@@ -788,7 +753,7 @@ namespace zzzdkjs
                 if (flag)
                 {
                     MessageBox.Show("当前尾纤已存在，请更改！");
-                   
+
                 }
 
                 else
@@ -797,7 +762,7 @@ namespace zzzdkjs
 
                     dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnFiberPigtail"].Value = rec.FiberPigtail;
                     dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnTeleOperator"].Value = rec.TeleOperator;
-                    dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnRoadIntersection"].Value = rec.RoadCross;
+                    dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnRoadIntersection"].Value = rec.roadcrossinfo.RoadCrossname;
                     dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnBayonetUsed"].Value = rec.BayonetUsed;
                     dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnVideoUsed"].Value = rec.VideoUsed;
                     dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnSignalUsed"].Value = rec.SignalUsed;
@@ -808,6 +773,10 @@ namespace zzzdkjs
                     dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnDetachmentLocationA"].Value = rec.DetachmentLocationA;
                     dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnDetachmentLocationB"].Value = rec.DetachmentLocationB;
                     dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnFiberPlugType"].Value = rec.FiberPlugType;
+
+
+                    // 更新光纤数据记录
+                    DataParse.UpdateFiberRecords(rec);
                 }
             }
 
@@ -816,7 +785,7 @@ namespace zzzdkjs
                 // 直接完成记录更改工作
                 dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnFiberPigtail"].Value = rec.FiberPigtail;
                 dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnTeleOperator"].Value = rec.TeleOperator;
-                dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnRoadIntersection"].Value = rec.RoadCross;
+                dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnRoadIntersection"].Value = rec.roadcrossinfo.RoadCrossname;
                 dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnBayonetUsed"].Value = rec.BayonetUsed;
                 dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnVideoUsed"].Value = rec.VideoUsed;
                 dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnSignalUsed"].Value = rec.SignalUsed;
@@ -828,6 +797,8 @@ namespace zzzdkjs
                 dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnDetachmentLocationB"].Value = rec.DetachmentLocationB;
                 dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnFiberPlugType"].Value = rec.FiberPlugType;
 
+                // 更新光纤数据记录
+                DataParse.UpdateFiberRecords(rec);
 
             }
         }
@@ -840,9 +811,9 @@ namespace zzzdkjs
 
             // 需要根据新增光纤记录的尾号判断是否与当前记录存在冲突
             bool flag = false;
-            for (int i = 0; i < excelParse.fiberrecords.Count; i++)
+            for (int i = 0; i < records.Count; i++)
             {
-                if (string.Compare(rec.FiberPigtail, excelParse.fiberrecords[i].FiberPigtail) == 0)
+                if (string.Compare(rec.FiberPigtail, records[i].FiberPigtail) == 0)
                 {
                     flag = true;
                     break;
@@ -857,14 +828,11 @@ namespace zzzdkjs
 
             else
             {
-                // 在光纤数据集合中增加新的光纤记录数据
-                excelParse.fiberrecords.Add(rec);
-
                 // 完成datagridview控件中的记录增加工作
                 int index = this.dataGridView1.Rows.Add();
                 dataGridView1.Rows[index].Cells["ColumnFiberPigtail"].Value = rec.FiberPigtail;
                 dataGridView1.Rows[index].Cells["ColumnTeleOperator"].Value = rec.TeleOperator;
-                dataGridView1.Rows[index].Cells["ColumnRoadIntersection"].Value = rec.RoadCross;
+                dataGridView1.Rows[index].Cells["ColumnRoadIntersection"].Value = rec.roadcrossinfo.RoadCrossname;
                 dataGridView1.Rows[index].Cells["ColumnBayonetUsed"].Value = rec.BayonetUsed;
                 dataGridView1.Rows[index].Cells["ColumnVideoUsed"].Value = rec.VideoUsed;
                 dataGridView1.Rows[index].Cells["ColumnSignalUsed"].Value = rec.SignalUsed;
@@ -875,6 +843,9 @@ namespace zzzdkjs
                 dataGridView1.Rows[index].Cells["ColumnDetachmentLocationA"].Value = rec.DetachmentLocationA;
                 dataGridView1.Rows[index].Cells["ColumnDetachmentLocationB"].Value = rec.DetachmentLocationB;
                 dataGridView1.Rows[index].Cells["ColumnFiberPlugType"].Value = rec.FiberPlugType;
+
+                // 更新光纤数据记录
+                DataParse.UpdateFiberRecords(rec);
             }
 
 
@@ -886,11 +857,11 @@ namespace zzzdkjs
         private void DelFiberRec(FiberRecord rec)
         {
             bool flag = false;
-            for (int i = 0; i < excelParse.fiberrecords.Count; i++)
+            for (int i = 0; i < records.Count; i++)
             {
-                if (string.Compare(rec.FiberPigtail, excelParse.fiberrecords[i].FiberPigtail) == 0)
+                if (string.Compare(rec.FiberPigtail, records[i].FiberPigtail) == 0)
                 {
-                    excelParse.fiberrecords[i].EditFlag = 0x01;
+                    records[i].EditFlag = 0x01;
                     break;
                 }
             }
@@ -899,27 +870,32 @@ namespace zzzdkjs
             dataGridView1.Rows.RemoveAt(currentselectdatagridviewrowindex);
             dataGridView1.Invalidate();
 
+            // 更新光纤数据记录
+            DataParse.UpdateFiberRecords(rec);
         }
+
+
+
 
         /// <summary>
         /// 退出程序时，将所有光纤数据文件保存至后台文件
         /// </summary>
         private void SaveRec()
         {
-            for (int i =0; i < excelParse.fiberrecords.Count; i++)
+            for (int i = 0; i < records.Count; i++)
             {
-                switch (excelParse.fiberrecords[i].EditFlag & 0xFF)
+                switch (records[i].EditFlag & 0xFF)
                 {
                     case 0x00:  // 未改变
                         break;
                     case 0x01:  // 删除
-                        excelParse.DelRecord(excelParse.fiberrecords[i]);
+                        DataParse.DelRecord(records[i]);
                         break;
                     case 0x10:  // 新增
-                        excelParse.AddNewRecord(excelParse.fiberrecords[i]);
+                        DataParse.AddNewRecord(records[i]);
                         break;
                     case 0x11:  // 编辑
-                        excelParse.EditRecord(excelParse.fiberrecords[i]);
+                        DataParse.EditRecord(records[i]);
                         break;
                 }
             }
@@ -936,5 +912,34 @@ namespace zzzdkjs
             // 保存光纤记录至后台数据文件
             SaveRec();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            //webBrowser1.Document.InvokeScript("test");
+            //这里传入x、y的值，调用JavaScript脚本  
+            //webBrowser1.Document.InvokeScript("AddPoint", new object[] { 121.504, 39.212 });
+
+            webBrowser1.Document.InvokeScript("FoucusPoint", new object[] { 117.27, 31.86 });
+        }
+
+
+
+        #region JS代码调用
+        /// <summary>
+        /// 地图聚焦到
+        /// </summary>
+        /// <param name="log"></param>
+        /// <param name="lat"></param>
+        private void FoucusPoint(double log, double lat)
+        {
+            webBrowser1.Document.InvokeScript("FoucusPoint", new object[] { log, lat});
+        }
+
+        #endregion
     }
 }

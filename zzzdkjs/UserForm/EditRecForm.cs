@@ -24,7 +24,6 @@ namespace zzzdkjs.UserForm
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
-
             FiberRecord rec = GetEditedRec();
             EditFiberRec(rec);//执行委托实例
         }
@@ -39,7 +38,7 @@ namespace zzzdkjs.UserForm
         /// </summary>
         private void CtrlInit()
         {
-            textBoxCrossName.Text = fiberrec.RoadCross;
+            textBoxCrossName.Text = fiberrec.roadcrossinfo.RoadCrossname;
             textBoxFiberTail.Text = fiberrec.FiberPigtail;
             string str = fiberrec.DetachmentLocationA;
             string[] strs = new string[5];
@@ -56,7 +55,7 @@ namespace zzzdkjs.UserForm
             textBoxLocof12floor.Text = fiberrec.DetachmentLocationB;
             comboBoxFiberPlugType.SelectedItem = fiberrec.FiberPlugType;
             textBoxLocof12floor.Text = fiberrec.DetachmentLocationB;
-            textBoxCrossName.Text = fiberrec.RoadCross;
+            textBoxCrossName.Text = fiberrec.roadcrossinfo.RoadCrossname;
             comboBoxOperator.SelectedItem = fiberrec.TeleOperator;
 
             if (string.Compare(fiberrec.IntranetUsed, "有") == 0)
@@ -109,7 +108,7 @@ namespace zzzdkjs.UserForm
                     comboBoxPanHao.SelectedItem.ToString(), "-", comboBoxXuHao.SelectedItem.ToString());
                 rec.FiberPlugType = comboBoxFiberPlugType.SelectedItem.ToString();
                 rec.DetachmentLocationB = textBoxLocof12floor.Text;
-                rec.RoadCross = textBoxCrossName.Text;
+                rec.roadcrossinfo.RoadCrossname = textBoxCrossName.Text;
 
                 rec.BayonetUsed = checkBoxkk.Checked ? "有" : "无";
                 rec.VideoUsed = checkBoxspzw.Checked ? "有" : "无";

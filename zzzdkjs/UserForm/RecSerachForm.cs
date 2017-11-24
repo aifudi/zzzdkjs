@@ -1,12 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using ExcelParseNS;
+using IDataParseNS;
 
 namespace zzzdkjs.UserForm
 {
     public partial class RecSerachForm : Form
     {
-        private ExcelParse excelParse;
+        private IDataParse DataParse;
         private Form1 Mainform;
         public RecSerachForm()
         {
@@ -17,20 +19,21 @@ namespace zzzdkjs.UserForm
         {
             InitializeComponent();
             Mainform = form1;
-            excelParse = Mainform.excelParse;
+            DataParse = Mainform.DataParse;
             // 初始化路口名和路段名
 
-            for (int i = 0; i < excelParse.roadnamelist.Count; i++)
+            List<string> roadcrossnamelist = DataParse.GetDataStatisticsByRoadCrossName();
+            for (int i = 0; i < roadcrossnamelist.Count; i++)
             {
-                comboBoxCrossName.Items.Add(excelParse.roadnamelist[i]);
+                comboBoxCrossName.Items.Add(roadcrossnamelist[i]);
             }
 
-            for (int i = 0; i < excelParse.roadnamelist.Count; i++)
+            for (int i = 0; i < roadcrossnamelist.Count; i++)
             {
-                comboBoxRoadName.Items.Add(excelParse.roadnamelist[i]);
+                comboBoxRoadName.Items.Add(roadcrossnamelist[i]);
             }
 
-            if (excelParse.roadnamelist.Count >0)
+            if (roadcrossnamelist.Count >0)
             {
                 comboBoxCrossName.SelectedIndex = 0;
             }
@@ -46,6 +49,7 @@ namespace zzzdkjs.UserForm
         private void button1_Click(object sender, EventArgs e)
         {
             string str = String.Empty;
+            List<string> roadcrossnamelist = DataParse.GetDataStatisticsByRoadCrossName();
             if (radioButtonRoadAuto.Checked)
             {
                 str = comboBoxRoadName.Items[comboBoxRoadName.SelectedIndex].ToString();
@@ -76,7 +80,7 @@ namespace zzzdkjs.UserForm
             // 查询路段
             if (radioButtonRoadAuto.Checked || radioButtonRoadHand.Checked)
             {
-                if (excelParse.roadnamelist.Contains(str))
+                if (roadcrossnamelist.Contains(str))
                 {
                     
                 }
@@ -85,7 +89,7 @@ namespace zzzdkjs.UserForm
             // 查询路口
             if (radioButtonCrossHand.Checked || radioButtonCrossAuto.Checked)
             {
-                if (excelParse.crossnamelist.Contains(str))
+                if (roadcrossnamelist.Contains(str))
                 {
                    
                 }

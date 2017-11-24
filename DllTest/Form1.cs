@@ -29,8 +29,8 @@ namespace DllTest
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
-            List<FiberRecord> records = excelParse.GetFiberRecordsData(true);
-            Dictionary<string,int> result = excelParse.GetDataStatisticsByTeleOperator(records);
+            
+            Dictionary<string,int> result = excelParse.GetDataStatisticsByTeleOperator();
         }
 
         /// <summary>
@@ -42,8 +42,8 @@ namespace DllTest
         {
             //string[] x = new string[] { "南山大队", "福田大队", "罗湖大队", "宝安大队", "指挥处", "大帝科技", "南山大队", "福田大队", "罗湖大队", "宝安大队", "指挥处", "大帝科技" };
             //double[] y = new double[] { 541, 574, 345, 854, 684, 257, 541, 574, 345, 854, 684, 257 };
-            List<FiberRecord> records = excelParse.GetFiberRecordsData(true);
-            Dictionary<string, int> result = excelParse.GetDataStatisticsByTeleOperator(records);
+            
+            Dictionary<string, int> result = excelParse.GetDataStatisticsByTeleOperator();
             string[] x = result.Keys.ToArray();
             int[] y = result.Values.ToArray();
             #region 柱状图
@@ -161,8 +161,8 @@ namespace DllTest
         {
             FiberRecord record = new FiberRecord();
             record.FiberPigtail = "FC003";
-            List<FiberRecord> records = excelParse.GetFiberRecordsData(true);
-            excelParse.GetDataStatisticsByUsing(records);
+            
+            excelParse.GetDataStatisticsByUsing();
         }
     }
 }

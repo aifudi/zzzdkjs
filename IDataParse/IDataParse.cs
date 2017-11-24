@@ -36,13 +36,13 @@ namespace IDataParseNS
         /// 目前支持的业务包括：卡口、监控系统、电子警察等
         /// </summary>
         /// <returns></returns>
-        Dictionary<string, int> GetDataStatisticsByUsing(List<FiberRecord> records);
+        Dictionary<string, int> GetDataStatisticsByUsing();
         
         /// <summary>
         /// 返回不同运营商负责承建维护的光纤线路
         /// </summary>
         /// <returns></returns>
-        Dictionary<string, int> GetDataStatisticsByTeleOperator(List<FiberRecord> records);
+        Dictionary<string, int> GetDataStatisticsByTeleOperator();
 
         /// <summary>
         /// 返回光纤记录数据集
@@ -56,6 +56,19 @@ namespace IDataParseNS
         /// </summary>
         /// <param name="rec"></param>
         void UpdateFiberRecords(FiberRecord rec);
+
+        /// <summary>
+        /// 返回所有交叉路口的名称
+        /// </summary>
+        /// <param name="records"></param>
+        /// <returns></returns>
+        List<string> GetDataStatisticsByRoadCrossName();
+
+        /// <summary>
+        /// 返回路段名称数据集合
+        /// </summary>
+        /// <returns></returns>
+        List<string> GetDataStatisticsByRoadName();
 
     }
 }
