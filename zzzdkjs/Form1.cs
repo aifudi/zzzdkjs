@@ -340,6 +340,24 @@ namespace zzzdkjs
                         break;
                     case "CrossingLocation":
                         MessageBox.Show("it is just a test");
+                        int index2 = -1;
+                        for (int i = 0; i < records.Count; i++)
+                        {
+                            if (string.Compare(records[i].roadcrossinfo.RoadCrossname,str2)==0)
+                            {
+                                index2 = i;
+                                break;
+                            }
+                        }
+
+                        if (index2<0)
+                        {
+                            break;
+                        }
+
+                        double log = records[index2].roadcrossinfo.log;
+                        double lat = records[index2].roadcrossinfo.lat;
+                        MapOpOfFoucusPoint(113,28.21);
                         break;
                 }
             }
@@ -734,7 +752,7 @@ namespace zzzdkjs
         /// <summary>
         /// 编辑光纤记录
         /// </summary>
-        private void EditFiberRec(FiberRecord rec)
+        private void EditFiberRec( FiberRecord rec)
         {
 
             if (string.Compare(selectedfiberRecord.FiberPigtail, rec.FiberPigtail) != 0)
@@ -776,7 +794,7 @@ namespace zzzdkjs
 
 
                     // 更新光纤数据记录
-                    DataParse.UpdateFiberRecords(rec);
+                    DataParse.UpdateFiberRecords(selectedfiberRecord,rec);
                 }
             }
 
@@ -798,7 +816,8 @@ namespace zzzdkjs
                 dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnFiberPlugType"].Value = rec.FiberPlugType;
 
                 // 更新光纤数据记录
-                DataParse.UpdateFiberRecords(rec);
+                DataParse.UpdateFiberRecords(selectedfiberRecord,rec);
+                UpdateCurrentFiberRecords();
 
             }
         }
@@ -813,7 +832,8 @@ namespace zzzdkjs
             bool flag = false;
             for (int i = 0; i < records.Count; i++)
             {
-                if (string.Compare(rec.FiberPigtail, records[i].FiberPigtail) == 0)
+                if (string.Compare(rec.FiberPigtail, records[i].FiberPigtail) == 0||
+                    string.Compare(rec.roadcrossinfo.RoadCrossname,records[i].roadcrossinfo.RoadCrossname)==0)
                 {
                     flag = true;
                     break;
@@ -846,6 +866,7 @@ namespace zzzdkjs
 
                 // 更新光纤数据记录
                 DataParse.UpdateFiberRecords(rec);
+                UpdateCurrentFiberRecords();
             }
 
 
@@ -871,34 +892,24 @@ namespace zzzdkjs
             dataGridView1.Invalidate();
 
             // 更新光纤数据记录
-            DataParse.UpdateFiberRecords(rec);
+            DataParse.UpdateFiberRecords(null,rec);
+            UpdateCurrentFiberRecords();
         }
 
-
-
+        /// <summary>
+        /// 更新光纤数据记录（由于新增、删除以及编辑等原因，导致光纤数据记录需要更新）
+        /// </summary>
+        private void UpdateCurrentFiberRecords()
+        {
+            records = DataParse.GetFiberRecordsData(true);
+        }
 
         /// <summary>
         /// 退出程序时，将所有光纤数据文件保存至后台文件
         /// </summary>
         private void SaveRec()
         {
-            for (int i = 0; i < records.Count; i++)
-            {
-                switch (records[i].EditFlag & 0xFF)
-                {
-                    case 0x00:  // 未改变
-                        break;
-                    case 0x01:  // 删除
-                        DataParse.DelRecord(records[i]);
-                        break;
-                    case 0x10:  // 新增
-                        DataParse.AddNewRecord(records[i]);
-                        break;
-                    case 0x11:  // 编辑
-                        DataParse.EditRecord(records[i]);
-                        break;
-                }
-            }
+
         }
 
 
@@ -910,7 +921,7 @@ namespace zzzdkjs
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             // 保存光纤记录至后台数据文件
-            SaveRec();
+            DataParse.SaveRecordToFile();
         }
 
         /// <summary>
@@ -924,7 +935,7 @@ namespace zzzdkjs
             //这里传入x、y的值，调用JavaScript脚本  
             //webBrowser1.Document.InvokeScript("AddPoint", new object[] { 121.504, 39.212 });
 
-            webBrowser1.Document.InvokeScript("FoucusPoint", new object[] { 117.27, 31.86 });
+            webBrowser1.Document.InvokeScript("MapOpOfFoucusPoint", new object[] { 117.27, 31.86 });
         }
 
 
@@ -935,9 +946,9 @@ namespace zzzdkjs
         /// </summary>
         /// <param name="log"></param>
         /// <param name="lat"></param>
-        private void FoucusPoint(double log, double lat)
+        private void MapOpOfFoucusPoint(double log, double lat)
         {
-            webBrowser1.Document.InvokeScript("FoucusPoint", new object[] { log, lat});
+            webBrowser1.Document.InvokeScript("MapOpOfFoucusPoint", new object[] { log, lat});
         }
 
         #endregion

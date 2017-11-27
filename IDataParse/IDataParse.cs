@@ -57,6 +57,13 @@ namespace IDataParseNS
         /// <param name="rec"></param>
         void UpdateFiberRecords(FiberRecord rec);
 
+
+        /// <summary>
+        /// 更新数据记录(针对编辑操作)
+        /// </summary>
+        /// <param name="rec"></param>
+        void UpdateFiberRecords(FiberRecord oldrec,FiberRecord rec);
+
         /// <summary>
         /// 返回所有交叉路口的名称
         /// </summary>
@@ -69,6 +76,11 @@ namespace IDataParseNS
         /// </summary>
         /// <returns></returns>
         List<string> GetDataStatisticsByRoadName();
+
+        /// <summary>
+        /// 保存数据记录至后台文件
+        /// </summary>
+        void SaveRecordToFile();
 
     }
 }

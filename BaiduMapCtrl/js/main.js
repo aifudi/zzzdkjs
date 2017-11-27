@@ -30,7 +30,7 @@ function localsearch(city) {
 function ZoomControl() {
     // 默认停靠位置和偏移量
     this.defaultAnchor = BMAP_ANCHOR_TOP_LEFT;
-    this.defaultOffset = new BMap.Size(10, 10);
+    this.defaultOffset = new BMap.Size(200, 0);
 }
 
 // 通过JavaScript的prototype属性继承于BMap.Control
@@ -93,7 +93,7 @@ function AddPoint(lng, lat) {
 }
 
 /// 聚焦到当前位置
-function FoucusPoint(lng,lat) {
+function MapOpOfFoucusPoint(lng, lat) {
 
     map.centerAndZoom(new BMap.Point(lng, lat), 13);
 }

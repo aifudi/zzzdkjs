@@ -14,7 +14,7 @@ namespace DelegateNS
     public  static class Delegate
     {
         // 定义编辑光纤记录回调函数
-        public  delegate void EditFiberRecHandle(FiberRecord rec);
+        public  delegate void EditFiberRecHandle(FiberRecord newrec);
 
         // 定义增加光纤记录回调函数
         public delegate void AddFiberRecHandle(FiberRecord rec);

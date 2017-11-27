@@ -22,9 +22,12 @@ namespace ExcelParseNS
         public DataTable dt;
         private List<FiberRecord> fiberrecords = new List<FiberRecord>();
         private List<string> roadnamelist = new List<string>();
+
         private List<string> crossnamelist = new List<string>();
+
         // 不同业务使用的光纤线路统计字典
         private Dictionary<string, int> numberoftaskusingdict = new Dictionary<string, int>();
+
         // 不同运营商使用的光纤数目统计字典
         private Dictionary<string, int> numberofoperatordict = new Dictionary<string, int>();
 
@@ -53,6 +56,7 @@ namespace ExcelParseNS
             roadnamelist = GetDataStatisticsByRoadName();
             crossnamelist = GetDataStatisticsByRoadCrossName();
         }
+
         /// <summary>
         /// 返回以FiberRecord类结构保存的数据记录
         /// </summary>
@@ -109,7 +113,7 @@ namespace ExcelParseNS
         public Dictionary<string, int> GetDataStatisticsByUsing()
         {
             var result = new Dictionary<string, int>();
-            string[] strs = new string[] { "卡口", "电子警察", "视频专网", "电视监视", "信号", "内网" };
+            string[] strs = new string[] {"卡口", "电子警察", "视频专网", "电视监视", "信号", "内网"};
             List<string> list = strs.ToList<string>();
 
             for (int i = 0; i < list.Count; i++)
@@ -205,15 +209,15 @@ namespace ExcelParseNS
                     }
                     else
                     {
-                        stra= str;
+                        stra = str;
                         strb = str;
                     }
                 }
-                if (!result.Contains(stra)&&stra!=string.Empty)
+                if (!result.Contains(stra) && stra != string.Empty)
                 {
                     result.Add(stra);
                 }
-                if (!result.Contains(strb)&&strb!=string.Empty)
+                if (!result.Contains(strb) && strb != string.Empty)
                 {
                     result.Add(strb);
                 }
@@ -221,40 +225,6 @@ namespace ExcelParseNS
             return result;
         }
 
-
-        /// <summary>
-        /// 更新数据记录
-        /// </summary>
-        /// <param name="rec"></param>
-        public void UpdateFiberRecords(FiberRecord rec)
-        {
-            switch (rec.EditFlag)
-            {
-                case 0x01:  // 删除光纤数据记录
-                    fiberrecords.Remove(rec);
-                    break;
-                case 0x10: // 新增光纤记录
-                    fiberrecords.Add(rec);
-                    break;
-                case 0x11: // 编辑光纤记录
-                    int index = -1;
-                    for (int i = 0; i < fiberrecords.Count; i++)
-                    {
-                        if (string.Compare(fiberrecords[i].FiberPigtail, rec.FiberPigtail) == 0)
-                        {
-                            index = i;
-                            break;
-                        }
-                    }
-                    if (index >= 0)
-                    {
-                        fiberrecords.RemoveAt(index);
-                        fiberrecords.Add(rec);
-                    }
-
-                    break;
-            }
-        }
 
         /// <summary>
         /// 返回所有的路口名称
@@ -291,7 +261,7 @@ namespace ExcelParseNS
         }
 
         /// <summary>
-        /// 删除选中的光纤记录
+        /// 从Excel文件中删除选中的光纤记录
         /// </summary>
         /// <param name="rec"></param>
         /// <returns>false:未能成功删除记录;true:成功删除记录</returns>
@@ -306,9 +276,10 @@ namespace ExcelParseNS
             object oMissiong = System.Reflection.Missing.Value;
             try
             {
-                workbook = app.Workbooks.Open(excelFilePath, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong);
+                workbook = app.Workbooks.Open(excelFilePath, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong,
+                    oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong);
                 sheets = workbook.Worksheets;
-                Excel.Worksheet worksheet = (Excel.Worksheet)sheets.get_Item(1);//读取第一张表  
+                Excel.Worksheet worksheet = (Excel.Worksheet) sheets.get_Item(1); //读取第一张表  
                 if (worksheet == null)
                     return false;
                 Excel.Range range;
@@ -319,7 +290,7 @@ namespace ExcelParseNS
                 // 首先确定“光纤尾号”是在哪一列
                 for (int iCol = 1; iCol <= iColCount; iCol++)
                 {
-                    string txt2 = ((Excel.Range)worksheet.Cells[1, iCol]).Text.ToString();
+                    string txt2 = ((Excel.Range) worksheet.Cells[1, iCol]).Text.ToString();
 
                     if (string.Compare(txt2.Trim(), "光纤尾号") == 0)
                     {
@@ -331,7 +302,7 @@ namespace ExcelParseNS
                 for (int i = 2; i <= iRowCount; i++)
                 {
                     string pigtaildel = rec.FiberPigtail;
-                    string txt = ((Excel.Range)worksheet.Cells[i, pigtailcol]).Value2.ToString();
+                    string txt = ((Excel.Range) worksheet.Cells[i, pigtailcol]).Value2.ToString();
                     if (string.Compare(txt, pigtaildel) == 0)
                     {
                         delrow = i;
@@ -346,9 +317,11 @@ namespace ExcelParseNS
                 }
                 if (delrow > 0)
                 {
-                    range = (Excel.Range)worksheet.Rows[delrow, oMissiong];
+                    range = (Excel.Range) worksheet.Rows[delrow, oMissiong];
                     range.Delete(Excel.XlDeleteShiftDirection.xlShiftUp);
-                    workbook.SaveAs(excelFilePath, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlNoChange, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Missing.Value);
+                    workbook.SaveAs(excelFilePath, Missing.Value, Missing.Value, Missing.Value, Missing.Value,
+                        Missing.Value, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlNoChange, Missing.Value,
+                        Missing.Value, Missing.Value, Missing.Value, Missing.Value);
                 }
             }
             catch
@@ -390,7 +363,7 @@ namespace ExcelParseNS
                 sheets = workbook.Worksheets;
 
                 //将数据读入到DataTable中
-                Excel.Worksheet worksheet = (Excel.Worksheet)sheets.get_Item(1);//读取第一张表  
+                Excel.Worksheet worksheet = (Excel.Worksheet) sheets.get_Item(1); //读取第一张表  
                 if (worksheet == null) return false;
 
                 int iRowCount = worksheet.UsedRange.Rows.Count;
@@ -400,52 +373,57 @@ namespace ExcelParseNS
                 int rowIdx = iRowCount + 1;
                 for (int iCol = 1; iCol <= iColCount; iCol++)
                 {
-                    string txt2 = ((Excel.Range)worksheet.Cells[1, iCol]).Text.ToString();
+                    string txt2 = ((Excel.Range) worksheet.Cells[1, iCol]).Text.ToString();
 
                     switch (txt2)
                     {
                         case "序号":
-                            worksheet.Cells[rowIdx, iCol] = rowIdx.ToString();  //光纤承建运营商
+                            worksheet.Cells[rowIdx, iCol] = rowIdx.ToString(); //光纤承建运营商
                             break;
                         case "运营商":
-                            worksheet.Cells[rowIdx, iCol] = rec.TeleOperator;  //服务提供运营商
+                            worksheet.Cells[rowIdx, iCol] = rec.TeleOperator; //服务提供运营商
                             break;
                         case "光纤尾号":
-                            worksheet.Cells[rowIdx, iCol] = rec.FiberPigtail;  //尾纤编号
+                            worksheet.Cells[rowIdx, iCol] = rec.FiberPigtail; //尾纤编号
                             break;
                         case "外场地址":
-                            worksheet.Cells[rowIdx, iCol] = rec.DetachmentLocationB;  //外场地址
+                            worksheet.Cells[rowIdx, iCol] = rec.DetachmentLocationB; //外场地址
                             break;
                         case "电视监视":
                             worksheet.Cells[rowIdx, iCol] = rec.MonitorUsed; //光纤承建运营商
                             break;
                         case "电警":
-                            worksheet.Cells[rowIdx, iCol] = rec.EPoliceUsed;  //服务提供运营商
+                            worksheet.Cells[rowIdx, iCol] = rec.EPoliceUsed; //服务提供运营商
                             break;
                         case "卡口":
-                            worksheet.Cells[rowIdx, iCol] = rec.BayonetUsed;  //尾纤编号
+                            worksheet.Cells[rowIdx, iCol] = rec.BayonetUsed; //尾纤编号
                             break;
                         case "信号":
-                            worksheet.Cells[rowIdx, iCol] = rec.SignalUsed;  //外场地址
+                            worksheet.Cells[rowIdx, iCol] = rec.SignalUsed; //外场地址
                             break;
                         case "内网":
-                            worksheet.Cells[rowIdx, iCol] = rec.IntranetUsed;  //光纤承建运营商
+                            worksheet.Cells[rowIdx, iCol] = rec.IntranetUsed; //光纤承建运营商
                             break;
                         case "视频专网":
-                            worksheet.Cells[rowIdx, iCol] = rec.VideoUsed;  //服务提供运营商
+                            worksheet.Cells[rowIdx, iCol] = rec.VideoUsed; //服务提供运营商
                             break;
                         case "十一楼机房位置":
-                            worksheet.Cells[rowIdx, iCol] = rec.DetachmentLocationA;  //尾纤编号
+                            worksheet.Cells[rowIdx, iCol] = rec.DetachmentLocationA; //尾纤编号
                             break;
                         case "十二楼机房位置":
-                            worksheet.Cells[rowIdx, iCol] = rec.DetachmentLocationB;  //外场地址
+                            worksheet.Cells[rowIdx, iCol] = rec.DetachmentLocationB; //外场地址
                             break;
                     }
 
                 }
-                workbook.SaveAs(excelFilePath, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlNoChange, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Missing.Value);
+                workbook.SaveAs(excelFilePath, Missing.Value, Missing.Value, Missing.Value, Missing.Value,
+                    Missing.Value, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlNoChange, Missing.Value,
+                    Missing.Value, Missing.Value, Missing.Value, Missing.Value);
             }
-            catch { return false; }
+            catch
+            {
+                return false;
+            }
             finally
             {
                 workbook.Close(false, oMissiong, oMissiong);
@@ -479,7 +457,7 @@ namespace ExcelParseNS
                 sheets = workbook.Worksheets;
 
                 //将数据读入到DataTable中
-                Excel.Worksheet worksheet = (Excel.Worksheet)sheets.get_Item(1); //读取第一张表  
+                Excel.Worksheet worksheet = (Excel.Worksheet) sheets.get_Item(1); //读取第一张表  
                 if (worksheet == null) return null;
 
                 int iRowCount = worksheet.UsedRange.Rows.Count;
@@ -490,7 +468,7 @@ namespace ExcelParseNS
                     var name = "column" + i;
                     if (hasTitle)
                     {
-                        var txt = ((Excel.Range)worksheet.Cells[1, i + 1]).Text.ToString();
+                        var txt = ((Excel.Range) worksheet.Cells[1, i + 1]).Text.ToString();
                         if (!string.IsNullOrWhiteSpace(txt)) name = txt;
                     }
                     while (dt.Columns.Contains(name)) name = name + "_1"; //重复行名称会报错。
@@ -504,7 +482,7 @@ namespace ExcelParseNS
                     DataRow dr = dt.NewRow();
                     for (int iCol = 1; iCol <= iColCount; iCol++)
                     {
-                        range = (Excel.Range)worksheet.Cells[iRow, iCol];
+                        range = (Excel.Range) worksheet.Cells[iRow, iCol];
                         dr[iCol - 1] = (range.Value2 == null) ? "" : range.Text.ToString();
                     }
 
@@ -729,9 +707,10 @@ namespace ExcelParseNS
                     return "分段读取Excel失败";
                 }
 
-                workbook = app.Workbooks.Open(excelFilePath, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong);
+                workbook = app.Workbooks.Open(excelFilePath, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong,
+                    oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong);
                 sheets = workbook.Worksheets;
-                Excel.Worksheet worksheet = (Excel.Worksheet)sheets.get_Item(1);//读取第一张表  
+                Excel.Worksheet worksheet = (Excel.Worksheet) sheets.get_Item(1); //读取第一张表  
                 if (worksheet == null)
                     return result;
                 Excel.Range range;
@@ -739,7 +718,7 @@ namespace ExcelParseNS
                 //先删除指定行，一般为列描述  
                 if (designationRow != -1)
                 {
-                    range = (Excel.Range)worksheet.Rows[designationRow, oMissiong];
+                    range = (Excel.Range) worksheet.Rows[designationRow, oMissiong];
                     range.Delete(Excel.XlDeleteShiftDirection.xlShiftUp);
                 }
                 Stopwatch sw = new Stopwatch();
@@ -748,7 +727,7 @@ namespace ExcelParseNS
                 int i = rowStart;
                 for (int iRow = rowStart; iRow <= rowEnd; iRow++, i++)
                 {
-                    range = (Excel.Range)worksheet.Rows[rowStart, oMissiong];
+                    range = (Excel.Range) worksheet.Rows[rowStart, oMissiong];
                     range.Delete(Excel.XlDeleteShiftDirection.xlShiftUp);
                 }
 
@@ -792,7 +771,7 @@ namespace ExcelParseNS
             try
             {
                 workbookData = appExcel.Workbooks.Add(System.Reflection.Missing.Value);
-                appExcel.DisplayAlerts = false;//不显示警告  
+                appExcel.DisplayAlerts = false; //不显示警告  
                 //xlApp.Visible = true;//excel是否可见  
                 //  
                 //for (int i = workbookData.Worksheets.Count; i > 0; i--)  
@@ -804,7 +783,9 @@ namespace ExcelParseNS
 
                 for (int k = 0; k < ds.Tables.Count; k++)
                 {
-                    worksheetData = (Excel.Worksheet)workbookData.Worksheets.Add(System.Reflection.Missing.Value, System.Reflection.Missing.Value, System.Reflection.Missing.Value, System.Reflection.Missing.Value);
+                    worksheetData = (Excel.Worksheet) workbookData.Worksheets.Add(System.Reflection.Missing.Value,
+                        System.Reflection.Missing.Value, System.Reflection.Missing.Value,
+                        System.Reflection.Missing.Value);
                     // testnum--;  
                     if (ds.Tables[k] != null)
                     {
@@ -813,11 +794,11 @@ namespace ExcelParseNS
                         for (int i = 0; i < ds.Tables[k].Columns.Count; i++)
                         {
                             worksheetData.Cells[1, i + 1] = ds.Tables[k].Columns[i].ColumnName;
-                            range = (Excel.Range)worksheetData.Cells[1, i + 1];
+                            range = (Excel.Range) worksheetData.Cells[1, i + 1];
                             //range.Interior.ColorIndex = 15;  
                             range.Font.Bold = true;
-                            range.NumberFormatLocal = "@";//文本格式  
-                            range.EntireColumn.AutoFit();//自动调整列宽  
+                            range.NumberFormatLocal = "@"; //文本格式  
+                            range.EntireColumn.AutoFit(); //自动调整列宽  
                             // range.WrapText = true; //文本自动换行    
                             range.ColumnWidth = 15;
                         }
@@ -841,7 +822,9 @@ namespace ExcelParseNS
                     workbookData.Saved = true;
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex)
+            {
+            }
             finally
             {
                 workbookData.SaveCopyAs(fileName);
@@ -850,506 +833,77 @@ namespace ExcelParseNS
                 GC.Collect();
             }
         }
+
+        /// <summary>
+        /// 更新数据记录
+        /// </summary>
+        /// <param name="rec"></param>
+        public void UpdateFiberRecords(FiberRecord rec)
+        {
+            switch (rec.EditFlag)
+            {
+                case 0x01: // 删除光纤数据记录
+                    fiberrecords.Remove(rec);
+                    break;
+                case 0x10: // 新增光纤记录
+                    fiberrecords.Add(rec);
+                    break;
+                //case 0x11: // 编辑光纤记录
+                //    int index = -1;
+                //    for (int i = 0; i < fiberrecords.Count; i++)
+                //    {
+                //        if (string.Compare(fiberrecords[i].FiberPigtail, rec.FiberPigtail) == 0)
+                //        {
+                //            index = i;
+                //            break;
+                //        }
+                //    }
+                //    if (index >= 0)
+                //    {
+                //        fiberrecords.RemoveAt(index);
+                //        fiberrecords.Add(rec);
+                //    }
+
+                //    break;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void SaveRecordToFile()
+        {
+            for (int i = 0; i < fiberrecords.Count; i++)
+            {
+                switch (fiberrecords[i].EditFlag & 0xFF)
+                {
+                    case 0x00:  // 未改变
+                        break;
+                    case 0x01:  // 删除
+                        DelRecord(fiberrecords[i]);
+                        break;
+                    case 0x10:  // 新增
+                        AddNewRecord(fiberrecords[i]);
+                        break;
+                    //case 0x11:  // 编辑
+                    //    EditRecord(fiberrecords[i]);
+                    //    break;
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="oldrec"></param>
+        /// <param name="rec"></param>
+        public void UpdateFiberRecords(FiberRecord oldrec, FiberRecord rec)
+        {
+            fiberrecords.Remove(oldrec);
+            rec.EditFlag = 0x10;
+            fiberrecords.Add(rec);
+        }
     }
 
-    //    public class ExcelParse:IDisposable
-    //    {
-    //        Excel.Application app = new Excel.Application();
-    //        Excel.Sheets sheets;
-    //        Excel.Workbook workbook = null;
-    //        private Excel.Worksheet fiberdataworksheet;
-    //        object oMissiong = Missing.Value;
-    //        private string excelFilePath;
-    //        public DataTable dt;
-    //        public List<FiberRecord> fiberrecords = new List<FiberRecord>();
-    //
-    //        public ExcelParse(string _filename)
-    //        {
-    //            try
-    //            {
-    //                excelFilePath = _filename;
-    //                if (!File.Exists(excelFilePath))
-    //                {
-    //                    Exception e =new FileNotFoundException();
-    //                    throw e;
-    //                }
-    //                workbook = app.Workbooks.Open(_filename, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong);
-    //                sheets = workbook.Worksheets;
-    //                fiberdataworksheet = (Excel.Worksheet)sheets.get_Item(1);//读取第一张表  
-    //                app.DisplayAlerts = false;
-    //                dt = new DataTable();
-    //            }
-    //            catch (Exception e)
-    //            {
-    //                Console.WriteLine(e);
-    //                throw;
-    //            }
-    //
-    //        }
-    //        public ExcelParse()
-    //        {
-    //            dt = new DataTable();
-    //        }
-    //
-    //        /// <summary>
-    //        /// 返回以FiberRecord类结构保存的数据记录
-    //        /// </summary>
-    //        /// <returns></returns>
-    //        public FiberRecord ParseDataRow(DataRow row)
-    //        {
-    //            var record = new FiberRecord();
-    //            foreach (DataColumn column in dt.Columns)
-    //            {
-    //                switch (column.ColumnName.Trim())
-    //                {
-    //                    case "运营商":
-    //                        record.TeleOperator = row[column].ToString();
-    //                        break;
-    //                    case "尾纤标识":
-    //                        record.FiberPigtail = row[column].ToString();
-    //                        break;
-    //                    case "电子警察":
-    //                        record.EPoliceUsed = row[column].ToString();
-    //                        break;
-    //                    case "交通诱导":
-    //                        record.TrafficGuidanceUsed = row[column].ToString();
-    //                        break;
-    //                    case "电视监视":
-    //                        record.MonitorUsed = row[column].ToString();
-    //                        break;
-    //                    case "卡口":
-    //                        record.BayonetUsed = row[column].ToString();
-    //                        break;
-    //                    case "外场地址":
-    //                        string str = row[column].ToString();
-    //                        if (str.Contains('－'))
-    //                        {
-    //                            // 将外场地址拆分为两个路口
-    //                            string[] addrs = str.Split('－');
-    //                            record.RemoteLocationA = addrs[0].Trim();
-    //                            record.RemoteLocationB = addrs[1].Trim();
-    //                        }
-    //                        else
-    //                        {
-    //                            record.RemoteLocationA = str;
-    //                            record.RemoteLocationB = str;
-    //                        }
-    //                        break;
-    //
-    //                    case "十一楼机房位置":
-    //
-    //                        break;
-    //
-    //                    case "十二楼机房位置":
-    //
-    //                        break;
-    //                }
-    //
-    //            }
-    //            return record;
-    //        }
-    //
-    //        /// <summary>
-    //        /// 返回不同业务使用的光纤线路
-    //        /// 目前支持的业务包括：卡口、监控系统、电子警察等
-    //        /// </summary>
-    //        /// <returns></returns>
-    //        public Dictionary<string, int> GetDataStatisticsByUsing()
-    //        {
-    //            var result = new Dictionary<string, int>();
-    //            var records = GetFiberRecordsData(true);
-    //            string[] strs = new string[] { "卡口", "电子警察", "视频专网", "电视监视", "信号", "内网" };
-    //            List<string> list = strs.ToList<string>();
-    //
-    //            for (int i = 0; i < list.Count; i++)
-    //            {
-    //                result.Add(list[i], 0);
-    //            }
-    //
-    //            foreach (FiberRecord rec in records)
-    //            {
-    //                if (string.Compare(rec.EPoliceUsed, "有") == 0)
-    //                {
-    //                    result["电子警察"]++;
-    //                }
-    //
-    //                if (string.Compare(rec.BayonetUsed, "有") == 0)
-    //                {
-    //                    result["卡口"]++;
-    //                }
-    //                if (string.Compare(rec.MonitorUsed, "有") == 0)
-    //                {
-    //                    result["电视监视"]++;
-    //                }
-    //
-    //                if (string.Compare(rec.SignalUsed, "有") == 0)
-    //                {
-    //                    result["信号"]++;
-    //                }
-    //
-    //                if (string.Compare(rec.VideoUsed, "有") == 0)
-    //                {
-    //                    result["视频专网"]++;
-    //                }
-    //
-    //                if (string.Compare(rec.IntranetUsed, "有") == 0)
-    //                {
-    //                    result["内网"]++;
-    //                }
-    //
-    //            }
-    //            return result;
-    //        }
-    //
-    //        /// <summary>
-    //        /// 返回不同运营商负责承建维护的光纤线路
-    //        /// </summary>
-    //        /// <returns></returns>
-    //        public Dictionary<string, int> GetDataStatisticsByTeleOperator()
-    //        {
-    //            var result = new Dictionary<string, int>();
-    //            var records = GetFiberRecordsData(true);
-    //            foreach (FiberRecord rec in records)
-    //            {
-    //                string keyname = rec.TeleOperator;
-    //                if (result.ContainsKey(keyname))
-    //                {
-    //
-    //                    result[keyname]++;
-    //                }
-    //
-    //                else
-    //                {
-    //                    result.Add(keyname, 1);
-    //                }
-    //            }
-    //            return result;
-    //        }
-    //
-    //        /// <summary>
-    //        /// 检查数据的有效性
-    //        /// </summary>
-    //        /// <returns></returns>
-    //        private bool CheckDataValidity()
-    //        {
-    //            return false;
-    //        }
-    //
-    //        /// <summary>
-    //        /// 编辑选中的光纤记录，采用的方法是先删除旧的记录，再添加新的光纤维护记录
-    //        /// </summary>
-    //        /// <returns></returns>
-    //        public bool EditRecord(FiberRecord oldrec, FiberRecord newrec)
-    //        {
-    //
-    //            return false;
-    //        }
-    //
-    //        /// <summary>
-    //        /// 删除选中的光纤记录
-    //        /// </summary>
-    //        /// <param name="rec"></param>
-    //        /// <returns>false:未能成功删除记录;true:成功删除记录</returns>
-    //        public bool DelRecord(FiberRecord rec)
-    //        {
-    //            bool result = true;
-    //            try
-    //            {
-    //                Excel.Range range;
-    //                int delrow = -1;
-    //                int pigtailcol = -1;
-    //                int iRowCount = fiberdataworksheet.UsedRange.Rows.Count;
-    //                int iColCount = fiberdataworksheet.UsedRange.Columns.Count;
-    //                // 首先确定“光纤尾号”是在哪一列
-    //                for (int iCol = 1; iCol <= iColCount; iCol++)
-    //                {
-    //                    string txt2 = ((Excel.Range)fiberdataworksheet.Cells[1, iCol]).Text.ToString();
-    //
-    //                    if (string.Compare(txt2.Trim(), "光纤尾号") == 0)
-    //                    {
-    //                        pigtailcol = iCol;
-    //                        break;
-    //                    }
-    //                }
-    //                // 再判断当前要删除的记录在哪一行
-    //                for (int i = 2; i <= iRowCount; i++)
-    //                {
-    //                    string pigtaildel = rec.FiberPigtail;
-    //                    string txt = ((Excel.Range)fiberdataworksheet.Cells[i, pigtailcol]).Value2.ToString();
-    //                    if (string.Compare(txt, pigtaildel) == 0)
-    //                    {
-    //                        delrow = i;
-    //                        break;
-    //                    }
-    //                }
-    //
-    //                
-    //                if (delrow == -1)
-    //                {
-    //                    // 未找到数据记录
-    //                    MessageBox.Show("删除的光纤维护记录有误，请确认！");
-    //                    result = false;
-    //                }
-    //
-    //                if (delrow > 0)
-    //                {
-    //                    range = (Excel.Range)fiberdataworksheet.Rows[delrow, oMissiong];
-    //                    range.Delete(Excel.XlDeleteShiftDirection.xlShiftUp);
-    //                    workbook.SaveAs(excelFilePath, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlNoChange, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Missing.Value);
-    //                }
-    //            }
-    //            catch(Exception e)
-    //            {
-    //                Console.WriteLine(e);
-    //                result = false;
-    //            }
-    //
-    //            return result;
-    //        }
-    //
-    //        /// <summary>
-    //        /// 向Excel文件中添加纪录
-    //        /// </summary>
-    //        /// <returns></returns>
-    //        public bool AddNewRecord(FiberRecord rec)
-    //        {
-    //            try
-    //            {
-    //                //将数据读入到DataTable中
-    //                if (fiberdataworksheet == null) return false;
-    //                int iRowCount = fiberdataworksheet.UsedRange.Rows.Count;
-    //                int iColCount = fiberdataworksheet.UsedRange.Columns.Count;
-    //
-    //                //将数据记录添加到最后一行
-    //                int rowIdx = iRowCount + 1;
-    //                for (int iCol = 1; iCol <= iColCount; iCol++)
-    //                {
-    //                    string txt2 = ((Excel.Range)fiberdataworksheet.Cells[1, iCol]).Text.ToString();
-    //
-    //                    switch (txt2)
-    //                    {
-    //                        case "序号":
-    //                            fiberdataworksheet.Cells[rowIdx, iCol] = rowIdx.ToString();  //光纤承建运营商
-    //                            break;
-    //                        case "运营商":
-    //                            fiberdataworksheet.Cells[rowIdx, iCol] = rec.TeleOperator;  //光纤承建运营商
-    //                            break;
-    //                        case "光纤尾号":
-    //                            fiberdataworksheet.Cells[rowIdx, iCol] = rec.FiberPigtail;  //光纤承建运营商
-    //                            break;
-    //                        case "外场地址":
-    //                            fiberdataworksheet.Cells[rowIdx, iCol] = "just a test";  //光纤承建运营商
-    //                            break;
-    //                    }
-    //
-    //                }
-    //
-    //                workbook.SaveAs(excelFilePath, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlNoChange, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Missing.Value);
-    //             }
-    //            catch { return false; }
-    //            return true;
-    //        }
-    //
-    //        /// <summary>
-    //        /// 采用COM组件的方式从excel文件中读取数据,并以List<FiberRecord>的格式返回
-    //        /// </summary>
-    //        /// <param name="hasTitle"></param>
-    //        /// <returns></returns>
-    //        public List<FiberRecord> GetFiberRecordsData(bool hasTitle = false)
-    //        {
-    //            try
-    //            {
-    //                //将数据读入到DataTable中
-    //                 
-    //                if (fiberdataworksheet == null) return null;
-    //                int iRowCount = fiberdataworksheet.UsedRange.Rows.Count;
-    //                int iColCount = fiberdataworksheet.UsedRange.Columns.Count;
-    //                //生成列头
-    //                for (int i = 0; i < iColCount; i++)
-    //                {
-    //                    var name = "column" + i;
-    //                    if (hasTitle)
-    //                    {
-    //                        var txt = ((Excel.Range)fiberdataworksheet.Cells[1, i + 1]).Text.ToString();
-    //                        if (!string.IsNullOrWhiteSpace(txt)) name = txt;
-    //                    }
-    //                    while (dt.Columns.Contains(name)) name = name + "_1";//重复行名称会报错。
-    //                    dt.Columns.Add(new DataColumn(name, typeof(string)));
-    //                }
-    //                //生成行数据
-    //                Excel.Range range;
-    //                int rowIdx = hasTitle ? 2 : 1;
-    //                for (int iRow = rowIdx; iRow <= iRowCount; iRow++)
-    //                {
-    //                    DataRow dr = dt.NewRow();
-    //                    for (int iCol = 1; iCol <= iColCount; iCol++)
-    //                    {
-    //                        range = (Excel.Range)fiberdataworksheet.Cells[iRow, iCol];
-    //                        dr[iCol - 1] = (range.Value2 == null) ? "" : range.Text.ToString();
-    //                    }
-    //
-    //                    dt.Rows.Add(dr);
-    //                }
-    //
-    //                //var records = new List<FiberRecord>();
-    //                foreach (DataRow row in dt.Rows)
-    //                {
-    //                    var record = ParseDataRow(row);
-    //                    fiberrecords.Add(record);
-    //                }
-    //                return fiberrecords;
-    //
-    //            }
-    //            catch { return null; }
-    //        }
-    //
-    //        /// <summary>  
-    //        /// 删除Excel行  
-    //        /// </summary>  
-    //        /// <param name="excelFilePath">Excel路径</param>  
-    //        /// <param name="rowStart">开始行</param>  
-    //        /// <param name="rowEnd">结束行</param>  
-    //        /// <param name="designationRow">指定行</param>  
-    //        /// <returns></returns>  
-    //        public string DeleteRows(string excelFilePath, int rowStart, int rowEnd, int designationRow)
-    //        {
-    //            string result = "";
-    //            try
-    //            {
-    //                if (app == null)
-    //                {
-    //                    return "分段读取Excel失败";
-    //                }
-    //
-    //                workbook = app.Workbooks.Open(excelFilePath, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong);
-    //                sheets = workbook.Worksheets;
-    //                Excel.Worksheet worksheet = (Excel.Worksheet)sheets.get_Item(1);//读取第一张表  
-    //                if (worksheet == null)
-    //                    return result;
-    //                Excel.Range range;
-    //
-    //                //先删除指定行，一般为列描述  
-    //                if (designationRow != -1)
-    //                {
-    //                    range = (Excel.Range)worksheet.Rows[designationRow, oMissiong];
-    //                    range.Delete(Excel.XlDeleteShiftDirection.xlShiftUp);
-    //                }
-    //                Stopwatch sw = new Stopwatch();
-    //                sw.Start();
-    //
-    //                int i = rowStart;
-    //                for (int iRow = rowStart; iRow <= rowEnd; iRow++, i++)
-    //                {
-    //                    range = (Excel.Range)worksheet.Rows[rowStart, oMissiong];
-    //                    range.Delete(Excel.XlDeleteShiftDirection.xlShiftUp);
-    //                }
-    //
-    //                sw.Stop();
-    //                TimeSpan ts = sw.Elapsed;
-    //                workbook.Save();
-    //
-    //                //将数据读入到DataTable中——End  
-    //                return result;
-    //            }
-    //            catch
-    //            {
-    //
-    //                return "分段读取Excel失败";
-    //            }
-    //            finally
-    //            {
-    //                workbook.Close(false, oMissiong, oMissiong);
-    //                System.Runtime.InteropServices.Marshal.ReleaseComObject(workbook);
-    //                workbook = null;
-    //                app.Workbooks.Close();
-    //                app.Quit();
-    //                System.Runtime.InteropServices.Marshal.ReleaseComObject(app);
-    //                app = null;
-    //                GC.Collect();
-    //                GC.WaitForPendingFinalizers();
-    //            }
-    //        }
-    //
-    //        /// <summary>
-    //        /// 
-    //        /// </summary>
-    //        /// <param name="ds"></param>
-    //        /// <param name="fileName"></param>
-    //        public void ToExcelSheet(DataSet ds, string fileName)
-    //        {
-    //            Excel.Application appExcel = new Excel.Application();
-    //            Excel.Workbook workbookData = null;
-    //            Excel.Worksheet worksheetData;
-    //            Excel.Range range;
-    //            try
-    //            {
-    //                workbookData = appExcel.Workbooks.Add(System.Reflection.Missing.Value);
-    //                appExcel.DisplayAlerts = false;//不显示警告  
-    //
-    //                for (int k = 0; k < ds.Tables.Count; k++)
-    //                {
-    //                    worksheetData = (Excel.Worksheet)workbookData.Worksheets.Add(System.Reflection.Missing.Value, System.Reflection.Missing.Value, System.Reflection.Missing.Value, System.Reflection.Missing.Value);
-    //                    // testnum--;  
-    //                    if (ds.Tables[k] != null)
-    //                    {
-    //                        worksheetData.Name = ds.Tables[k].TableName;
-    //                        //写入标题  
-    //                        for (int i = 0; i < ds.Tables[k].Columns.Count; i++)
-    //                        {
-    //                            worksheetData.Cells[1, i + 1] = ds.Tables[k].Columns[i].ColumnName;
-    //                            range = (Excel.Range)worksheetData.Cells[1, i + 1];
-    //                            //range.Interior.ColorIndex = 15;  
-    //                            range.Font.Bold = true;
-    //                            range.NumberFormatLocal = "@";//文本格式  
-    //                            range.EntireColumn.AutoFit();//自动调整列宽  
-    //                            // range.WrapText = true; //文本自动换行    
-    //                            range.ColumnWidth = 15;
-    //                        }
-    //                        //写入数值  
-    //                        for (int r = 0; r < ds.Tables[k].Rows.Count; r++)
-    //                        {
-    //                            for (int i = 0; i < ds.Tables[k].Columns.Count; i++)
-    //                            {
-    //                                worksheetData.Cells[r + 2, i + 1] = ds.Tables[k].Rows[r][i];
-    //                                //Range myrange = worksheetData.get_Range(worksheetData.Cells[r + 2, i + 1], worksheetData.Cells[r + 3, i + 2]);  
-    //                                //myrange.NumberFormatLocal = "@";//文本格式  
-    //                                //// myrange.EntireColumn.AutoFit();//自动调整列宽  
-    //                                ////   myrange.WrapText = true; //文本自动换行    
-    //                                //myrange.ColumnWidth = 15;  
-    //                            }
-    //                            //  rowRead++;  
-    //                            //System.Windows.Forms.Application.DoEvents();  
-    //                        }
-    //                    }
-    //                    worksheetData.Columns.EntireColumn.AutoFit();
-    //                    workbookData.Saved = true;
-    //                }
-    //            }
-    //            catch (Exception ex) { }
-    //            finally
-    //            {
-    //                workbookData.SaveCopyAs(fileName);
-    //                workbookData.Close(false, System.Reflection.Missing.Value, System.Reflection.Missing.Value);
-    //                appExcel.Quit();
-    //                GC.Collect();
-    //            }
-    //        }
-    //
-    //
-    //        /// <summary>
-    //        /// 释放解析Excel文件时使用的资源
-    //        /// </summary>
-    //        void IDisposable.Dispose()
-    //        {
-    //            workbook.Close(false, oMissiong, oMissiong);
-    //            System.Runtime.InteropServices.Marshal.ReleaseComObject(workbook);
-    //            workbook = null;
-    //            app.Workbooks.Close();
-    //            app.Quit();
-    //            System.Runtime.InteropServices.Marshal.ReleaseComObject(app);
-    //            app = null;
-    //            GC.Collect();
-    //            GC.WaitForPendingFinalizers();
-    //        }
-    //    }
 }
