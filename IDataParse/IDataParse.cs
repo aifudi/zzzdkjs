@@ -45,11 +45,20 @@ namespace IDataParseNS
         Dictionary<string, int> GetDataStatisticsByTeleOperator();
 
         /// <summary>
-        /// 返回光纤记录数据集
+        /// 初始化光纤记录数据集（从后台数据文件中读取）
         /// </summary>
         /// <param name="hasTitle"></param>
         /// <returns></returns>
-        List<FiberRecord> GetFiberRecordsData(bool hasTitle = true);
+        List<FiberRecord> InitFiberRecordsData(bool hasTitle = true);
+
+
+        /// <summary>
+        /// 返回光纤记录数据集（进行编辑、删除、添加操作后的数据记录集合）
+        /// </summary>
+        /// <param name="hasTitle"></param>
+        /// <returns></returns>
+        List<FiberRecord> GetFiberRecordsData();
+
 
         /// <summary>
         /// 更新数据记录

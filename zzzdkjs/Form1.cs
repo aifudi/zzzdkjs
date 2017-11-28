@@ -39,12 +39,7 @@ namespace zzzdkjs
             applicationstartuppath = Application.StartupPath;
             exceldatapath = applicationstartuppath + "\\FiberData.xls";
             DataParse = new ExcelParse(exceldatapath);
-            records = DataParse.GetFiberRecordsData(true);
-        }
-
-        private void chart1_Click(object sender, EventArgs e)
-        {
-
+            records = DataParse.InitFiberRecordsData(true);
         }
 
         /// <summary>
@@ -58,6 +53,14 @@ namespace zzzdkjs
             //UpdateStatus.Continue;  
             UpdateStyles();
             #endregion
+
+            #region Form主窗体全屏显示
+
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+
+            #endregion
+
 
             #region TreeView控件初始化,
             /// 找到"路口位置"节点，并进行“路口位置”子节点的初始化
@@ -122,7 +125,13 @@ namespace zzzdkjs
                 dataGridView1.Rows[index].Cells["ColumnFiberPlugType"].Value = records[i].FiberPlugType;
 
             }
+            #endregion
 
+            #region 初始化Chart控件
+
+            /// 初始默认时让Chart显示按照运营商分类的图表
+            InitGraphbyOperator();
+            InitGraphbyUsingType();
 
             #endregion
         }
@@ -148,93 +157,6 @@ namespace zzzdkjs
             return node;
         }
 
-        public void xx()
-        {
-            
-            Dictionary<string, int> result = DataParse.GetDataStatisticsByTeleOperator();
-            string[] x = result.Keys.ToArray();
-            int[] y = result.Values.ToArray();
-            #region 柱状图
-
-            //标题
-            cht1.Titles.Add("运营商光纤数据分析");
-            cht1.Titles[0].ForeColor = Color.Yellow;
-            cht1.Titles[0].Font = new Font("微软雅黑", 12f, FontStyle.Regular);
-            cht1.Titles[0].Alignment = ContentAlignment.TopCenter;
-            cht1.Titles.Add("合计：25414 宗");
-            cht1.Titles[1].ForeColor = Color.White;
-            cht1.Titles[1].Font = new Font("微软雅黑", 8f, FontStyle.Regular);
-            cht1.Titles[1].Alignment = ContentAlignment.TopRight;
-
-            //控件背景
-            cht1.BackColor = Color.Transparent;
-            //图表区背景
-            cht1.ChartAreas[0].BackColor = Color.Transparent;
-            cht1.ChartAreas[0].BorderColor = Color.Transparent;
-            //X轴标签间距
-            cht1.ChartAreas[0].AxisX.Interval = 1;
-            cht1.ChartAreas[0].AxisX.LabelStyle.IsStaggered = true;
-            cht1.ChartAreas[0].AxisX.LabelStyle.Angle = -45;
-            cht1.ChartAreas[0].AxisX.TitleFont = new Font("微软雅黑", 14f, FontStyle.Regular);
-            cht1.ChartAreas[0].AxisX.TitleForeColor = Color.White;
-
-            //X坐标轴颜色
-            cht1.ChartAreas[0].AxisX.LineColor = ColorTranslator.FromHtml("#38587a"); ;
-            cht1.ChartAreas[0].AxisX.LabelStyle.ForeColor = Color.White;
-            cht1.ChartAreas[0].AxisX.LabelStyle.Font = new Font("微软雅黑", 10f, FontStyle.Regular);
-            //X坐标轴标题
-            //cht1.ChartAreas[0].AxisX.Title = "数量(宗)";
-            //cht1.ChartAreas[0].AxisX.TitleFont = new Font("微软雅黑", 10f, FontStyle.Regular);
-            //cht1.ChartAreas[0].AxisX.TitleForeColor = Color.White;
-            //cht1.ChartAreas[0].AxisX.TextOrientation = TextOrientation.Horizontal;
-            //cht1.ChartAreas[0].AxisX.ToolTip = "数量(宗)";
-            //X轴网络线条
-            cht1.ChartAreas[0].AxisX.MajorGrid.Enabled = true;
-            cht1.ChartAreas[0].AxisX.MajorGrid.LineColor = ColorTranslator.FromHtml("#2c4c6d");
-
-            //Y坐标轴颜色
-            cht1.ChartAreas[0].AxisY.LineColor = ColorTranslator.FromHtml("#38587a");
-            cht1.ChartAreas[0].AxisY.LabelStyle.ForeColor = Color.White;
-            cht1.ChartAreas[0].AxisY.LabelStyle.Font = new Font("微软雅黑", 10f, FontStyle.Regular);
-            //Y坐标轴标题
-            cht1.ChartAreas[0].AxisY.Title = "光纤数量(条)";
-            cht1.ChartAreas[0].AxisY.TitleFont = new Font("微软雅黑", 10f, FontStyle.Regular);
-            cht1.ChartAreas[0].AxisY.TitleForeColor = Color.White;
-            cht1.ChartAreas[0].AxisY.TextOrientation = TextOrientation.Rotated270;
-            cht1.ChartAreas[0].AxisY.ToolTip = "光纤数量(条)";
-            //Y轴网格线条
-            cht1.ChartAreas[0].AxisY.MajorGrid.Enabled = true;
-            cht1.ChartAreas[0].AxisY.MajorGrid.LineColor = ColorTranslator.FromHtml("#2c4c6d");
-
-            cht1.ChartAreas[0].AxisY2.LineColor = Color.Transparent;
-            cht1.ChartAreas[0].BackGradientStyle = GradientStyle.TopBottom;
-            Legend legend = new Legend("legend");
-            legend.Title = "legendTitle";
-
-            cht1.Series[0].XValueType = ChartValueType.String;  //设置X轴上的值类型
-            cht1.Series[0].Label = "#VAL";                //设置显示X Y的值    
-            cht1.Series[0].LabelForeColor = Color.White;
-            cht1.Series[0].ToolTip = "#VALX:#VAL";     //鼠标移动到对应点显示数值
-            cht1.Series[0].ChartType = SeriesChartType.Column;    //图类型(折线)
-
-
-            cht1.Series[0].Color = Color.Lime;
-            cht1.Series[0].LegendText = legend.Name;
-            cht1.Series[0].IsValueShownAsLabel = true;
-            cht1.Series[0].LabelForeColor = Color.White;
-            cht1.Series[0].CustomProperties = "DrawingStyle = Cylinder";
-            cht1.Legends.Add(legend);
-            cht1.Legends[0].Position.Auto = false;
-
-
-            //绑定数据
-            cht1.Series[0].Points.DataBindXY(x, y);
-            cht1.Series[0].Points[0].Color = Color.White;
-            cht1.Series[0].Palette = ChartColorPalette.Bright;
-
-            #endregion
-        }
-
 
         /// <summary>
         /// 主程序窗体初始化操作，主要完成
@@ -250,7 +172,6 @@ namespace zzzdkjs
 
             // 加载WEB控件
             webBrowser1.Navigate(@"C:\Users\fang\source\repos\zzzdkjs\BaiduMapCtrl\index.html");
-            //webBrowser1.ObjectForScripting = this;
 
         }
 
@@ -313,7 +234,7 @@ namespace zzzdkjs
 
                         if (tabindex == 1)
                         {
-
+                            ShowGraphbyUsingType();
                         }
 
                         break;
@@ -333,11 +254,28 @@ namespace zzzdkjs
                     // 显示指定运营商的光纤记录
                     case "Operator":
 
-                        ShowSelectrecbyOperator(str2);
+                        if (tabindex == 0)
+                        {
+                            ShowSelectrecbyOperator(str2);
+                        }
+                        if (tabindex == 1)
+                        {
+                            /// 显示不同运营商的光纤数据分布
+                            ShowGraphbyOperator();
+                        }
                         break;
                     case "UsingType":
-                        ShowSelectrecbyUsingType(str2);
+                        if (tabindex == 0)
+                        {
+                            ShowSelectrecbyUsingType(str2);
+                        }
+
+                        if (tabindex == 1)
+                        {
+                            ShowGraphbyUsingType();
+                        }
                         break;
+
                     case "CrossingLocation":
                         MessageBox.Show("it is just a test");
                         int index2 = -1;
@@ -498,8 +436,25 @@ namespace zzzdkjs
         /// </summary>
         private void ShowGraphbyOperator()
         {
-            //string[] x = new string[] { "南山大队", "福田大队", "罗湖大队", "宝安大队", "指挥处", "大帝科技", "南山大队", "福田大队", "罗湖大队", "宝安大队", "指挥处", "大帝科技" };
-            //double[] y = new double[] { 541, 574, 345, 854, 684, 257, 541, 574, 345, 854, 684, 257 };
+            cht1.Visible = true;
+            cht2.Visible = false;
+        }
+
+        /// <summary>
+        /// 显示不同业务使用的占比图表
+        /// </summary>
+        private void ShowGraphbyUsingType()
+        {
+            cht1.Visible = false;
+            cht2.Visible = true;
+
+        }
+
+        /// <summary>
+        /// 初始化按运营山的光纤统计图表
+        /// </summary>
+        private void InitGraphbyOperator()
+        {
             Dictionary<string, int> result = DataParse.GetDataStatisticsByTeleOperator();
             string[] x = result.Keys.ToArray();
             int[] y = result.Values.ToArray();
@@ -510,7 +465,7 @@ namespace zzzdkjs
             //标题
             cht1.Titles.Add("运营商光纤数据分析");
             cht1.Titles[0].ForeColor = Color.Red;
-            cht1.Titles[0].Font = new Font("微软雅黑", 20f, FontStyle.Regular);
+            cht1.Titles[0].Font = new Font("微软雅黑", 30f, FontStyle.Regular);
             cht1.Titles[0].Alignment = ContentAlignment.TopCenter;
             cht1.Titles.Add("合计：25414 宗");
             cht1.Titles[1].ForeColor = Color.White;
@@ -587,10 +542,11 @@ namespace zzzdkjs
         }
 
         /// <summary>
-        /// 显示不同业务使用的占比图表
+        /// 初始化按使用用途的光纤统计图表
         /// </summary>
-        private void ShowGraphbyUsingType()
+        private void InitGraphbyUsingType()
         {
+
             Dictionary<string, int> result = DataParse.GetDataStatisticsByUsing();
             string[] x = result.Keys.ToArray();
             int[] y = result.Values.ToArray();
@@ -598,75 +554,88 @@ namespace zzzdkjs
             #region 柱状图
 
             //标题
-            cht1.Titles.Add("光纤使用用途数据分析");
-            cht1.Titles[0].ForeColor = Color.Red;
-            cht1.Titles[0].Font = new Font("微软雅黑", 20f, FontStyle.Regular);
-            cht1.Titles[0].Alignment = ContentAlignment.TopCenter;
-            //            cht1.Titles.Add("合计：25414 宗");
-            //            cht1.Titles[1].ForeColor = Color.White;
-            //            cht1.Titles[1].Font = new Font("微软雅黑", 8f, FontStyle.Regular);
-            //            cht1.Titles[1].Alignment = ContentAlignment.TopRight;
+            cht2.Titles.Add("光纤使用用途数据分析");
+            cht2.Titles[0].ForeColor = Color.Red;
+            cht2.Titles[0].Font = new Font("微软雅黑", 30f, FontStyle.Regular);
+            cht2.Titles[0].Alignment = ContentAlignment.TopCenter;
+
 
             //控件背景
-            cht1.BackColor = Color.Transparent;
+            cht2.BackColor = Color.Transparent;
             //图表区背景
-            cht1.ChartAreas[0].BackColor = Color.Transparent;
-            cht1.ChartAreas[0].BorderColor = Color.Transparent;
+            cht2.ChartAreas[0].BackColor = Color.Transparent;
+            cht2.ChartAreas[0].BorderColor = Color.Transparent;
+
+            //X坐标轴标题
+            cht2.ChartAreas[0].AxisX.Title = "光纤使用用途";
+            cht2.ChartAreas[0].AxisX.TitleFont = new Font("微软雅黑", 30f, FontStyle.Regular);
+            cht2.ChartAreas[0].AxisX.TitleForeColor = Color.Black;
+            cht2.ChartAreas[0].AxisX.TextOrientation = TextOrientation.Horizontal;
+
+            cht2.ChartAreas[0].AxisX.ToolTip = "光纤数量(条)";
+
+
             //X轴标签间距
-            cht1.ChartAreas[0].AxisX.Interval = 1;
-            cht1.ChartAreas[0].AxisX.LabelStyle.IsStaggered = true;
-            cht1.ChartAreas[0].AxisX.LabelStyle.Angle = -45;
-            cht1.ChartAreas[0].AxisX.TitleFont = new Font("微软雅黑", 14f, FontStyle.Regular);
-            cht1.ChartAreas[0].AxisX.TitleForeColor = Color.Red;
+
+            cht2.ChartAreas[0].AxisX.Interval = 1;
+            cht2.ChartAreas[0].AxisX.LabelStyle.IsStaggered = true;
+            cht2.ChartAreas[0].AxisX.LabelStyle.Angle = -45;
+            cht2.ChartAreas[0].AxisX.TitleFont = new Font("微软雅黑", 14f, FontStyle.Regular);
+            cht2.ChartAreas[0].AxisX.TitleForeColor = Color.Red;
 
             //X坐标轴颜色
-            cht1.ChartAreas[0].AxisX.LineColor = ColorTranslator.FromHtml("#38587a"); ;
-            cht1.ChartAreas[0].AxisX.LabelStyle.ForeColor = Color.White;
-            cht1.ChartAreas[0].AxisX.LabelStyle.Font = new Font("微软雅黑", 10f, FontStyle.Regular);
+            cht2.ChartAreas[0].AxisX.LineColor = ColorTranslator.FromHtml("#38587a"); ;
+            cht2.ChartAreas[0].AxisX.LabelStyle.ForeColor = Color.White;
+            cht2.ChartAreas[0].AxisX.LabelStyle.Font = new Font("微软雅黑", 30f, FontStyle.Regular);
 
             //X轴网络线条
-            cht1.ChartAreas[0].AxisX.MajorGrid.Enabled = true;
-            cht1.ChartAreas[0].AxisX.MajorGrid.LineColor = ColorTranslator.FromHtml("#2c4c6d");
+            cht2.ChartAreas[0].AxisX.MajorGrid.Enabled = true;
+            cht2.ChartAreas[0].AxisX.MajorGrid.LineColor = ColorTranslator.FromHtml("#2c4c6d");
 
             //Y坐标轴颜色
-            cht1.ChartAreas[0].AxisY.LineColor = ColorTranslator.FromHtml("#38587a");
-            cht1.ChartAreas[0].AxisY.LabelStyle.ForeColor = Color.White;
-            cht1.ChartAreas[0].AxisY.LabelStyle.Font = new Font("微软雅黑", 10f, FontStyle.Regular);
-            //Y坐标轴标题
-            cht1.ChartAreas[0].AxisY.Title = "光纤数量(条)";
-            cht1.ChartAreas[0].AxisY.TitleFont = new Font("微软雅黑", 20f, FontStyle.Regular);
-            cht1.ChartAreas[0].AxisY.TitleForeColor = Color.Black;
-            cht1.ChartAreas[0].AxisY.TextOrientation = TextOrientation.Rotated270;
-            cht1.ChartAreas[0].AxisY.ToolTip = "光纤数量(条)";
-            //Y轴网格线条
-            cht1.ChartAreas[0].AxisY.MajorGrid.Enabled = true;
-            cht1.ChartAreas[0].AxisY.MajorGrid.LineColor = ColorTranslator.FromHtml("#2c4c6d");
+            cht2.ChartAreas[0].AxisY.LineColor = ColorTranslator.FromHtml("#38587a");
+            cht2.ChartAreas[0].AxisY.LabelStyle.ForeColor = Color.White;
+            cht2.ChartAreas[0].AxisY.LabelStyle.Font = new Font("微软雅黑", 10f, FontStyle.Regular);
 
-            cht1.ChartAreas[0].AxisY2.LineColor = Color.Transparent;
-            cht1.ChartAreas[0].BackGradientStyle = GradientStyle.TopBottom;
+
+            //Y坐标轴标题
+            cht2.ChartAreas[0].AxisY.Title = "光纤数量(条)";
+            cht2.ChartAreas[0].AxisY.TitleFont = new Font("微软雅黑", 30f, FontStyle.Regular);
+            cht2.ChartAreas[0].AxisY.TitleForeColor = Color.Black;
+            cht2.ChartAreas[0].AxisY.TextOrientation = TextOrientation.Auto;
+            cht2.ChartAreas[0].AxisY.ToolTip = "光纤数量(条)";
+
+            //Y轴网格线条
+            cht2.ChartAreas[0].AxisY.MajorGrid.Enabled = true;
+            cht2.ChartAreas[0].AxisY.MajorGrid.LineColor = ColorTranslator.FromHtml("#2c4c6d");
+
+            cht2.ChartAreas[0].AxisY2.LineColor = Color.Transparent;
+            cht2.ChartAreas[0].BackGradientStyle = GradientStyle.TopBottom;
+
             Legend legend = new Legend("legend");
             legend.Title = "legendTitle";
 
-            cht1.Series[0].XValueType = ChartValueType.String;  //设置X轴上的值类型
-            cht1.Series[0].Label = "#VAL";                //设置显示X Y的值    
-            cht1.Series[0].LabelForeColor = Color.White;
-            cht1.Series[0].ToolTip = "#VALX:#VAL";     //鼠标移动到对应点显示数值
-            cht1.Series[0].ChartType = SeriesChartType.Column;    //图类型(折线)
+            cht2.Series[0].XValueType = ChartValueType.String;  //设置X轴上的值类型
+            cht2.Series[0].Label = "#VAL";                //设置显示X Y的值    
+            cht2.Series[0].LabelForeColor = Color.White;
+            cht2.Series[0].ToolTip = "#VALX:#VAL";     //鼠标移动到对应点显示数值
+            cht2.Series[0].ChartType = SeriesChartType.Column;    //图类型(折线)
 
-            cht1.Series[0].Color = Color.Lime;
-            cht1.Series[0].LegendText = legend.Name;
-            cht1.Series[0].IsValueShownAsLabel = true;
-            cht1.Series[0].LabelForeColor = Color.White;
-            cht1.Series[0].CustomProperties = "DrawingStyle = Cylinder";
-            cht1.Legends.Add(legend);
-            cht1.Legends[0].Position.Auto = false;
+            cht2.Series[0].Color = Color.Lime;
+            cht2.Series[0].LegendText = legend.Name;
+            cht2.Series[0].IsValueShownAsLabel = true;
+            cht2.Series[0].LabelForeColor = Color.Black;
+            cht2.Series[0].CustomProperties = "DrawingStyle = Cylinder";
+            cht2.Legends.Add(legend);
+            cht2.Legends[0].Position.Auto = false;
 
             //绑定数据
-            cht1.Series[0].Points.DataBindXY(x, y);
-            cht1.Series[0].Points[0].Color = Color.White;
-            cht1.Series[0].Palette = ChartColorPalette.Bright;
+            cht2.Series[0].Points.DataBindXY(x, y);
+            cht2.Series[0].Points[0].Color = Color.White;
+            cht2.Series[0].Palette = ChartColorPalette.Bright;
 
             #endregion
+
         }
 
         /// <summary>
@@ -725,6 +694,12 @@ namespace zzzdkjs
         /// <param name="e"></param>
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex ==-1)
+            {
+                // 当前鼠标点击的是列表头，不做任何处理，直接退出
+
+                return;
+            }
             string str = dataGridView1.Rows[e.RowIndex].Cells["ColumnFiberPigtail"].Value.ToString();
             currentselectdatagridviewrowindex = e.RowIndex;
             if (str == null)
@@ -892,7 +867,7 @@ namespace zzzdkjs
             dataGridView1.Invalidate();
 
             // 更新光纤数据记录
-            DataParse.UpdateFiberRecords(null,rec);
+            DataParse.UpdateFiberRecords(rec);
             UpdateCurrentFiberRecords();
         }
 
@@ -901,15 +876,7 @@ namespace zzzdkjs
         /// </summary>
         private void UpdateCurrentFiberRecords()
         {
-            records = DataParse.GetFiberRecordsData(true);
-        }
-
-        /// <summary>
-        /// 退出程序时，将所有光纤数据文件保存至后台文件
-        /// </summary>
-        private void SaveRec()
-        {
-
+            records = DataParse.GetFiberRecordsData();
         }
 
 

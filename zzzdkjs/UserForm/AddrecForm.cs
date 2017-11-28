@@ -43,6 +43,8 @@ namespace zzzdkjs.UserForm
 
         /// <summary>
         /// 得到新增的光纤记录值
+        /// flag = true 当前的数据输入无误，可以进行光纤数据记录的增添
+        /// flag = false 当前的数据格式有误，给出错误信息，无法进行正常的数据记录增添
         /// </summary>
         /// <returns></returns>
         private FiberRecord GetEditedRec(ref bool flag)

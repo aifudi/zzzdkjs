@@ -1,6 +1,7 @@
 ﻿using DelegateNS;
 using FiberRecordNS;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace zzzdkjs.UserForm
 {
@@ -42,34 +43,33 @@ namespace zzzdkjs.UserForm
         {
             textBoxCrossName.Text = fiberrec.roadcrossinfo.RoadCrossname;
             textBoxFiberTail.Text = fiberrec.FiberPigtail;
+
             //textBoxLocof11floor.Text = fiberrec.DetachmentLocationA;
+            string[] strs = new string[4];
+            if (fiberrec.DetachmentLocationA.Contains("-"))
+            {
+                strs = fiberrec.DetachmentLocationA.Split('-');
+            }
+            if (fiberrec.DetachmentLocationA.Contains("-"))
+            {
+                strs = fiberrec.DetachmentLocationA.Split('-');
+            }
+
+            comboBoxJiGui.SelectedItem = strs[0];
+            comboBoxKuangJia.SelectedItem = strs[1];
+            comboBoxPanHao.SelectedItem = strs[2];
+            comboBoxXuHao.SelectedItem = strs[3];
+
             textBoxLocof12floor.Text = fiberrec.DetachmentLocationB;
             comboBoxOperator.SelectedItem = fiberrec.TeleOperator;
             
-            if (string.Compare(fiberrec.IntranetUsed, "有") == 0)
-            {
-
-            }
-            if (string.Compare(fiberrec.EPoliceUsed, "有") == 0)
-            {
-                checkBoxdj.Checked = true;
-            }
-            if (string.Compare(fiberrec.SignalUsed, "有") == 0)
-            {
-                checkBoxxhj.Checked = true;
-            }
-            if (string.Compare(fiberrec.BayonetUsed, "有") == 0)
-            {
-                checkBoxkk.Checked = true;
-            }
-            if (string.Compare(fiberrec.VideoUsed, "有") == 0)
-            {
-                checkBoxspzw.Checked = true;
-            }
-            if (string.Compare(fiberrec.MonitorUsed, "有") == 0)
-            {
-
-            }
+            checkBoxzdnw.Checked = string.Compare(fiberrec.IntranetUsed, "有") == 0;
+            checkBoxdj.Checked = string.Compare(fiberrec.EPoliceUsed, "有") == 0;
+            checkBoxxhj.Checked = string.Compare(fiberrec.SignalUsed, "有") == 0;
+            checkBoxkk.Checked = string.Compare(fiberrec.BayonetUsed, "有") == 0;
+            checkBoxspzw.Checked = string.Compare(fiberrec.VideoUsed, "有") == 0;
+            checkBoxdsjk.Checked = string.Compare(fiberrec.MonitorUsed, "有") == 0;
+            checkBoxjtyd.Checked = string.Compare(fiberrec.TrafficGuidanceUsed, "有") == 0;
         }
     }
 }

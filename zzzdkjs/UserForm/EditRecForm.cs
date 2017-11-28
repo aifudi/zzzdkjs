@@ -42,10 +42,20 @@ namespace zzzdkjs.UserForm
             textBoxFiberTail.Text = fiberrec.FiberPigtail;
             string str = fiberrec.DetachmentLocationA;
             string[] strs = new string[5];
-            if (str.Contains("－") || str.Contains("-"))
+            if (str.Contains("－"))
             {
                 // 将远端地址拆分为两个路口
                 strs = str.Split('－');
+                comboBoxJiGui.SelectedItem = strs[0];
+                comboBoxKuangJia.SelectedItem = strs[1];
+                comboBoxPanHao.SelectedItem = strs[2];
+                comboBoxXuHao.SelectedItem = strs[3];
+            }
+
+            if (str.Contains("-"))
+            {
+                // 将远端地址拆分为两个路口
+                strs = str.Split('-');
                 comboBoxJiGui.SelectedItem = strs[0];
                 comboBoxKuangJia.SelectedItem = strs[1];
                 comboBoxPanHao.SelectedItem = strs[2];

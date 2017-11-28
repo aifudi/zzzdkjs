@@ -37,6 +37,9 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkBoxjtyd = new System.Windows.Forms.CheckBox();
+            this.checkBoxzdnw = new System.Windows.Forms.CheckBox();
+            this.checkBoxdsjk = new System.Windows.Forms.CheckBox();
             this.comboBoxOperator = new System.Windows.Forms.ComboBox();
             this.textBoxLocof12floor = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -46,16 +49,13 @@
             this.textBoxFiberTail = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
+            this.comboBoxXuHao = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.comboBoxPanHao = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.comboBoxKuangJia = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.checkBoxzdnw = new System.Windows.Forms.CheckBox();
-            this.checkBoxdsjk = new System.Windows.Forms.CheckBox();
-            this.checkBoxjtyd = new System.Windows.Forms.CheckBox();
+            this.comboBoxJiGui = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -162,6 +162,39 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "光纤用途";
             // 
+            // checkBoxjtyd
+            // 
+            this.checkBoxjtyd.AutoSize = true;
+            this.checkBoxjtyd.Enabled = false;
+            this.checkBoxjtyd.Location = new System.Drawing.Point(10, 89);
+            this.checkBoxjtyd.Name = "checkBoxjtyd";
+            this.checkBoxjtyd.Size = new System.Drawing.Size(72, 16);
+            this.checkBoxjtyd.TabIndex = 56;
+            this.checkBoxjtyd.Text = "交通诱导";
+            this.checkBoxjtyd.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxzdnw
+            // 
+            this.checkBoxzdnw.AutoSize = true;
+            this.checkBoxzdnw.Enabled = false;
+            this.checkBoxzdnw.Location = new System.Drawing.Point(103, 42);
+            this.checkBoxzdnw.Name = "checkBoxzdnw";
+            this.checkBoxzdnw.Size = new System.Drawing.Size(72, 16);
+            this.checkBoxzdnw.TabIndex = 11;
+            this.checkBoxzdnw.Text = "支队内网";
+            this.checkBoxzdnw.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxdsjk
+            // 
+            this.checkBoxdsjk.AutoSize = true;
+            this.checkBoxdsjk.Enabled = false;
+            this.checkBoxdsjk.Location = new System.Drawing.Point(103, 20);
+            this.checkBoxdsjk.Name = "checkBoxdsjk";
+            this.checkBoxdsjk.Size = new System.Drawing.Size(72, 16);
+            this.checkBoxdsjk.TabIndex = 10;
+            this.checkBoxdsjk.Text = "电视监控";
+            this.checkBoxdsjk.UseVisualStyleBackColor = true;
+            // 
             // comboBoxOperator
             // 
             this.comboBoxOperator.Enabled = false;
@@ -250,11 +283,11 @@
             this.label1.TabIndex = 34;
             this.label1.Text = "运营商";
             // 
-            // comboBox5
+            // comboBoxXuHao
             // 
-            this.comboBox5.Enabled = false;
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Items.AddRange(new object[] {
+            this.comboBoxXuHao.Enabled = false;
+            this.comboBoxXuHao.FormattingEnabled = true;
+            this.comboBoxXuHao.Items.AddRange(new object[] {
             "1#",
             "2#",
             "3#",
@@ -267,10 +300,10 @@
             "10#",
             "11#",
             "12#"});
-            this.comboBox5.Location = new System.Drawing.Point(344, 89);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(55, 20);
-            this.comboBox5.TabIndex = 55;
+            this.comboBoxXuHao.Location = new System.Drawing.Point(344, 89);
+            this.comboBoxXuHao.Name = "comboBoxXuHao";
+            this.comboBoxXuHao.Size = new System.Drawing.Size(55, 20);
+            this.comboBoxXuHao.TabIndex = 55;
             // 
             // label9
             // 
@@ -281,21 +314,21 @@
             this.label9.TabIndex = 54;
             this.label9.Text = "-";
             // 
-            // comboBox4
+            // comboBoxPanHao
             // 
-            this.comboBox4.Enabled = false;
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Items.AddRange(new object[] {
+            this.comboBoxPanHao.Enabled = false;
+            this.comboBoxPanHao.FormattingEnabled = true;
+            this.comboBoxPanHao.Items.AddRange(new object[] {
             "A盘",
             "B盘",
             "C盘",
             "D盘",
             "E盘",
             "F盘"});
-            this.comboBox4.Location = new System.Drawing.Point(266, 89);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(57, 20);
-            this.comboBox4.TabIndex = 53;
+            this.comboBoxPanHao.Location = new System.Drawing.Point(266, 89);
+            this.comboBoxPanHao.Name = "comboBoxPanHao";
+            this.comboBoxPanHao.Size = new System.Drawing.Size(57, 20);
+            this.comboBoxPanHao.TabIndex = 53;
             // 
             // label8
             // 
@@ -306,20 +339,20 @@
             this.label8.TabIndex = 52;
             this.label8.Text = "-";
             // 
-            // comboBox3
+            // comboBoxKuangJia
             // 
-            this.comboBox3.Enabled = false;
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Items.AddRange(new object[] {
+            this.comboBoxKuangJia.Enabled = false;
+            this.comboBoxKuangJia.FormattingEnabled = true;
+            this.comboBoxKuangJia.Items.AddRange(new object[] {
             "一框",
             "二框",
             "三框",
             "四框",
             "五框"});
-            this.comboBox3.Location = new System.Drawing.Point(194, 89);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(51, 20);
-            this.comboBox3.TabIndex = 51;
+            this.comboBoxKuangJia.Location = new System.Drawing.Point(194, 89);
+            this.comboBoxKuangJia.Name = "comboBoxKuangJia";
+            this.comboBoxKuangJia.Size = new System.Drawing.Size(51, 20);
+            this.comboBoxKuangJia.TabIndex = 51;
             // 
             // label7
             // 
@@ -330,66 +363,33 @@
             this.label7.TabIndex = 50;
             this.label7.Text = "-";
             // 
-            // comboBox2
+            // comboBoxJiGui
             // 
-            this.comboBox2.Enabled = false;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
+            this.comboBoxJiGui.Enabled = false;
+            this.comboBoxJiGui.FormattingEnabled = true;
+            this.comboBoxJiGui.Items.AddRange(new object[] {
             "GL1",
             "GL2",
             "GL3",
             "GL4",
             "GL5"});
-            this.comboBox2.Location = new System.Drawing.Point(121, 89);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(51, 20);
-            this.comboBox2.TabIndex = 49;
-            // 
-            // checkBoxzdnw
-            // 
-            this.checkBoxzdnw.AutoSize = true;
-            this.checkBoxzdnw.Enabled = false;
-            this.checkBoxzdnw.Location = new System.Drawing.Point(103, 42);
-            this.checkBoxzdnw.Name = "checkBoxzdnw";
-            this.checkBoxzdnw.Size = new System.Drawing.Size(72, 16);
-            this.checkBoxzdnw.TabIndex = 11;
-            this.checkBoxzdnw.Text = "支队内网";
-            this.checkBoxzdnw.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxdsjk
-            // 
-            this.checkBoxdsjk.AutoSize = true;
-            this.checkBoxdsjk.Enabled = false;
-            this.checkBoxdsjk.Location = new System.Drawing.Point(103, 20);
-            this.checkBoxdsjk.Name = "checkBoxdsjk";
-            this.checkBoxdsjk.Size = new System.Drawing.Size(72, 16);
-            this.checkBoxdsjk.TabIndex = 10;
-            this.checkBoxdsjk.Text = "电视监控";
-            this.checkBoxdsjk.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxjtyd
-            // 
-            this.checkBoxjtyd.AutoSize = true;
-            this.checkBoxjtyd.Enabled = false;
-            this.checkBoxjtyd.Location = new System.Drawing.Point(10, 89);
-            this.checkBoxjtyd.Name = "checkBoxjtyd";
-            this.checkBoxjtyd.Size = new System.Drawing.Size(72, 16);
-            this.checkBoxjtyd.TabIndex = 56;
-            this.checkBoxjtyd.Text = "交通诱导";
-            this.checkBoxjtyd.UseVisualStyleBackColor = true;
+            this.comboBoxJiGui.Location = new System.Drawing.Point(121, 89);
+            this.comboBoxJiGui.Name = "comboBoxJiGui";
+            this.comboBoxJiGui.Size = new System.Drawing.Size(51, 20);
+            this.comboBoxJiGui.TabIndex = 49;
             // 
             // DelRecForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(420, 290);
-            this.Controls.Add(this.comboBox5);
+            this.Controls.Add(this.comboBoxXuHao);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.comboBox4);
+            this.Controls.Add(this.comboBoxPanHao);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.comboBox3);
+            this.Controls.Add(this.comboBoxKuangJia);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.comboBoxJiGui);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.comboBox1);
@@ -433,13 +433,13 @@
         private System.Windows.Forms.TextBox textBoxFiberTail;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox comboBox5;
+        private System.Windows.Forms.ComboBox comboBoxXuHao;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.ComboBox comboBoxPanHao;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox comboBoxKuangJia;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox comboBoxJiGui;
         private System.Windows.Forms.CheckBox checkBoxzdnw;
         private System.Windows.Forms.CheckBox checkBoxdsjk;
         private System.Windows.Forms.CheckBox checkBoxjtyd;

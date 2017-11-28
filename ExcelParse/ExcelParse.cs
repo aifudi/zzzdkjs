@@ -50,7 +50,7 @@ namespace ExcelParseNS
         private void DataInit()
         {
 
-            GetFiberRecordsData(true);
+            InitFiberRecordsData(true);
             numberoftaskusingdict = GetDataStatisticsByUsing();
             numberofoperatordict = GetDataStatisticsByTeleOperator();
             roadnamelist = GetDataStatisticsByRoadName();
@@ -77,21 +77,30 @@ namespace ExcelParseNS
                     case "光纤尾号":
                         record.FiberPigtail = row[column].ToString();
                         break;
-                    case "电子警察":
-                        record.EPoliceUsed = row[column].ToString();
-                        break;
-                    case "交通诱导":
-                        record.TrafficGuidanceUsed = row[column].ToString();
+                    case "外场地址":
+                        string str = row[column].ToString();
+                        record.roadcrossinfo.RoadCrossname = str;
                         break;
                     case "电视监视":
                         record.MonitorUsed = row[column].ToString();
                         break;
+                    case "电警":
+                        record.EPoliceUsed = row[column].ToString();
+                        break;
                     case "卡口":
                         record.BayonetUsed = row[column].ToString();
                         break;
-                    case "外场地址":
-                        string str = row[column].ToString();
-                        record.roadcrossinfo.RoadCrossname = str;
+                    case "信号":
+                        record.SignalUsed = row[column].ToString();
+                        break;
+                    case "交通诱导":
+                        record.TrafficGuidanceUsed = row[column].ToString();
+                        break;
+                    case "内网":
+                        record.IntranetUsed = row[column].ToString();
+                        break;
+                    case "视频专网":
+                        record.VideoUsed = row[column].ToString();
                         break;
                     case "十一楼机房位置":
                         record.DetachmentLocationA = row[column].ToString();
@@ -438,12 +447,14 @@ namespace ExcelParseNS
             return true;
         }
 
+
+
         /// <summary>
         /// 采用COM组件的方式从excel文件中读取数据,并以List<FiberRecord>的格式返回
         /// </summary>
         /// <param name="hasTitle"></param>
         /// <returns></returns>
-        public List<FiberRecord> GetFiberRecordsData(bool hasTitle = true)
+        public List<FiberRecord> InitFiberRecordsData(bool hasTitle = true)
         {
             Excel.Application app = new Excel.Application();
             Excel.Sheets sheets;
@@ -842,29 +853,12 @@ namespace ExcelParseNS
         {
             switch (rec.EditFlag)
             {
-                case 0x01: // 删除光纤数据记录
-                    fiberrecords.Remove(rec);
-                    break;
+                //case 0x01: // 删除光纤数据记录
+                //    fiberrecords.Remove(rec);
+                //    break;
                 case 0x10: // 新增光纤记录
                     fiberrecords.Add(rec);
                     break;
-                //case 0x11: // 编辑光纤记录
-                //    int index = -1;
-                //    for (int i = 0; i < fiberrecords.Count; i++)
-                //    {
-                //        if (string.Compare(fiberrecords[i].FiberPigtail, rec.FiberPigtail) == 0)
-                //        {
-                //            index = i;
-                //            break;
-                //        }
-                //    }
-                //    if (index >= 0)
-                //    {
-                //        fiberrecords.RemoveAt(index);
-                //        fiberrecords.Add(rec);
-                //    }
-
-                //    break;
             }
         }
 
@@ -886,8 +880,8 @@ namespace ExcelParseNS
                         AddNewRecord(fiberrecords[i]);
                         break;
                     //case 0x11:  // 编辑
-                    //    EditRecord(fiberrecords[i]);
-                    //    break;
+                    //   编辑记录分解为删除和添加两个操作
+                    //    
                 }
             }
         }
@@ -900,9 +894,39 @@ namespace ExcelParseNS
         /// <param name="rec"></param>
         public void UpdateFiberRecords(FiberRecord oldrec, FiberRecord rec)
         {
-            fiberrecords.Remove(oldrec);
+            int index = -1;
+            for (int i = 0; i < fiberrecords.Count; i++)
+            {
+                if (string.Compare(oldrec.FiberPigtail, fiberrecords[i].FiberPigtail) == 0)
+                {
+                    fiberrecords[i].EditFlag = 0x01;
+                    break;
+                }
+            }
+            
             rec.EditFlag = 0x10;
             fiberrecords.Add(rec);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public List<FiberRecord> GetFiberRecordsData()
+        {
+            List<FiberRecord> recs = new List<FiberRecord>();
+            for (int i = 0; i < fiberrecords.Count; i++)
+            {
+                if (fiberrecords[i].EditFlag ==0x01)
+                {
+                    continue;
+                }
+
+                recs.Add(fiberrecords[i]);
+            }
+
+            return recs;
         }
     }
 
