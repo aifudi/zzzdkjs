@@ -39,7 +39,7 @@ namespace zzzdkjs
             applicationstartuppath = Application.StartupPath;
             exceldatapath = applicationstartuppath + "\\FiberData.xls";
             DataParse = new ExcelParse(exceldatapath);
-            records = DataParse.InitFiberRecordsData(true);
+            records = DataParse.GetFiberRecordsData();
         }
 
         /// <summary>
@@ -281,21 +281,21 @@ namespace zzzdkjs
                         int index2 = -1;
                         for (int i = 0; i < records.Count; i++)
                         {
-                            if (string.Compare(records[i].roadcrossinfo.RoadCrossname,str2)==0)
+                            if (string.Compare(records[i].roadcrossinfo.RoadCrossname, str2) == 0)
                             {
                                 index2 = i;
                                 break;
                             }
                         }
 
-                        if (index2<0)
+                        if (index2 < 0)
                         {
                             break;
                         }
 
                         double log = records[index2].roadcrossinfo.log;
                         double lat = records[index2].roadcrossinfo.lat;
-                        MapOpOfFoucusPoint(113,28.21);
+                        MapOpOfFoucusPoint(113, 28.21);
                         break;
                 }
             }
@@ -461,76 +461,78 @@ namespace zzzdkjs
 
             #region 柱状图
 
-
             //标题
-            cht1.Titles.Add("运营商光纤数据分析");
-            cht1.Titles[0].ForeColor = Color.Red;
+            cht1.Titles.Add("光纤运营商数据分析");
+            cht1.Titles[0].ForeColor = Color.Black;
             cht1.Titles[0].Font = new Font("微软雅黑", 30f, FontStyle.Regular);
             cht1.Titles[0].Alignment = ContentAlignment.TopCenter;
-            cht1.Titles.Add("合计：25414 宗");
-            cht1.Titles[1].ForeColor = Color.White;
-            cht1.Titles[1].Font = new Font("微软雅黑", 8f, FontStyle.Regular);
-            cht1.Titles[1].Alignment = ContentAlignment.TopRight;
+
 
             //控件背景
             cht1.BackColor = Color.Transparent;
             //图表区背景
             cht1.ChartAreas[0].BackColor = Color.Transparent;
             cht1.ChartAreas[0].BorderColor = Color.Transparent;
+
+            //X坐标轴标题
+            cht1.ChartAreas[0].AxisX.Title = "运营商";
+            cht1.ChartAreas[0].AxisX.TitleFont = new Font("微软雅黑", 25f, FontStyle.Regular);
+            cht1.ChartAreas[0].AxisX.TitleForeColor = Color.Black;
+            cht1.ChartAreas[0].AxisX.TextOrientation = TextOrientation.Horizontal;
+            cht1.ChartAreas[0].AxisX.TitleAlignment = StringAlignment.Far;
+
+
             //X轴标签间距
             cht1.ChartAreas[0].AxisX.Interval = 1;
-            cht1.ChartAreas[0].AxisX.LabelStyle.IsStaggered = true;
-            cht1.ChartAreas[0].AxisX.LabelStyle.Angle = -45;
-            cht1.ChartAreas[0].AxisX.TitleFont = new Font("微软雅黑", 14f, FontStyle.Regular);
-            cht1.ChartAreas[0].AxisX.TitleForeColor = Color.Blue;
 
             //X坐标轴颜色
-            cht1.ChartAreas[0].AxisX.LineColor = ColorTranslator.FromHtml("#38587a"); ;
-            cht1.ChartAreas[0].AxisX.LabelStyle.ForeColor = Color.White;
-            cht1.ChartAreas[0].AxisX.LabelStyle.Font = new Font("微软雅黑", 10f, FontStyle.Regular);
-            //X坐标轴标题
-            cht1.ChartAreas[0].AxisX.Title = "数量(宗)";
-            cht1.ChartAreas[0].AxisX.TitleFont = new Font("微软雅黑", 10f, FontStyle.Regular);
-            cht1.ChartAreas[0].AxisX.TitleForeColor = Color.White;
-            cht1.ChartAreas[0].AxisX.TextOrientation = TextOrientation.Horizontal;
-            cht1.ChartAreas[0].AxisX.ToolTip = "数量(宗)";
+            cht1.ChartAreas[0].AxisX.LabelStyle.IsStaggered = false;
+            cht1.ChartAreas[0].AxisX.LabelStyle.Angle = 0;
+            cht1.ChartAreas[0].AxisX.LabelStyle.ForeColor = Color.Black;
+            cht1.ChartAreas[0].AxisX.LabelStyle.Font = new Font("微软雅黑", 20f, FontStyle.Regular);
+
             //X轴网络线条
+            cht1.ChartAreas[0].AxisX.LineColor = ColorTranslator.FromHtml("#38587a");
             cht1.ChartAreas[0].AxisX.MajorGrid.Enabled = true;
             cht1.ChartAreas[0].AxisX.MajorGrid.LineColor = ColorTranslator.FromHtml("#2c4c6d");
 
             //Y坐标轴颜色
             cht1.ChartAreas[0].AxisY.LineColor = ColorTranslator.FromHtml("#38587a");
-            cht1.ChartAreas[0].AxisY.LabelStyle.ForeColor = Color.White;
+            cht1.ChartAreas[0].AxisY.LabelStyle.ForeColor = Color.Black;
             cht1.ChartAreas[0].AxisY.LabelStyle.Font = new Font("微软雅黑", 10f, FontStyle.Regular);
+
+
             //Y坐标轴标题
-            cht1.ChartAreas[0].AxisY.Title = "光纤数量(条)";
-            cht1.ChartAreas[0].AxisY.TitleFont = new Font("微软雅黑", 10f, FontStyle.Regular);
-            cht1.ChartAreas[0].AxisY.TitleForeColor = Color.White;
-            cht1.ChartAreas[0].AxisY.TextOrientation = TextOrientation.Rotated270;
-            cht1.ChartAreas[0].AxisY.ToolTip = "光纤数量(条)";
+            cht1.ChartAreas[0].AxisY.Title = "光纤数量";
+            cht1.ChartAreas[0].AxisY.TitleFont = new Font("微软雅黑", 25f, FontStyle.Regular);
+            cht1.ChartAreas[0].AxisY.TitleForeColor = Color.Black;
+            cht1.ChartAreas[0].AxisY.TextOrientation = TextOrientation.Stacked;
+
+
             //Y轴网格线条
             cht1.ChartAreas[0].AxisY.MajorGrid.Enabled = true;
             cht1.ChartAreas[0].AxisY.MajorGrid.LineColor = ColorTranslator.FromHtml("#2c4c6d");
 
             cht1.ChartAreas[0].AxisY2.LineColor = Color.Transparent;
             cht1.ChartAreas[0].BackGradientStyle = GradientStyle.TopBottom;
+
             Legend legend = new Legend("legend");
             legend.Title = "legendTitle";
+            cht1.Legends.Add(legend);
+            cht1.Legends[0].Position.Auto = true;
+
 
             cht1.Series[0].XValueType = ChartValueType.String;  //设置X轴上的值类型
             cht1.Series[0].Label = "#VAL";                //设置显示X Y的值    
-            cht1.Series[0].LabelForeColor = Color.White;
+            cht1.Series[0].LabelForeColor = Color.Black;
             cht1.Series[0].ToolTip = "#VALX:#VAL";     //鼠标移动到对应点显示数值
             cht1.Series[0].ChartType = SeriesChartType.Column;    //图类型(折线)
-
-
-            cht1.Series[0].Color = Color.Lime;
-            cht1.Series[0].LegendText = legend.Name;
-            cht1.Series[0].IsValueShownAsLabel = true;
-            cht1.Series[0].LabelForeColor = Color.White;
             cht1.Series[0].CustomProperties = "DrawingStyle = Cylinder";
-            cht1.Legends.Add(legend);
-            cht1.Legends[0].Position.Auto = false;
+
+            //cht2.Series[0].Color = Color.Lime;
+            //cht2.Series[0].LegendText = legend.Name;
+            //cht2.Series[0].IsValueShownAsLabel = true;
+
 
 
             //绑定数据
@@ -555,7 +557,7 @@ namespace zzzdkjs
 
             //标题
             cht2.Titles.Add("光纤使用用途数据分析");
-            cht2.Titles[0].ForeColor = Color.Red;
+            cht2.Titles[0].ForeColor = Color.Black;
             cht2.Titles[0].Font = new Font("微软雅黑", 30f, FontStyle.Regular);
             cht2.Titles[0].Alignment = ContentAlignment.TopCenter;
 
@@ -568,72 +570,87 @@ namespace zzzdkjs
 
             //X坐标轴标题
             cht2.ChartAreas[0].AxisX.Title = "光纤使用用途";
-            cht2.ChartAreas[0].AxisX.TitleFont = new Font("微软雅黑", 30f, FontStyle.Regular);
+            cht2.ChartAreas[0].AxisX.TitleFont = new Font("微软雅黑", 25f, FontStyle.Regular);
             cht2.ChartAreas[0].AxisX.TitleForeColor = Color.Black;
             cht2.ChartAreas[0].AxisX.TextOrientation = TextOrientation.Horizontal;
-
-            cht2.ChartAreas[0].AxisX.ToolTip = "光纤数量(条)";
+            cht2.ChartAreas[0].AxisX.TitleAlignment = StringAlignment.Far;
 
 
             //X轴标签间距
-
             cht2.ChartAreas[0].AxisX.Interval = 1;
-            cht2.ChartAreas[0].AxisX.LabelStyle.IsStaggered = true;
-            cht2.ChartAreas[0].AxisX.LabelStyle.Angle = -45;
-            cht2.ChartAreas[0].AxisX.TitleFont = new Font("微软雅黑", 14f, FontStyle.Regular);
-            cht2.ChartAreas[0].AxisX.TitleForeColor = Color.Red;
 
             //X坐标轴颜色
-            cht2.ChartAreas[0].AxisX.LineColor = ColorTranslator.FromHtml("#38587a"); ;
-            cht2.ChartAreas[0].AxisX.LabelStyle.ForeColor = Color.White;
-            cht2.ChartAreas[0].AxisX.LabelStyle.Font = new Font("微软雅黑", 30f, FontStyle.Regular);
+            cht2.ChartAreas[0].AxisX.LabelStyle.IsStaggered = false;
+            cht2.ChartAreas[0].AxisX.LabelStyle.Angle = 0;
+            cht2.ChartAreas[0].AxisX.LabelStyle.ForeColor = Color.Black;
+            cht2.ChartAreas[0].AxisX.LabelStyle.Font = new Font("微软雅黑", 20f, FontStyle.Regular);
 
             //X轴网络线条
+            cht2.ChartAreas[0].AxisX.LineColor = ColorTranslator.FromHtml("#38587a");
             cht2.ChartAreas[0].AxisX.MajorGrid.Enabled = true;
             cht2.ChartAreas[0].AxisX.MajorGrid.LineColor = ColorTranslator.FromHtml("#2c4c6d");
 
             //Y坐标轴颜色
             cht2.ChartAreas[0].AxisY.LineColor = ColorTranslator.FromHtml("#38587a");
-            cht2.ChartAreas[0].AxisY.LabelStyle.ForeColor = Color.White;
+            cht2.ChartAreas[0].AxisY.LabelStyle.ForeColor = Color.Black;
             cht2.ChartAreas[0].AxisY.LabelStyle.Font = new Font("微软雅黑", 10f, FontStyle.Regular);
 
-
             //Y坐标轴标题
-            cht2.ChartAreas[0].AxisY.Title = "光纤数量(条)";
-            cht2.ChartAreas[0].AxisY.TitleFont = new Font("微软雅黑", 30f, FontStyle.Regular);
+            cht2.ChartAreas[0].AxisY.Title = "光纤数量";
+            cht2.ChartAreas[0].AxisY.TitleFont = new Font("微软雅黑", 25f, FontStyle.Regular);
             cht2.ChartAreas[0].AxisY.TitleForeColor = Color.Black;
-            cht2.ChartAreas[0].AxisY.TextOrientation = TextOrientation.Auto;
-            cht2.ChartAreas[0].AxisY.ToolTip = "光纤数量(条)";
+            cht2.ChartAreas[0].AxisY.TextOrientation = TextOrientation.Stacked;
 
             //Y轴网格线条
             cht2.ChartAreas[0].AxisY.MajorGrid.Enabled = true;
             cht2.ChartAreas[0].AxisY.MajorGrid.LineColor = ColorTranslator.FromHtml("#2c4c6d");
-
             cht2.ChartAreas[0].AxisY2.LineColor = Color.Transparent;
             cht2.ChartAreas[0].BackGradientStyle = GradientStyle.TopBottom;
 
-            Legend legend = new Legend("legend");
-            legend.Title = "legendTitle";
-
             cht2.Series[0].XValueType = ChartValueType.String;  //设置X轴上的值类型
             cht2.Series[0].Label = "#VAL";                //设置显示X Y的值    
-            cht2.Series[0].LabelForeColor = Color.White;
+            cht2.Series[0].LabelForeColor = Color.Black;
             cht2.Series[0].ToolTip = "#VALX:#VAL";     //鼠标移动到对应点显示数值
             cht2.Series[0].ChartType = SeriesChartType.Column;    //图类型(折线)
-
-            cht2.Series[0].Color = Color.Lime;
-            cht2.Series[0].LegendText = legend.Name;
-            cht2.Series[0].IsValueShownAsLabel = true;
-            cht2.Series[0].LabelForeColor = Color.Black;
             cht2.Series[0].CustomProperties = "DrawingStyle = Cylinder";
-            cht2.Legends.Add(legend);
-            cht2.Legends[0].Position.Auto = false;
+
+
+
+
+
+            //Legend legend = new Legend("legend");
+            //legend.Title = "legendTitle";
+            //cht2.Legends.Add(legend);
+            //cht2.Legends[0].Position.Auto = true;
+            //cht2.Series[0].LegendText = "fdfdsfd";
+            //cht2.Series[0].IsValueShownAsLabel = true;
+
+            Legend legend2 = new Legend("#VALX");
+            legend2.Title = "图例";
+            legend2.TitleBackColor = Color.Transparent;
+            legend2.BackColor = Color.Transparent;
+            legend2.TitleForeColor = Color.Red;
+            legend2.TitleFont = new Font("微软雅黑", 20f, FontStyle.Regular);
+            legend2.Font = new Font("微软雅黑", 18f, FontStyle.Regular);
+            legend2.ForeColor = Color.Black;
+
+            cht2.Legends.Add(legend2);
+            cht2.Legends[0].Position.Auto = true;
+            cht2.Series[0].Color = Color.Lime;
+            cht2.Series[0].LegendText = legend2.Name;
+            cht2.Series[0].IsValueShownAsLabel = true;
+            
+            //是否显示图例
+            cht2.Series[0].IsVisibleInLegend = true;
+            cht2.Series[0].ShadowOffset = 0;
+
+            //绑定颜色
+            cht2.Series[0].Palette = ChartColorPalette.BrightPastel;
 
             //绑定数据
             cht2.Series[0].Points.DataBindXY(x, y);
-            cht2.Series[0].Points[0].Color = Color.White;
+            cht2.Series[0].Points[0].Color = Color.Red;
             cht2.Series[0].Palette = ChartColorPalette.Bright;
-
             #endregion
 
         }
@@ -694,7 +711,7 @@ namespace zzzdkjs
         /// <param name="e"></param>
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex ==-1)
+            if (e.RowIndex == -1)
             {
                 // 当前鼠标点击的是列表头，不做任何处理，直接退出
 
@@ -727,7 +744,7 @@ namespace zzzdkjs
         /// <summary>
         /// 编辑光纤记录
         /// </summary>
-        private void EditFiberRec( FiberRecord rec)
+        private void EditFiberRec(FiberRecord rec)
         {
 
             if (string.Compare(selectedfiberRecord.FiberPigtail, rec.FiberPigtail) != 0)
@@ -769,7 +786,7 @@ namespace zzzdkjs
 
 
                     // 更新光纤数据记录
-                    DataParse.UpdateFiberRecords(selectedfiberRecord,rec);
+                    DataParse.UpdateFiberRecords(selectedfiberRecord, rec);
                 }
             }
 
@@ -791,7 +808,7 @@ namespace zzzdkjs
                 dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnFiberPlugType"].Value = rec.FiberPlugType;
 
                 // 更新光纤数据记录
-                DataParse.UpdateFiberRecords(selectedfiberRecord,rec);
+                DataParse.UpdateFiberRecords(selectedfiberRecord, rec);
                 UpdateCurrentFiberRecords();
 
             }
@@ -807,8 +824,8 @@ namespace zzzdkjs
             bool flag = false;
             for (int i = 0; i < records.Count; i++)
             {
-                if (string.Compare(rec.FiberPigtail, records[i].FiberPigtail) == 0||
-                    string.Compare(rec.roadcrossinfo.RoadCrossname,records[i].roadcrossinfo.RoadCrossname)==0)
+                if (string.Compare(rec.FiberPigtail, records[i].FiberPigtail) == 0 ||
+                    string.Compare(rec.roadcrossinfo.RoadCrossname, records[i].roadcrossinfo.RoadCrossname) == 0)
                 {
                     flag = true;
                     break;
@@ -915,7 +932,7 @@ namespace zzzdkjs
         /// <param name="lat"></param>
         private void MapOpOfFoucusPoint(double log, double lat)
         {
-            webBrowser1.Document.InvokeScript("MapOpOfFoucusPoint", new object[] { log, lat});
+            webBrowser1.Document.InvokeScript("MapOpOfFoucusPoint", new object[] { log, lat });
         }
 
         #endregion
