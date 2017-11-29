@@ -633,10 +633,11 @@ namespace zzzdkjs
             legend2.TitleFont = new Font("微软雅黑", 20f, FontStyle.Regular);
             legend2.Font = new Font("微软雅黑", 18f, FontStyle.Regular);
             legend2.ForeColor = Color.Black;
+            //legend2.CellColumns.Add(new LegendCellColumn("xxx0",LegendCellColumnType.Text, "#VALX"));
 
             cht2.Legends.Add(legend2);
             cht2.Legends[0].Position.Auto = true;
-            cht2.Series[0].Color = Color.Lime;
+            //cht2.Series[0].Color = Color.Lime;
             cht2.Series[0].LegendText = legend2.Name;
             cht2.Series[0].IsValueShownAsLabel = true;
             
@@ -652,6 +653,38 @@ namespace zzzdkjs
             cht2.Series[0].Points[0].Color = Color.Red;
             cht2.Series[0].Palette = ChartColorPalette.Bright;
             #endregion
+
+        }
+
+        /// <summary>
+        /// 当光纤数据记录发生更改后，重新刷新chart显示
+        /// </summary>
+        private void UpdateGraphbyOperator()
+        {
+            Dictionary<string, int> result = DataParse.GetDataStatisticsByTeleOperator();
+            string[] x = result.Keys.ToArray();
+            int[] y = result.Values.ToArray();
+
+            //绑定数据
+            cht1.Series[0].Points.DataBindXY(x, y);
+
+            cht1.Invalidate();
+
+        }
+
+        /// <summary>
+        /// 当光纤数据记录发生更改后，重新刷新chart显示
+        /// </summary>
+        private void UpdateGraphbyUsingType()
+        {
+            Dictionary<string, int> result = DataParse.GetDataStatisticsByUsing();
+            string[] x = result.Keys.ToArray();
+            int[] y = result.Values.ToArray();
+
+            //绑定数据
+            cht2.Series[0].Points.DataBindXY(x, y);
+
+            cht2.Invalidate();
 
         }
 
@@ -919,7 +952,10 @@ namespace zzzdkjs
             //这里传入x、y的值，调用JavaScript脚本  
             //webBrowser1.Document.InvokeScript("AddPoint", new object[] { 121.504, 39.212 });
 
-            webBrowser1.Document.InvokeScript("MapOpOfFoucusPoint", new object[] { 117.27, 31.86 });
+            // webBrowser1.Document.InvokeScript("MapOpOfFoucusPoint", new object[] { 117.27, 31.86 });
+
+            UpdateGraphbyUsingType();
+            UpdateGraphbyOperator();
         }
 
 

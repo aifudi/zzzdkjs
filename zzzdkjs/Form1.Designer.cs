@@ -66,12 +66,11 @@
             treeNode18,
             treeNode19});
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.button1 = new System.Windows.Forms.Button();
             this.treeView1 = new System.Windows.Forms.TreeView();
@@ -92,12 +91,12 @@
             this.ColumnDetachmentLocationB = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnFiberPlugType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.cht2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.cht1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
-            this.cht2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -106,10 +105,10 @@
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cht2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cht1)).BeginInit();
             this.tabPage4.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cht2)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -348,13 +347,30 @@
             this.tabPage2.Text = "图表分析";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // cht2
+            // 
+            chartArea1.AxisX.LabelStyle.Interval = 0D;
+            chartArea1.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea1.Name = "ChartArea1";
+            this.cht2.ChartAreas.Add(chartArea1);
+            this.cht2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cht2.Location = new System.Drawing.Point(7, 7);
+            this.cht2.Name = "cht2";
+            series1.ChartArea = "ChartArea1";
+            series1.Name = "Series1";
+            this.cht2.Series.Add(series1);
+            this.cht2.Size = new System.Drawing.Size(1144, 551);
+            this.cht2.TabIndex = 1;
+            this.cht2.Text = "chart1";
+            this.cht2.Visible = false;
+            // 
             // cht1
             // 
             chartArea2.Name = "ChartArea1";
             this.cht1.ChartAreas.Add(chartArea2);
             this.cht1.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend2.Name = "Legend1";
-            this.cht1.Legends.Add(legend2);
+            legend1.Name = "Legend1";
+            this.cht1.Legends.Add(legend1);
             this.cht1.Location = new System.Drawing.Point(7, 7);
             this.cht1.Margin = new System.Windows.Forms.Padding(7);
             this.cht1.Name = "cht1";
@@ -369,10 +385,10 @@
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.webBrowser1);
-            this.tabPage4.Location = new System.Drawing.Point(4, 37);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(1158, 565);
+            this.tabPage4.Size = new System.Drawing.Size(1158, 580);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "地图浏览";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -383,15 +399,15 @@
             this.webBrowser1.Location = new System.Drawing.Point(3, 3);
             this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(1152, 559);
+            this.webBrowser1.Size = new System.Drawing.Size(1152, 574);
             this.webBrowser1.TabIndex = 0;
             // 
             // tabPage3
             // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 37);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1158, 565);
+            this.tabPage3.Size = new System.Drawing.Size(1158, 580);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "合同情况";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -414,26 +430,6 @@
             this.toolStripContainer1.Text = "toolStripContainer1";
             this.toolStripContainer1.TopToolStripPanelVisible = false;
             // 
-            // cht2
-            // 
-            chartArea1.AxisX.LabelStyle.Interval = 0D;
-            chartArea1.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea1.Name = "ChartArea1";
-            this.cht2.ChartAreas.Add(chartArea1);
-            this.cht2.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend1.Name = "Legend1";
-            this.cht2.Legends.Add(legend1);
-            this.cht2.Location = new System.Drawing.Point(7, 7);
-            this.cht2.Name = "cht2";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.cht2.Series.Add(series1);
-            this.cht2.Size = new System.Drawing.Size(1144, 551);
-            this.cht2.TabIndex = 1;
-            this.cht2.Text = "chart1";
-            this.cht2.Visible = false;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
@@ -455,11 +451,11 @@
             this.tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.cht2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cht1)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.toolStripContainer1.ResumeLayout(false);
             this.toolStripContainer1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cht2)).EndInit();
             this.ResumeLayout(false);
 
         }

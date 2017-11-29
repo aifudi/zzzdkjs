@@ -122,7 +122,7 @@ namespace ExcelParseNS
         public Dictionary<string, int> GetDataStatisticsByUsing()
         {
             var result = new Dictionary<string, int>();
-            string[] strs = new string[] {"卡口", "电子警察", "视频专网", "电视监视", "信号", "内网"};
+            string[] strs = new string[] { "卡口", "电子警察", "视频专网", "电视监视", "信号", "内网" };
             List<string> list = strs.ToList<string>();
 
             for (int i = 0; i < list.Count; i++)
@@ -132,6 +132,11 @@ namespace ExcelParseNS
 
             foreach (FiberRecord rec in fiberrecords)
             {
+                if (rec.EditFlag == 0x01)
+                {
+                    continue;
+                }
+
                 if (string.Compare(rec.EPoliceUsed, "有") == 0)
                 {
                     result["电子警察"]++;
@@ -174,10 +179,13 @@ namespace ExcelParseNS
             var result = new Dictionary<string, int>();
             foreach (FiberRecord rec in fiberrecords)
             {
+                if (rec.EditFlag ==0x01)
+                {
+                    continue;
+                }
                 string keyname = rec.TeleOperator;
                 if (result.ContainsKey(keyname))
                 {
-
                     result[keyname]++;
                 }
 
@@ -288,7 +296,7 @@ namespace ExcelParseNS
                 workbook = app.Workbooks.Open(excelFilePath, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong,
                     oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong);
                 sheets = workbook.Worksheets;
-                Excel.Worksheet worksheet = (Excel.Worksheet) sheets.get_Item(1); //读取第一张表  
+                Excel.Worksheet worksheet = (Excel.Worksheet)sheets.get_Item(1); //读取第一张表  
                 if (worksheet == null)
                     return false;
                 Excel.Range range;
@@ -299,7 +307,7 @@ namespace ExcelParseNS
                 // 首先确定“光纤尾号”是在哪一列
                 for (int iCol = 1; iCol <= iColCount; iCol++)
                 {
-                    string txt2 = ((Excel.Range) worksheet.Cells[1, iCol]).Text.ToString();
+                    string txt2 = ((Excel.Range)worksheet.Cells[1, iCol]).Text.ToString();
 
                     if (string.Compare(txt2.Trim(), "光纤尾号") == 0)
                     {
@@ -311,7 +319,7 @@ namespace ExcelParseNS
                 for (int i = 2; i <= iRowCount; i++)
                 {
                     string pigtaildel = rec.FiberPigtail;
-                    string txt = ((Excel.Range) worksheet.Cells[i, pigtailcol]).Value2.ToString();
+                    string txt = ((Excel.Range)worksheet.Cells[i, pigtailcol]).Value2.ToString();
                     if (string.Compare(txt, pigtaildel) == 0)
                     {
                         delrow = i;
@@ -326,7 +334,7 @@ namespace ExcelParseNS
                 }
                 if (delrow > 0)
                 {
-                    range = (Excel.Range) worksheet.Rows[delrow, oMissiong];
+                    range = (Excel.Range)worksheet.Rows[delrow, oMissiong];
                     range.Delete(Excel.XlDeleteShiftDirection.xlShiftUp);
                     workbook.SaveAs(excelFilePath, Missing.Value, Missing.Value, Missing.Value, Missing.Value,
                         Missing.Value, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlNoChange, Missing.Value,
@@ -372,7 +380,7 @@ namespace ExcelParseNS
                 sheets = workbook.Worksheets;
 
                 //将数据读入到DataTable中
-                Excel.Worksheet worksheet = (Excel.Worksheet) sheets.get_Item(1); //读取第一张表  
+                Excel.Worksheet worksheet = (Excel.Worksheet)sheets.get_Item(1); //读取第一张表  
                 if (worksheet == null) return false;
 
                 int iRowCount = worksheet.UsedRange.Rows.Count;
@@ -382,7 +390,7 @@ namespace ExcelParseNS
                 int rowIdx = iRowCount + 1;
                 for (int iCol = 1; iCol <= iColCount; iCol++)
                 {
-                    string txt2 = ((Excel.Range) worksheet.Cells[1, iCol]).Text.ToString();
+                    string txt2 = ((Excel.Range)worksheet.Cells[1, iCol]).Text.ToString();
 
                     switch (txt2)
                     {
@@ -468,7 +476,7 @@ namespace ExcelParseNS
                 sheets = workbook.Worksheets;
 
                 //将数据读入到DataTable中
-                Excel.Worksheet worksheet = (Excel.Worksheet) sheets.get_Item(1); //读取第一张表  
+                Excel.Worksheet worksheet = (Excel.Worksheet)sheets.get_Item(1); //读取第一张表  
                 if (worksheet == null) return null;
 
                 int iRowCount = worksheet.UsedRange.Rows.Count;
@@ -479,7 +487,7 @@ namespace ExcelParseNS
                     var name = "column" + i;
                     if (hasTitle)
                     {
-                        var txt = ((Excel.Range) worksheet.Cells[1, i + 1]).Text.ToString();
+                        var txt = ((Excel.Range)worksheet.Cells[1, i + 1]).Text.ToString();
                         if (!string.IsNullOrWhiteSpace(txt)) name = txt;
                     }
                     while (dt.Columns.Contains(name)) name = name + "_1"; //重复行名称会报错。
@@ -493,7 +501,7 @@ namespace ExcelParseNS
                     DataRow dr = dt.NewRow();
                     for (int iCol = 1; iCol <= iColCount; iCol++)
                     {
-                        range = (Excel.Range) worksheet.Cells[iRow, iCol];
+                        range = (Excel.Range)worksheet.Cells[iRow, iCol];
                         dr[iCol - 1] = (range.Value2 == null) ? "" : range.Text.ToString();
                     }
 
@@ -721,7 +729,7 @@ namespace ExcelParseNS
                 workbook = app.Workbooks.Open(excelFilePath, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong,
                     oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong);
                 sheets = workbook.Worksheets;
-                Excel.Worksheet worksheet = (Excel.Worksheet) sheets.get_Item(1); //读取第一张表  
+                Excel.Worksheet worksheet = (Excel.Worksheet)sheets.get_Item(1); //读取第一张表  
                 if (worksheet == null)
                     return result;
                 Excel.Range range;
@@ -729,7 +737,7 @@ namespace ExcelParseNS
                 //先删除指定行，一般为列描述  
                 if (designationRow != -1)
                 {
-                    range = (Excel.Range) worksheet.Rows[designationRow, oMissiong];
+                    range = (Excel.Range)worksheet.Rows[designationRow, oMissiong];
                     range.Delete(Excel.XlDeleteShiftDirection.xlShiftUp);
                 }
                 Stopwatch sw = new Stopwatch();
@@ -738,7 +746,7 @@ namespace ExcelParseNS
                 int i = rowStart;
                 for (int iRow = rowStart; iRow <= rowEnd; iRow++, i++)
                 {
-                    range = (Excel.Range) worksheet.Rows[rowStart, oMissiong];
+                    range = (Excel.Range)worksheet.Rows[rowStart, oMissiong];
                     range.Delete(Excel.XlDeleteShiftDirection.xlShiftUp);
                 }
 
@@ -794,7 +802,7 @@ namespace ExcelParseNS
 
                 for (int k = 0; k < ds.Tables.Count; k++)
                 {
-                    worksheetData = (Excel.Worksheet) workbookData.Worksheets.Add(System.Reflection.Missing.Value,
+                    worksheetData = (Excel.Worksheet)workbookData.Worksheets.Add(System.Reflection.Missing.Value,
                         System.Reflection.Missing.Value, System.Reflection.Missing.Value,
                         System.Reflection.Missing.Value);
                     // testnum--;  
@@ -805,7 +813,7 @@ namespace ExcelParseNS
                         for (int i = 0; i < ds.Tables[k].Columns.Count; i++)
                         {
                             worksheetData.Cells[1, i + 1] = ds.Tables[k].Columns[i].ColumnName;
-                            range = (Excel.Range) worksheetData.Cells[1, i + 1];
+                            range = (Excel.Range)worksheetData.Cells[1, i + 1];
                             //range.Interior.ColorIndex = 15;  
                             range.Font.Bold = true;
                             range.NumberFormatLocal = "@"; //文本格式  
@@ -879,9 +887,9 @@ namespace ExcelParseNS
                     case 0x10:  // 新增
                         AddNewRecord(fiberrecords[i]);
                         break;
-                    //case 0x11:  // 编辑
-                    //   编辑记录分解为删除和添加两个操作
-                    //    
+                        //case 0x11:  // 编辑
+                        //   编辑记录分解为删除和添加两个操作
+                        //    
                 }
             }
         }
@@ -903,7 +911,7 @@ namespace ExcelParseNS
                     break;
                 }
             }
-            
+
             rec.EditFlag = 0x10;
             fiberrecords.Add(rec);
         }
@@ -918,7 +926,7 @@ namespace ExcelParseNS
             List<FiberRecord> recs = new List<FiberRecord>();
             for (int i = 0; i < fiberrecords.Count; i++)
             {
-                if (fiberrecords[i].EditFlag ==0x01)
+                if (fiberrecords[i].EditFlag == 0x01)
                 {
                     continue;
                 }
