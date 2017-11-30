@@ -258,7 +258,7 @@
             // textBoxFiberTail
             // 
             this.textBoxFiberTail.Enabled = false;
-            this.textBoxFiberTail.Location = new System.Drawing.Point(298, 14);
+            this.textBoxFiberTail.Location = new System.Drawing.Point(298, 19);
             this.textBoxFiberTail.Name = "textBoxFiberTail";
             this.textBoxFiberTail.Size = new System.Drawing.Size(100, 21);
             this.textBoxFiberTail.TabIndex = 36;

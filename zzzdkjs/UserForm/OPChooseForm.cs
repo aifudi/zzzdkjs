@@ -36,7 +36,7 @@ namespace zzzdkjs.UserForm
 
             if (radioButton2.Checked)
             {
-                fiberrec.EditFlag = 0x11;
+                
                 EditRecForm editRecForm = new EditRecForm(fiberrec);
                 editRecForm.EditFiberRec += EditFiberRec;
                 editRecForm.ShowDialog();
@@ -44,7 +44,7 @@ namespace zzzdkjs.UserForm
 
             if (radioButton3.Checked)
             {
-                fiberrec.EditFlag = 0x01;
+                
                 DelRecForm delRecForm = new DelRecForm(fiberrec);
                 delRecForm.DelFiberRec += DelFiberRec;
                 delRecForm.ShowDialog();

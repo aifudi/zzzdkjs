@@ -108,6 +108,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="UserForm\AddrecForm.resx">
       <DependentUpon>AddrecForm.cs</DependentUpon>
@@ -137,6 +138,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Properties\图片1.png" />
+    <None Include="Resources\图片3.png" />
+    <None Include="Resources\图片2.png" />
+    <None Include="Resources\图片1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -61,7 +61,6 @@ namespace zzzdkjs
 
             #endregion
 
-
             #region TreeView控件初始化,
             /// 找到"路口位置"节点，并进行“路口位置”子节点的初始化
             TreeNode LocationNode = FindTreeNode("路口位置");
@@ -72,13 +71,11 @@ namespace zzzdkjs
                 node.Text = roadcrossnamelist[i];
                 LocationNode.Nodes.Add(node);
             }
-            currentselectednode = treeView1.TopNode;
-            #endregion
-
-
             /// TreeNode的所有节点目录都全部展开
             treeView1.ExpandAll();
-
+            treeView1.TopNode = treeView1.Nodes[0];
+            currentselectednode = treeView1.TopNode;
+            #endregion
 
             #region 初始化Datagridview
             /// 首先向Datagridview控件中添加数据列，利用反射获取fiberrecord的属性值
@@ -640,7 +637,7 @@ namespace zzzdkjs
             //cht2.Series[0].Color = Color.Lime;
             cht2.Series[0].LegendText = legend2.Name;
             cht2.Series[0].IsValueShownAsLabel = true;
-            
+
             //是否显示图例
             cht2.Series[0].IsVisibleInLegend = true;
             cht2.Series[0].ShadowOffset = 0;
@@ -775,6 +772,16 @@ namespace zzzdkjs
         }
 
         /// <summary>
+        /// 单击datagridview单元格
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            currentselectdatagridviewrowindex = e.RowIndex;
+        }
+
+        /// <summary>
         /// 编辑光纤记录
         /// </summary>
         private void EditFiberRec(FiberRecord rec)
@@ -820,6 +827,10 @@ namespace zzzdkjs
 
                     // 更新光纤数据记录
                     DataParse.UpdateFiberRecords(selectedfiberRecord, rec);
+
+                    // 更新图表控件
+                    UpdateGraphbyOperator();
+                    UpdateGraphbyUsingType();
                 }
             }
 
@@ -843,6 +854,10 @@ namespace zzzdkjs
                 // 更新光纤数据记录
                 DataParse.UpdateFiberRecords(selectedfiberRecord, rec);
                 UpdateCurrentFiberRecords();
+
+                // 更新图表控件
+                UpdateGraphbyOperator();
+                UpdateGraphbyUsingType();
 
             }
         }
@@ -892,9 +907,11 @@ namespace zzzdkjs
                 // 更新光纤数据记录
                 DataParse.UpdateFiberRecords(rec);
                 UpdateCurrentFiberRecords();
+
+                // 更新图表控件
+                UpdateGraphbyOperator();
+                UpdateGraphbyUsingType();
             }
-
-
         }
 
         /// <summary>
@@ -919,6 +936,11 @@ namespace zzzdkjs
             // 更新光纤数据记录
             DataParse.UpdateFiberRecords(rec);
             UpdateCurrentFiberRecords();
+
+            // 更新图表控件
+            UpdateGraphbyOperator();
+            UpdateGraphbyUsingType();
+
         }
 
         /// <summary>
@@ -953,7 +975,6 @@ namespace zzzdkjs
             //webBrowser1.Document.InvokeScript("AddPoint", new object[] { 121.504, 39.212 });
 
             // webBrowser1.Document.InvokeScript("MapOpOfFoucusPoint", new object[] { 117.27, 31.86 });
-
             UpdateGraphbyUsingType();
             UpdateGraphbyOperator();
         }
@@ -972,5 +993,68 @@ namespace zzzdkjs
         }
 
         #endregion
+
+
+        #region Tool栏工具按钮
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            ///添加光纤数据记录
+            AddrecForm addrecForm = new AddrecForm(null);
+            addrecForm.AddFiberRec += AddFiberRec;
+            addrecForm.ShowDialog();
+        }
+        
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            ///编辑光纤数据记录
+            FiberRecord fiberrec = new FiberRecord();
+            if (currentselectdatagridviewrowindex<0)
+            {
+                MessageBox.Show("请选择需要编辑的光纤记录");
+                return;
+            }
+
+            string pigtail = dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnFiberPigtail"].Value.ToString() ;
+            for (int i = 0; i < records.Count; i++)
+            {
+                if (string.Compare(pigtail, records[i].FiberPigtail) ==0)
+                {
+                    fiberrec = records[i];
+                    break;
+                }
+            }
+
+            EditRecForm editRecForm = new EditRecForm(fiberrec);
+            editRecForm.EditFiberRec += EditFiberRec;
+            editRecForm.ShowDialog();
+        }
+
+        private void toolStripButton3_Click(object sender, EventArgs e)
+        {
+            ///删除光纤数据记录
+            FiberRecord fiberrec = new FiberRecord();
+            if (currentselectdatagridviewrowindex < 0)
+            {
+                MessageBox.Show("请选择需要删除的光纤记录");
+                return;
+            }
+
+            string pigtail = dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnFiberPigtail"].Value.ToString();
+            for (int i = 0; i < records.Count; i++)
+            {
+                if (string.Compare(pigtail, records[i].FiberPigtail) == 0)
+                {
+                    fiberrec = records[i];
+                    break;
+                }
+            }
+
+            DelRecForm delRecForm = new DelRecForm(fiberrec);
+            delRecForm.DelFiberRec += DelFiberRec;
+            delRecForm.ShowDialog();
+        }
+
+        #endregion
+
     }
 }

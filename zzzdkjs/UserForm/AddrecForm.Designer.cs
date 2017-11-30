@@ -246,7 +246,7 @@
             // textBoxFiberTail
             // 
             this.textBoxFiberTail.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.textBoxFiberTail.Location = new System.Drawing.Point(295, 16);
+            this.textBoxFiberTail.Location = new System.Drawing.Point(295, 18);
             this.textBoxFiberTail.Name = "textBoxFiberTail";
             this.textBoxFiberTail.Size = new System.Drawing.Size(100, 21);
             this.textBoxFiberTail.TabIndex = 36;
