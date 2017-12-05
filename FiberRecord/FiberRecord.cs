@@ -91,6 +91,11 @@ namespace FiberRecordNS
         /// </summary>
         public int EditFlag { get; set; }
 
+        /// <summary>
+        /// 关于光纤记录的备注信息
+        /// </summary>
+        public string BackupInfo { get; set; }
+
         public FiberRecord()
         {
             EditFlag = 0x00;
@@ -106,6 +111,12 @@ namespace FiberRecordNS
     /// </summary>
     public class RoadCrossInfo
     {
+        /// <summary>
+        /// 光纤部署位置所属的区域
+        /// （目前有五个辖区：芦淞、天元、石峰、荷塘以及云龙）
+        /// </summary>
+        public string District { get; set; }
+
         /// <summary>
         /// 光纤部署的路口位置描述
         /// </summary>

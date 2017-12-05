@@ -108,6 +108,13 @@ namespace ExcelParseNS
                     case "十二楼机房位置":
                         record.DetachmentLocationB = row[column].ToString();
                         break;
+                    case "行政区域":
+                        record.roadcrossinfo.District = row[column].ToString();
+                        break;
+                    case "备注信息":
+                        record.BackupInfo = row[column].ToString();
+                        break;
+
                 }
 
             }

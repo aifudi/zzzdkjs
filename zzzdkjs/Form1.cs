@@ -43,9 +43,6 @@ namespace zzzdkjs
 
         public Form1()
         {
-
-
-
             InitializeComponent();
             // 加载数据解析库
             applicationstartuppath = Application.StartupPath;
@@ -141,6 +138,8 @@ namespace zzzdkjs
                 dataGridView1.Rows[index].Cells["ColumnDetachmentLocationA"].Value = records[i].DetachmentLocationA;
                 dataGridView1.Rows[index].Cells["ColumnDetachmentLocationB"].Value = records[i].DetachmentLocationB;
                 dataGridView1.Rows[index].Cells["ColumnFiberPlugType"].Value = records[i].FiberPlugType;
+                dataGridView1.Rows[index].Cells["ColumnDistrict"].Value = records[i].roadcrossinfo.District;
+                dataGridView1.Rows[index].Cells["ColumnBackupInfo"].Value = records[i].BackupInfo;
 
             }
             #endregion
