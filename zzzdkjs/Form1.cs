@@ -4,9 +4,11 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Xml;
 using ExcelParseNS;
 using FiberRecordNS;
 using IDataParseNS;
+using XmlHelperNS;
 using zzzdkjs.UserForm;
 
 
@@ -32,16 +34,35 @@ namespace zzzdkjs
 
         // 点击Datagridview时，选中的FiberRecord记录
         private FiberRecord selectedfiberRecord = new FiberRecord();
+
+        // 用户名-密码 统计字典
+        private Dictionary<string, string> userDictionary = new Dictionary<string, string>();
+
+        // 当前登录系统的用户名
+        private string username;
+
         public Form1()
         {
+
+
+
             InitializeComponent();
             // 加载数据解析库
             applicationstartuppath = Application.StartupPath;
             exceldatapath = applicationstartuppath + "\\FiberData.xls";
             DataParse = new ExcelParse(exceldatapath);
             records = DataParse.GetFiberRecordsData();
-        }
 
+            #region 用户登录主窗体
+            LoginForm loginForm = new LoginForm(applicationstartuppath);
+            loginForm.UserLongin += LoginForm_UserLongin;
+            loginForm.ShowDialog();
+            #endregion
+
+            InitUserPwd(applicationstartuppath);
+
+        }
+       
         /// <summary>
         /// 控件初始化
         /// </summary>
@@ -165,10 +186,15 @@ namespace zzzdkjs
         private void Form1_Load(object sender, EventArgs e)
         {
 
+
             ControlInit();
 
             // 加载WEB控件
             webBrowser1.Navigate(@"C:\Users\fang\source\repos\zzzdkjs\BaiduMapCtrl\index.html");
+
+            TabPage tp = tabControl1.TabPages[3];//在这里先保存，以便以后还要显示
+
+            tabControl1.TabPages.Remove(tp);//隐藏（删除）
 
         }
 
@@ -274,7 +300,26 @@ namespace zzzdkjs
                         break;
 
                     case "CrossingLocation":
-                        MessageBox.Show("it is just a test");
+
+                        #region Datagridview中定位操作
+
+                        for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                        {
+                            string crossname = dataGridView1.Rows[i].Cells["ColumnRoadIntersection"].Value.ToString();
+                            if (string.Compare(crossname, str2)==0)
+                            {
+                                dataGridView1.Rows[i].Selected = true;//高亮显示选中行
+                            }
+                            else
+                            {
+                                dataGridView1.Rows[i].Selected = false;
+                            }
+                        }
+                        
+
+                        #endregion
+
+                        #region 地图界面居中显示操作
                         int index2 = -1;
                         for (int i = 0; i < records.Count; i++)
                         {
@@ -292,13 +337,19 @@ namespace zzzdkjs
 
                         double log = records[index2].roadcrossinfo.log;
                         double lat = records[index2].roadcrossinfo.lat;
-                        MapOpOfFoucusPoint(113, 28.21);
+                        MapOpOfFoucusPoint(113.172986, 27.85125);
+                        MapOpOfAddPoint(113.172986, 27.85125);
+                        #endregion
+
+                        break;
+
+                    /// 辅助功能按钮
+                    case "AssistanceFun":
+                        MessageBox.Show("it is just a test");
                         break;
                 }
             }
         }
-
-
 
         /// <summary>
         /// 显示指定运营商的光纤记录
@@ -730,8 +781,6 @@ namespace zzzdkjs
 
                 }
             }
-
-
         }
 
         /// <summary>
@@ -809,7 +858,6 @@ namespace zzzdkjs
                 else
                 {
                     // 完成datagridview控件中的记录更改工作
-
                     dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnFiberPigtail"].Value = rec.FiberPigtail;
                     dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnTeleOperator"].Value = rec.TeleOperator;
                     dataGridView1.Rows[currentselectdatagridviewrowindex].Cells["ColumnRoadIntersection"].Value = rec.roadcrossinfo.RoadCrossname;
@@ -959,8 +1007,17 @@ namespace zzzdkjs
         /// <param name="e"></param>
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // 保存光纤记录至后台数据文件
-            DataParse.SaveRecordToFile();
+            if (MessageBox.Show("确认退出系统?", "退出系统", MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.OK)
+            {
+                // 退出系统
+                // 保存光纤记录至后台数据文件
+                DataParse.SaveRecordToFile();
+            }
+
+            else
+            {
+                e.Cancel = true;
+            }
         }
 
         /// <summary>
@@ -975,6 +1032,9 @@ namespace zzzdkjs
             //webBrowser1.Document.InvokeScript("AddPoint", new object[] { 121.504, 39.212 });
 
             // webBrowser1.Document.InvokeScript("MapOpOfFoucusPoint", new object[] { 117.27, 31.86 });
+            ChangePwdForm changePwdForm = new ChangePwdForm();
+            changePwdForm.ShowDialog();
+            
             UpdateGraphbyUsingType();
             UpdateGraphbyOperator();
         }
@@ -992,6 +1052,15 @@ namespace zzzdkjs
             webBrowser1.Document.InvokeScript("MapOpOfFoucusPoint", new object[] { log, lat });
         }
 
+        /// <summary>
+        /// 地图聚焦到
+        /// </summary>
+        /// <param name="log"></param>
+        /// <param name="lat"></param>
+        private void MapOpOfAddPoint(double log, double lat)
+        {
+            webBrowser1.Document.InvokeScript("AddPoint", new object[] { log, lat });
+        }
         #endregion
 
 
@@ -1055,6 +1124,34 @@ namespace zzzdkjs
         }
 
         #endregion
+
+
+        /// <summary>
+        /// 用户登录后的回调函数
+        /// </summary>
+        private void LoginForm_UserLongin(string _username)
+        {
+            username = _username;
+        }
+
+        /// <summary>
+        /// 用户名-密码 字典初始化
+        /// </summary>
+        private void InitUserPwd(string startuppath)
+        {
+
+            string usrpwdfile = startuppath + "\\user.xml";
+
+            // 解析XML文件
+            XmlHelper xmlHelper = new XmlHelper();
+            XmlNodeList nodeList = xmlHelper.GetXmlNodeListByXpath(usrpwdfile, "/Users/user");
+            foreach (XmlNode n in nodeList)
+            {
+                string username = n.SelectSingleNode("username").InnerText;
+                string pwd = n.SelectSingleNode("password").InnerText;
+                userDictionary.Add(username, pwd);
+            }
+        }
 
     }
 }

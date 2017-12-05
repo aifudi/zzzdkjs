@@ -22,5 +22,8 @@ namespace DelegateNS
         // 定义删除光纤记录回调函数
         public delegate void DelFiberRecHandle(FiberRecord rec);
 
+        // 定义用户登录回调函数
+        public delegate void UserLoginHandle(string username);
+
     }
 }

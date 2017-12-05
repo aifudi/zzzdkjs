@@ -89,13 +89,25 @@ function test() {
 function AddPoint(lng, lat) {
     var marker = new BMap.Marker(new BMap.Point(lng, lat));  // 创建标注  
     map.addOverlay(marker);
-    //map.centerAndZoom
+    var opts = {
+        width: 200, // 信息窗口宽度
+        height: 100, // 信息窗口高度
+        title: "部署位置信息", // 信息窗口标题
+        enableMessage: true, //设置允许信息窗发送短息
+        message: "运营商：电信~"
+    }
+    var infoWindow = new BMap.InfoWindow("地址：市政大厦", opts); // 创建信息窗口对象 
+    map.openInfoWindow(infoWindow, new BMap.Point(lng, lat)); //开启信息窗口
+    marker.addEventListener("click",
+        function() {
+            map.openInfoWindow(infoWindow, new BMap.Point(lng, lat)); //开启信息窗口
+        });
 }
 
 /// 聚焦到当前位置
 function MapOpOfFoucusPoint(lng, lat) {
 
-    map.centerAndZoom(new BMap.Point(lng, lat), 13);
+    map.centerAndZoom(new BMap.Point(lng, lat), 16);
 }
 
 

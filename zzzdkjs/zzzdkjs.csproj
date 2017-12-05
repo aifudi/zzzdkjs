@@ -57,6 +57,9 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="XMLParse">
+      <HintPath>..\XMLParse\bin\Debug\XMLParse.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Form1.cs">
@@ -73,6 +76,12 @@
     <Compile Include="UserForm\AddrecForm.Designer.cs">
       <DependentUpon>AddrecForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserForm\ChangePwdForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserForm\ChangePwdForm.Designer.cs">
+      <DependentUpon>ChangePwdForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserForm\DelRecForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,6 +93,12 @@
     </Compile>
     <Compile Include="UserForm\EditRecForm.Designer.cs">
       <DependentUpon>EditRecForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserForm\LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserForm\LoginForm.Designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UserForm\OPChooseForm.cs">
       <SubType>Form</SubType>
@@ -113,11 +128,17 @@
     <EmbeddedResource Include="UserForm\AddrecForm.resx">
       <DependentUpon>AddrecForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserForm\ChangePwdForm.resx">
+      <DependentUpon>ChangePwdForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserForm\DelRecForm.resx">
       <DependentUpon>DelRecForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserForm\EditRecForm.resx">
       <DependentUpon>EditRecForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserForm\LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserForm\OPChooseForm.resx">
       <DependentUpon>OPChooseForm.cs</DependentUpon>
@@ -141,6 +162,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\图片1.png" />
+    <None Include="Resources\network.jpg" />
+    <None Include="Resources\timg3.jpg" />
+    <None Include="Resources\timg2.jpg" />
+    <None Include="Resources\timg1.jpg" />
+    <None Include="Resources\bg.jpg" />
+    <None Include="Resources\timg.jpg" />
     <None Include="Resources\图片3.png" />
     <None Include="Resources\图片2.png" />
     <None Include="Resources\图片1.png" />
